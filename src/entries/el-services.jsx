@@ -1,13 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { SiteProvider } from '../i18n'
+import t from '../i18n/el'
 import Layout from '../components/Layout'
-import Contact from '../pages/Contact'
+import Services from '../pages/Services'
 import '../index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Layout path="/contact/">
-      <Contact />
-    </Layout>
+    <SiteProvider lang="el" page="services" t={t}>
+      <Layout>
+        <Services />
+      </Layout>
+    </SiteProvider>
   </StrictMode>,
 )

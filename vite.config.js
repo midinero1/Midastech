@@ -5,19 +5,25 @@ import { resolve } from 'node:path'
 
 const r = (p) => resolve(import.meta.dirname, p)
 
-// A real multi-page site rather than a client-side router: four HTML documents,
-// so every page has its own title, description and canonical URL for search,
-// and clean directory URLs that need no redirect rules on a static host.
+// A real multi-page site rather than a client-side router: one HTML document
+// per page per language, so every page has its own title, description,
+// canonical URL and hreflang alternates for search, and clean directory URLs
+// that need no redirect rules on a static host.
+//
+// English sits at the root, Greek under /el/.
+const LANGS = ['en', 'el']
+const PAGES = ['home', 'services', 'about', 'contact']
+
+const input = Object.fromEntries(
+  LANGS.flatMap((lang) =>
+    PAGES.map((page) => {
+      const dir = [lang === 'en' ? '' : lang, page === 'home' ? '' : page].filter(Boolean).join('/')
+      return [`${lang}-${page}`, r(dir ? `${dir}/index.html` : 'index.html')]
+    }),
+  ),
+)
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  build: {
-    rollupOptions: {
-      input: {
-        home: r('index.html'),
-        services: r('services/index.html'),
-        about: r('about/index.html'),
-        contact: r('contact/index.html'),
-      },
-    },
-  },
+  build: { rollupOptions: { input } },
 })

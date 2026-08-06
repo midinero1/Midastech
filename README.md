@@ -1,7 +1,7 @@
 # Midas Technology — marketing site
 
-A four-page React (Vite) + Tailwind CSS site: custom websites and companion
-apps for cafés, restaurants and local shops.
+A bilingual (English / Ελληνικά) four-page React (Vite) + Tailwind CSS site:
+custom websites and companion apps for cafés, restaurants and local shops.
 
 ```bash
 npm install
@@ -12,55 +12,82 @@ npm run preview  # serve the build on http://localhost:4173
 
 ## Pages
 
-| URL | Document | Component |
-| --- | --- | --- |
-| `/` | `index.html` | `src/pages/Home.jsx` |
-| `/services/` | `services/index.html` | `src/pages/Services.jsx` |
-| `/about/` | `about/index.html` | `src/pages/About.jsx` |
-| `/contact/` | `contact/index.html` | `src/pages/Contact.jsx` |
+English sits at the root, Greek under `/el/`. Eight documents in all.
 
-These are four real HTML documents, not client-side routes. Each one carries
-its own `<title>`, meta description and canonical URL, which is what search
-engines actually index — a single-page router would have given all four pages
-the same one. It also means the clean `/services/` URLs work on any static
-host with no redirect rules, and there is no routing library to keep patched.
+| Page | English | Ελληνικά | Component |
+| --- | --- | --- | --- |
+| Home | `/` | `/el/` | `src/pages/Home.jsx` |
+| Services | `/services/` | `/el/services/` | `src/pages/Services.jsx` |
+| About | `/about/` | `/el/about/` | `src/pages/About.jsx` |
+| Contact | `/contact/` | `/el/contact/` | `src/pages/Contact.jsx` |
 
-React and the shared CSS are one cached chunk across all four pages, so after
-the first visit each page costs only 1.5–3 KB.
+These are real HTML documents, not client-side routes. Each carries its own
+`<html lang>`, title, description, canonical URL and `hreflang` alternates —
+which is what search engines actually index, and what tells Google to serve
+the Greek page to Greek searchers. A single-page router would have given all
+eight the same metadata. It also means the clean URLs work on any static host
+with no redirect rules, and there is no routing library to keep patched.
 
-To add a page: create `newpage/index.html` (copy an existing one and change
-the title, description, canonical and entry path), add
-`src/entries/newpage.jsx` and `src/pages/NewPage.jsx`, register the input in
-`vite.config.js`, and add it to `NAV` in `src/content.js`.
+React and the shared CSS are one cached chunk across every page, so after the
+first visit each page costs only 2–3 KB plus its language dictionary.
 
-## The things you will want to change
+## Editing the copy
 
-Nearly all copy and settings live in **`src/content.js`** — you should not need
-to open a component to edit the site's words.
+All text lives in two dictionaries with identical shapes:
 
-| What | Where |
+- `src/i18n/en.js`
+- `src/i18n/el.js`
+
+Nothing else needs opening to change a word. If you add a key to one, add it
+to the other — a missing key renders as blank, not as a fallback.
+
+| What | Where (in both files) |
 | --- | --- |
-| Email and phone | `CONTACT` — **currently placeholders** |
-| Nav links | `NAV` |
-| Which headline the hero uses | `ACTIVE_HEADLINE` (`0`, `1` or `2`) |
-| Hero subheading | `SUBHEAD` |
-| The three stats under the hero | `PROOF` |
-| Philosophy principles | `PRINCIPLES` |
-| Services, in full | `SERVICES` |
-| The four-step process | `PROCESS` |
-| "Always included" list | `INCLUDED` |
-| About story, pull quote, promises | `ABOUT` |
-| Social links | `SOCIALS` in `src/components/Footer.jsx` — all `#` placeholders |
+| Page titles and meta descriptions | `meta` |
+| Nav labels | `nav` |
+| Buttons and shared labels | `ui` |
+| Hero headline, subheading, stats | `hero` |
+| The phone/browser mock's contents | `showcase` |
+| Philosophy principles | `principles` |
+| Services, in full | `services` |
+| Home page section headings | `home` |
+| Services page process and included list | `servicesPage` |
+| About story, pull quote, promises | `aboutPage` |
+| Contact copy, form labels, validation messages | `contactPage` |
+| Closing band on each page | `cta` |
 
-### Headline options
+Things that are **not** translated live in `src/i18n/locales.js`: the email
+and phone (`CONTACT`), the URL scheme, and `ACTIVE_HEADLINE` — which of the
+three hero headlines is live (`0`, `1` or `2`; both languages have all three).
 
-```
-0. We turn your business into *gold* online.
-1. Small business. *Golden* first impression.
-2. The website your regulars *already believe* you have.
-```
+Social links are `#` placeholders in `src/components/Footer.jsx`.
 
-The starred word renders in the gold gradient.
+### Adding a language
+
+1. Copy `src/i18n/en.js` to `src/i18n/<code>.js` and translate it.
+2. Add `{ code, short, label }` to `LOCALES` in `src/i18n/locales.js`.
+3. Add the code to `LANGS` in `vite.config.js`.
+4. Create `<code>/index.html` and `<code>/{services,about,contact}/index.html`
+   plus the matching `src/entries/<code>-*.jsx` (copy the `el` ones and swap
+   the code — they are four lines of difference each).
+5. If the script is not Latin or Greek, check the font coverage first — see
+   below.
+
+### Greek typography
+
+**Playfair Display has no Greek glyphs**, so Greek headings would otherwise
+fall back to a system serif and look broken. Greek headings are served by
+**Noto Serif Display** — the closest match in the same high-contrast Didone
+genre, with real italics and matching variable weights. It is declared under
+the `'Playfair Display'` family name with a Greek `unicode-range`, so the
+browser picks the right face per character and no component has to know which
+language it is rendering. Those files download only on pages containing Greek.
+
+Inter covers Greek natively, so body text needed no substitute.
+
+Setting `<html lang="el">` also makes browsers apply Greek casing rules, which
+is why the uppercase eyebrows read `ΙΣΤΟΣΕΛΙΔΕΣ` and not `ΙΣΤΟΣΕΛΊΔΕΣ` —
+Greek drops accents in uppercase.
 
 ## The logo
 
@@ -76,8 +103,8 @@ A soft disc sits behind the taller shoulder — a sunrise. It is the only part
 that fades out at small sizes, which is deliberate: the silhouette carries the
 mark down to a 16px favicon on its own.
 
-`<LogoMark variant="dark" />` switches to the brighter gradient set for use on
-the espresso bands. `src/components/Logo.jsx` holds the geometry;
+`<LogoMark variant="dark" />` switches to the brighter gradient set for the
+espresso bands. `src/components/Logo.jsx` holds the geometry;
 `public/favicon.svg` is a standalone copy of the same paths — edit both if you
 change the shape.
 
@@ -105,31 +132,36 @@ espresso bands it uses `gilt`.
 
 Front-end only, as specified. It validates every field, marks errors inline
 and via `aria-invalid`, moves focus to the first problem on a failed submit,
-and shows a personalised success panel. **It does not send anything yet.**
+and shows a personalised success panel — all in whichever language the page
+is in.
 
-To make it live, replace the `setSent(true)` line in
-`src/pages/Contact.jsx` with a POST to a form service (Formspree, Basin,
-Netlify Forms) or your own endpoint. The success state is already wired, so
-you only need to swap that one call.
+To make it live, replace the `setSent(true)` line in `src/pages/Contact.jsx`
+with a POST to a form service (Formspree, Basin, Netlify Forms) or your own
+endpoint. The success state is already wired, so you only need to swap that
+one call.
 
 ## Notes on how it is built
 
-- **Fonts are self-hosted** in `public/fonts` (Playfair Display for display
-  type, Inter for body — both variable, latin + latin-ext subsets). No Google
-  Fonts request, so the site never blocks on a third-party CDN. That is what
-  makes the "under 2s" claim on the page safe to keep.
+- **Fonts are self-hosted** in `public/fonts` — Playfair Display and Inter for
+  Latin, Noto Serif Display and Inter for Greek, all variable and subsetted.
+  No Google Fonts request, so the site never blocks on a third-party CDN. That
+  is what makes the "under 2s" claim on the page safe to keep.
 - **No images anywhere.** The logo, every icon and the hero product mock are
   drawn in SVG and CSS, so they stay sharp at any size and cost almost nothing
   to load.
 - **Motion** is one `IntersectionObserver` in `src/components/Reveal.jsx` plus
-  CSS transitions, and a page fade-in on load so navigation between documents
-  feels continuous. Everything is disabled under
-  `prefers-reduced-motion: reduce`.
+  CSS transitions, and a page fade-in on load so moving between documents
+  feels continuous. All of it is disabled under `prefers-reduced-motion`.
 - **Dependencies** are React, Vite and Tailwind. Nothing else — `npm audit`
   reports zero vulnerabilities.
 
 ## Deploying
 
-`npm run build` produces a fully static `dist/` with the directory structure
-already in place. Drop it on Netlify, Vercel, Cloudflare Pages or any static
-host — no server, no SPA fallback, no redirect rules needed.
+`npm run build` produces a fully static `dist/` with the directory structure,
+`sitemap.xml` and `robots.txt` already in place. Drop it on Netlify, Vercel,
+Cloudflare Pages or any static host — no server, no SPA fallback, no redirect
+rules needed.
+
+Update the domain in `public/sitemap.xml`, `public/robots.txt` and the
+`canonical`/`og:url`/`hreflang` tags in the eight `index.html` files when you
+have the real one — they currently point at `midastechnology.com`.
