@@ -1,34 +1,24 @@
 import { useEffect, useState } from 'react'
 import Logo from './Logo'
-import { ACTIVE_LOGO } from '../content'
+import { NAV } from '../content'
 
-const LINKS = [
-  { id: 'philosophy', label: 'Philosophy' },
-  { id: 'offer', label: 'What We Offer' },
-  { id: 'contact', label: 'Contact' },
-]
+/** Marks the current page. `/` only matches exactly; the rest match their prefix. */
+function isCurrent(href, path) {
+  if (href === '/') return path === '/' || path === '/index.html'
+  return path.startsWith(href.replace(/\/$/, ''))
+}
 
-export default function Nav() {
+export default function Nav({ path = '/' }) {
   const [scrolled, setScrolled] = useState(false)
-  const [active, setActive] = useState('')
   const [open, setOpen] = useState(false)
 
-  // Condense the bar on scroll and track which section is under it.
   useEffect(() => {
     let frame = 0
     const onScroll = () => {
       if (frame) return
       frame = requestAnimationFrame(() => {
         frame = 0
-        setScrolled(window.scrollY > 24)
-
-        const line = window.scrollY + window.innerHeight * 0.32
-        let current = ''
-        for (const { id } of LINKS) {
-          const el = document.getElementById(id)
-          if (el && el.offsetTop <= line) current = id
-        }
-        setActive(current)
+        setScrolled(window.scrollY > 20)
       })
     }
     onScroll()
@@ -39,7 +29,6 @@ export default function Nav() {
     }
   }, [])
 
-  // Lock the page behind the mobile menu, and let Escape close it.
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     const onKey = (e) => e.key === 'Escape' && setOpen(false)
@@ -53,42 +42,43 @@ export default function Nav() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open
-          ? 'border-b border-gold/12 bg-ink/80 backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent'
+        scrolled || open ? 'border-b border-sand bg-canvas/85 backdrop-blur-xl' : 'border-b border-transparent'
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3.5 sm:px-8 sm:py-4">
         <a
-          href="#top"
-          className="shrink-0 transition-opacity duration-300 hover:opacity-80"
-          onClick={() => setOpen(false)}
-          aria-label="Midas Technology — back to top"
+          href="/"
+          className="shrink-0 transition-opacity duration-300 hover:opacity-75"
+          aria-label="Midas Technology — home"
         >
-          <Logo variant={ACTIVE_LOGO} markClass="h-8 w-8 sm:h-9 sm:w-9" />
+          <Logo markClass="h-9 w-9 sm:h-10 sm:w-10" />
         </a>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-9 md:flex">
-          {LINKS.map((l) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              className={`group relative text-[0.82rem] font-medium tracking-wide transition-colors duration-300 ${
-                active === l.id ? 'text-cream' : 'text-muted hover:text-cream'
-              }`}
-            >
-              {l.label}
-              <span
-                className={`absolute -bottom-1.5 left-0 h-px bg-gold transition-all duration-400 ease-[cubic-bezier(.16,1,.3,1)] ${
-                  active === l.id ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-60'
+        {/* Desktop */}
+        <div className="hidden items-center gap-8 md:flex">
+          {NAV.map((l) => {
+            const current = isCurrent(l.href, path)
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={current ? 'page' : undefined}
+                className={`group relative text-[0.84rem] font-medium transition-colors duration-300 ${
+                  current ? 'text-ink' : 'text-slate hover:text-ink'
                 }`}
-              />
-            </a>
-          ))}
+              >
+                {l.label}
+                <span
+                  className={`absolute -bottom-1.5 left-0 h-px bg-gold transition-all duration-400 ease-[cubic-bezier(.16,1,.3,1)] ${
+                    current ? 'w-full opacity-100' : 'w-0 opacity-0 group-hover:w-full group-hover:opacity-70'
+                  }`}
+                />
+              </a>
+            )
+          })}
           <a
-            href="#contact"
-            className="rounded-full border border-gold/40 bg-gold/8 px-5 py-2 text-[0.8rem] font-medium text-gold transition-all duration-300 hover:border-gold/70 hover:bg-gold/15 hover:shadow-[0_0_28px_-8px_var(--color-gold)]"
+            href="/contact/"
+            className="rounded-full bg-ink px-5 py-2.5 text-[0.8rem] font-medium text-canvas transition-all duration-300 hover:bg-ember hover:shadow-[0_10px_28px_-12px_rgba(110,78,16,0.8)]"
           >
             Book a consultation
           </a>
@@ -100,7 +90,7 @@ export default function Nav() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-gold/25 text-gold transition-colors duration-300 hover:bg-gold/10 md:hidden"
+          className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-sand bg-porcelain/70 text-ink transition-colors duration-300 hover:border-gold/60 md:hidden"
         >
           <span className="relative block h-3 w-4.5">
             <span
@@ -124,28 +114,31 @@ export default function Nav() {
 
       {/* Mobile sheet */}
       <div
-        className={`overflow-hidden border-t border-gold/10 bg-ink/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 ease-[cubic-bezier(.16,1,.3,1)] md:hidden ${
-          open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        className={`overflow-hidden border-t border-sand bg-canvas/97 backdrop-blur-xl transition-[max-height,opacity] duration-500 ease-[cubic-bezier(.16,1,.3,1)] md:hidden ${
+          open ? 'max-h-[26rem] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="flex flex-col gap-1 px-5 pb-7 pt-4">
-          {LINKS.map((l, i) => (
-            <a
-              key={l.id}
-              href={`#${l.id}`}
-              onClick={() => setOpen(false)}
-              style={{ transitionDelay: open ? `${80 + i * 60}ms` : '0ms' }}
-              className={`border-b border-white/5 py-3.5 font-display text-xl text-cream transition-all duration-500 ${
-                open ? 'translate-x-0 opacity-100' : '-translate-x-3 opacity-0'
-              }`}
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="flex flex-col px-5 pb-7 pt-3">
+          {NAV.map((l, i) => {
+            const current = isCurrent(l.href, path)
+            return (
+              <a
+                key={l.href}
+                href={l.href}
+                aria-current={current ? 'page' : undefined}
+                style={{ transitionDelay: open ? `${70 + i * 55}ms` : '0ms' }}
+                className={`flex items-center justify-between border-b border-sand/70 py-3.5 font-display text-xl transition-all duration-500 ${
+                  open ? 'translate-x-0 opacity-100' : '-translate-x-3 opacity-0'
+                } ${current ? 'text-bronze' : 'text-ink'}`}
+              >
+                {l.label}
+                {current && <span className="h-1.5 w-1.5 rounded-full bg-gold" />}
+              </a>
+            )
+          })}
           <a
-            href="#contact"
-            onClick={() => setOpen(false)}
-            className="mt-5 rounded-full border border-gold/40 bg-gold/10 py-3.5 text-center text-sm font-medium text-gold"
+            href="/contact/"
+            className="mt-6 rounded-full bg-ink py-3.5 text-center text-sm font-medium text-canvas"
           >
             Book a free consultation
           </a>

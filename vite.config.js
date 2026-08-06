@@ -3,15 +3,20 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
 
+const r = (p) => resolve(import.meta.dirname, p)
+
+// A real multi-page site rather than a client-side router: four HTML documents,
+// so every page has its own title, description and canonical URL for search,
+// and clean directory URLs that need no redirect rules on a static host.
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
     rollupOptions: {
       input: {
-        // The marketing site.
-        main: resolve(import.meta.dirname, 'index.html'),
-        // Internal picker for the three logo directions. Delete once a mark is chosen.
-        logos: resolve(import.meta.dirname, 'logos.html'),
+        home: r('index.html'),
+        services: r('services/index.html'),
+        about: r('about/index.html'),
+        contact: r('contact/index.html'),
       },
     },
   },

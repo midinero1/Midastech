@@ -1,10 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Logos from './Logos'
-import './index.css'
+import Layout from '../components/Layout'
+import Contact from '../pages/Contact'
+import '../index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Logos />
+    <Layout path="/contact/">
+      <Contact />
+    </Layout>
   </StrictMode>,
 )
