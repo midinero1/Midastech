@@ -87,8 +87,18 @@ one shelf. Two details make that work: every pack sits on the same neutral
 field, and drawn art gets a scale correction, because a photograph is cropped
 tight to the pack while a drawn artboard carries margin the photograph does not.
 
-The wordmark on the drawn packs is set in the site's own typeface. This concept
-does not trace or reproduce the brand's registered script logotype.
+The wordmark on the drawn packs is set in the site's own typeface — those packs
+are placeholders, not replicas.
+
+The real script logotype does appear, once, on the language picker. It was
+lifted from the grated pouch shot rather than traced: it is white script and a
+cyan line printed on flat charcoal, so alpha comes from distance to the
+background rather than from luminance — a luminance key would half-erase the
+cyan, which is darker than the white but just as opaque — and the colour is
+then unpremultiplied back to full strength, or every antialiased edge keeps a
+charcoal fringe and the mark looks dirty over a light photograph. The chrome
+keeps the plain typeface version, which stays legible at sizes the script
+would not survive.
 
 The supplied shots were flood-filled from the frame edge to lift their flat
 backgrounds — a threshold over the whole image would have eaten the cream

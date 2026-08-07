@@ -128,6 +128,23 @@ export default function LanguagePicker() {
             aria-hidden="true"
             className="h-full w-full object-cover"
           />
+          {/* Pooled behind the wordmark rather than laid over the whole
+              photograph. A flat scrim strong enough to carry the cyan
+              "100% vegan" line would also drain the pizza, which is the
+              other half of what this panel is for. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(62% 58% at 50% 44%, rgba(34,39,42,0.62), rgba(34,39,42,0.18) 68%, rgba(34,39,42,0) 100%)',
+            }}
+          />
+          <img
+            src={img('violife-wordmark.webp')}
+            alt="Violife"
+            className="absolute left-1/2 top-1/2 w-[8.5rem] -translate-x-1/2 -translate-y-[62%] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:w-[10rem]"
+          />
           {/* Grounds the card against the photo so the heading below has a
               clean edge to sit on rather than a hard seam. */}
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-canvas to-transparent" />

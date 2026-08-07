@@ -54,8 +54,10 @@ function Ground({ id, cy = 206, rx = 84, ry = 15, opacity = 0.3 }) {
    drawn pack sit in the same grid as a photographed one without the
    grid falling apart.
 
-   The wordmark is set in the site's own typeface. This concept does not
-   trace or reproduce the brand's registered script logotype.
+   The wordmark on these drawn packs is set in the site's own typeface —
+   they are placeholders, not replicas. The real script logotype does
+   appear on the site, lifted from a supplied photograph, but only in the
+   language picker and inside the photographs themselves.
 ------------------------------------------------------------------- */
 
 const PACK = { face: '#474B4F', shade: '#3A3E42', lit: '#565B60', edge: '#61666B' }

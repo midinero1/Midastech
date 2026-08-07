@@ -18,8 +18,9 @@ import { IconHome, IconPack, IconRecipe, IconPin, IconSearch, IconLeaf } from '.
 
 const TAB_ICONS = { home: IconHome, pack: IconPack, recipe: IconRecipe, pin: IconPin }
 
-/* A wordmark set in the site's own typeface — this concept deliberately
-   does not reproduce the brand's registered script logotype. */
+/* The chrome's wordmark is set in the site's own typeface, so the
+   navigation stays legible at small sizes where the script would not.
+   The real logotype appears on the language picker instead. */
 export function Wordmark({ className = '' }) {
   return (
     <span className={`inline-flex items-baseline gap-[0.12em] ${className}`}>
