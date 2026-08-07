@@ -97,7 +97,14 @@ export default {
     salt: 'Salt',
   },
 
-  freeFrom: ['Dairy', 'Soya', 'Gluten', 'Lactose', 'Nuts', 'Artificial preservatives'],
+  freeFrom: {
+    dairy: 'Dairy',
+    soya: 'Soya',
+    gluten: 'Gluten',
+    lactose: 'Lactose',
+    nuts: 'Nuts',
+    preservatives: 'Artificial preservatives',
+  },
 
   home: {
     title: 'Concept — Violife redesign',

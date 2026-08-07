@@ -630,3 +630,105 @@ export const IconClose = (p) => (
     <path d="M6.2 6.2 17.8 17.8M17.8 6.2 6.2 17.8" />
   </Icon>
 )
+
+/* -------------------------------------------------------------------
+   Free-from marks
+
+   Each allergen gets its own silhouette with a stroke through it. Six
+   identical "no entry" circles would tell a shopper nothing — the
+   silhouette is what the eye scans for, and the slash is what turns it
+   into a claim. Same 24px grid and 1.6 stroke as the rest of the set, so
+   they sit in a row with the interface icons without looking imported.
+------------------------------------------------------------------- */
+
+function Crossed({ children, className = '', ...rest }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden="true" focusable="false" {...rest}>
+      <g {...S}>
+        {children}
+        {/* Drawn last so it reads as a mark laid over the object rather
+            than as part of it. */}
+        <path d="M4.6 19.4 19.4 4.6" />
+      </g>
+    </svg>
+  )
+}
+
+/** Dairy — a cow's head.
+    Ears and a wide muzzle are what make it read; horns alone looked like
+    leaves on a bowl. Eyes are still left out — below about 32px two dots
+    inside a shape this busy just fill in. */
+export const IconNoDairy = (p) => (
+  <Crossed {...p}>
+    {/* ears, pushed clear of the head so the silhouette is unmistakable */}
+    <path d="M6.6 9.6C4.9 8.3 2.6 8.1 1.8 9.2c-.8 1.2.4 2.8 2.4 3.3" />
+    <path d="M17.4 9.6c1.7-1.3 4-1.5 4.8-.4.8 1.2-.4 2.8-2.4 3.3" />
+    {/* horns */}
+    <path d="M8.9 6.6c-.5-1.2-.2-2.4.7-3" />
+    <path d="M15.1 6.6c.5-1.2.2-2.4-.7-3" />
+    {/* head */}
+    <path d="M6.6 12.6V9.8c0-2 2.4-3.6 5.4-3.6s5.4 1.6 5.4 3.6v2.8c0 1.5-.7 2.8-1.8 3.6H8.4c-1.1-.8-1.8-2.1-1.8-3.6Z" />
+    {/* muzzle */}
+    <rect x="8.2" y="14.6" width="7.6" height="4.8" rx="2.4" />
+    <path d="M10.6 17h.02M13.4 17h.02" strokeWidth="2.1" />
+  </Crossed>
+)
+
+/** Gluten — an ear of wheat. */
+export const IconNoGluten = (p) => (
+  <Crossed {...p}>
+    <path d="M12 20.8V8.6" />
+    <path d="M12 8.6c0-2.1 1.3-3.4 3.2-3.4 0 2.1-1.3 3.4-3.2 3.4Z" />
+    <path d="M12 8.6c0-2.1-1.3-3.4-3.2-3.4 0 2.1 1.3 3.4 3.2 3.4Z" />
+    <path d="M12 13.1c0-2.1 1.3-3.4 3.2-3.4 0 2.1-1.3 3.4-3.2 3.4Z" />
+    <path d="M12 13.1c0-2.1-1.3-3.4-3.2-3.4 0 2.1 1.3 3.4 3.2 3.4Z" />
+    <path d="M12 17.6c0-2.1 1.3-3.4 3.2-3.4 0 2.1-1.3 3.4-3.2 3.4Z" />
+    <path d="M12 17.6c0-2.1-1.3-3.4-3.2-3.4 0 2.1 1.3 3.4 3.2 3.4Z" />
+  </Crossed>
+)
+
+/** Soya — a pod, beans showing. Horizontal on purpose: drawn on the
+    diagonal it ran parallel to the slash and the two merged. */
+export const IconNoSoya = (p) => (
+  <Crossed {...p}>
+    <path d="M4.4 12c0-2.5 2-4.5 4.5-4.5h6.2c2.5 0 4.5 2 4.5 4.5s-2 4.5-4.5 4.5H8.9C6.4 16.5 4.4 14.5 4.4 12Z" />
+    <circle cx="8.6" cy="12" r="1.7" />
+    <circle cx="15.4" cy="12" r="1.7" />
+  </Crossed>
+)
+
+/** Lactose — a milk bottle. */
+export const IconNoLactose = (p) => (
+  <Crossed {...p}>
+    <path d="M9.6 3.4h4.8" />
+    <path d="M10 3.4v2.3l-1.6 2.4a3 3 0 0 0-.5 1.7v8.7a2 2 0 0 0 2 2h4.2a2 2 0 0 0 2-2V9.8a3 3 0 0 0-.5-1.7L14 5.7V3.4" />
+    <path d="M7.9 13.2h8.2" />
+  </Crossed>
+)
+
+/** Nuts — a peanut in its shell, lying down. Upright it read as an
+    infinity sign; horizontal with a harder pinch it reads as a shell. */
+export const IconNoNuts = (p) => (
+  <Crossed {...p}>
+    <path d="M3.6 12c0-2.4 1.9-4.3 4.2-4.3 1.3 0 2.1.6 2.8 1.1.6.4 1 .7 1.5.7s.9-.3 1.5-.7c.7-.5 1.5-1.1 2.8-1.1 2.3 0 4.2 1.9 4.2 4.3s-1.9 4.3-4.2 4.3c-1.3 0-2.1-.6-2.8-1.1-.6-.4-1-.7-1.5-.7s-.9.3-1.5.7c-.7.5-1.5 1.1-2.8 1.1C5.5 16.3 3.6 14.4 3.6 12Z" />
+    <path d="M6.6 10.4h.02M8.2 13.4h.02M15.8 10.4h.02M17.4 13.4h.02" strokeWidth="2.1" />
+  </Crossed>
+)
+
+/** Artificial preservatives — a lab flask. */
+export const IconNoPreservatives = (p) => (
+  <Crossed {...p}>
+    <path d="M9.3 3.4h5.4" />
+    <path d="M10.1 3.4v5.3l-5 8.7a2 2 0 0 0 1.7 3h10.4a2 2 0 0 0 1.7-3l-5-8.7V3.4" />
+    <path d="M7.6 15h8.8" />
+  </Crossed>
+)
+
+export const FREE_FROM_ICONS = {
+  dairy: IconNoDairy,
+  soya: IconNoSoya,
+  gluten: IconNoGluten,
+  lactose: IconNoLactose,
+  nuts: IconNoNuts,
+  preservatives: IconNoPreservatives,
+}

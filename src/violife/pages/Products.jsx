@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { FORMATS, PRODUCTS } from '../data'
+import { FORMATS, FREE_FROM, PRODUCTS } from '../data'
+import { FREE_FROM_ICONS } from '../art'
 import { useSite } from '../i18n'
 import { Heading, ProductCard, ProductSheet, Reveal, Segmented, useProductSheet } from '../ui'
 
@@ -68,15 +69,18 @@ export default function Products() {
               body={t.productsPage.freeFromBody}
             />
           </Reveal>
-          <Reveal delay={120} className="mt-9 flex flex-wrap justify-center gap-2.5">
-            {t.freeFrom.map((f) => (
-              <span
-                key={f}
-                className="rounded-full border border-line bg-shell px-4 py-2 text-[0.85rem] font-medium text-ink"
-              >
-                {f}
-              </span>
-            ))}
+          <Reveal delay={120} className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-x-3 gap-y-7 sm:grid-cols-6">
+            {FREE_FROM.map((id) => {
+              const Mark = FREE_FROM_ICONS[id]
+              return (
+                <div key={id} className="flex flex-col items-center gap-2 text-center">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-shell text-teal">
+                    <Mark className="h-6 w-6" />
+                  </span>
+                  <span className="text-[0.75rem] font-medium leading-tight text-ink">{t.freeFrom[id]}</span>
+                </div>
+              )
+            })}
           </Reveal>
         </div>
       </section>

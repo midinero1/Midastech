@@ -49,6 +49,11 @@ export const NAV = [
 
 export const FORMATS = ['all', 'blocks', 'slices', 'grated', 'creamy', 'drinks']
 
+/* The free-from claims, as ids. Each has a drawn mark in art.jsx and a
+   label in each dictionary, so the icon set is shared across languages
+   rather than duplicated per translation. */
+export const FREE_FROM = ['dairy', 'soya', 'gluten', 'lactose', 'nuts', 'preservatives']
+
 /* Photographed packs lead, so the strongest assets are what a visitor
    meets first. `label` is the flavour name printed on a drawn pack and is
    only read when there is no photo. */

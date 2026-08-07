@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { IconArrow, IconMelt, IconStretch, IconGrate, IconPin } from '../art'
-import { FORMATS, HERO_PRODUCT, PRODUCTS, PROOF, RECIPES, STORY_YEARS } from '../data'
+import { FREE_FROM_ICONS, IconArrow, IconMelt, IconStretch, IconGrate, IconPin } from '../art'
+import { FORMATS, FREE_FROM, HERO_PRODUCT, PRODUCTS, PROOF, RECIPES, STORY_YEARS } from '../data'
 import { useSite } from '../i18n'
 import { FIELD, Heading, PackShot, ProductCard, ProductSheet, RecipeCard, Reveal, Segmented, useProductSheet } from '../ui'
 
@@ -85,17 +85,28 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* Trust bar. The words the shopper is scanning for, stated once, in
-            one weight — not six differently coloured badges. Wraps rather
-            than scrolls: a clipped word here reads as a bug. */}
-        <Reveal delay={200} className="relative z-10 mx-auto mt-12 max-w-6xl sm:mt-16">
-          <div className="glass frost flex flex-wrap items-center justify-center gap-x-6 gap-y-2 rounded-[1.6rem] px-6 py-4 sm:gap-x-9 sm:rounded-full">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-muted">{t.ui.freeFrom}</span>
-            {t.freeFrom.map((f) => (
-              <span key={f} className="text-[0.85rem] font-medium text-ink">
-                {f}
-              </span>
-            ))}
+        {/* Trust bar. Each claim gets its own crossed-out mark, because a
+            shopper avoiding one thing scans for that shape rather than
+            reading six words. Three across on a phone, six on a wide
+            screen — never a scroll, since a clipped claim reads as a bug. */}
+        <Reveal delay={200} className="relative z-10 mx-auto mt-12 max-w-4xl sm:mt-16">
+          <div className="glass frost rounded-[1.6rem] px-4 py-5 sm:px-6">
+            <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-muted">
+              {t.ui.freeFrom}
+            </p>
+            <ul className="mt-4 grid grid-cols-3 gap-x-2 gap-y-5 sm:grid-cols-6">
+              {FREE_FROM.map((id) => {
+                const Mark = FREE_FROM_ICONS[id]
+                return (
+                  <li key={id} className="flex flex-col items-center gap-1.5 text-center">
+                    <Mark className="h-7 w-7 text-teal" />
+                    <span className="text-[0.72rem] font-medium leading-tight text-ink sm:text-[0.78rem]">
+                      {t.freeFrom[id]}
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </Reveal>
       </section>

@@ -180,6 +180,30 @@ problem gets worse with Spanish or Portuguese. They are here because they make
 the two current options recognisable at a glance, which was the point. Past
 three or four languages, drop to native names alone.
 
+## Free-from marks
+
+Each of the six claims has its own crossed-out silhouette — cow, soy pod, ear
+of wheat, milk bottle, peanut, lab flask — rather than six identical "no
+entry" circles. A shopper avoiding one particular thing scans for that shape;
+six identical roundels give them nothing to scan for, and the words alone
+give them a paragraph to read.
+
+Drawn on the same 24px grid and 1.6 stroke as the interface icons, so they sit
+in a row together without looking imported. Three lessons came out of testing
+them at their real size rather than magnified:
+
+- **Detail below about 32px fills in.** The cow began with ears, horns, eyes
+  and nostrils and read as a smudge. Eyes came out; ears and a wide muzzle are
+  what actually make it a cow.
+- **Nothing may run parallel to the slash.** The soy pod was drawn on the
+  diagonal and merged with the strike into a single stroke. Horizontal, it
+  reads instantly.
+- **Symmetry can betray a shape.** An upright peanut is an infinity sign.
+  Lying down with a harder pinch at the waist, it is a peanut.
+
+Claims are ids in `data.js` with labels in each dictionary, so the marks are
+shared across languages rather than redrawn per translation.
+
 ## Ingredients and nutrition
 
 Each product carries two disclosures, matching the pattern the live site

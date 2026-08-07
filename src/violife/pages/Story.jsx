@@ -1,5 +1,5 @@
-import { IconArrow } from '../art'
-import { PRODUCTS, STORY_YEARS } from '../data'
+import { FREE_FROM_ICONS, IconArrow } from '../art'
+import { FREE_FROM, PRODUCTS, STORY_YEARS } from '../data'
 import { useSite } from '../i18n'
 import { FIELD, Heading, PackShot, Reveal } from '../ui'
 
@@ -49,13 +49,16 @@ export default function Story() {
                 title={t.storyPage.madeOfTitle}
                 body={t.storyPage.madeOfBody}
               />
-              <ul className="mt-7 space-y-2.5">
-                {t.freeFrom.map((f) => (
-                  <li key={f} className="flex items-center gap-3 text-[0.95rem] text-body">
-                    <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
-                    {t.ui.freeFrom} {f.toLowerCase()}
-                  </li>
-                ))}
+              <ul className="mt-7 space-y-3">
+                {FREE_FROM.map((id) => {
+                  const Mark = FREE_FROM_ICONS[id]
+                  return (
+                    <li key={id} className="flex items-center gap-3 text-[0.95rem] text-body">
+                      <Mark className="h-5 w-5 shrink-0 text-teal" />
+                      {t.ui.freeFrom} {t.freeFrom[id].toLowerCase()}
+                    </li>
+                  )
+                })}
               </ul>
             </Reveal>
 

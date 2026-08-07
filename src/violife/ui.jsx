@@ -10,7 +10,7 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ProductArt, DishArt, IconArrow, IconClock, IconClose, IconCheck, IconMelt, IconStretch, IconGrate } from './art'
-import { NUTRITION_ROWS, PRODUCTS, img } from './data'
+import { FREE_FROM, NUTRITION_ROWS, PRODUCTS, img } from './data'
 import { useSite } from './i18n'
 
 export { default as Reveal } from '../components/Reveal'
@@ -332,7 +332,7 @@ export function ProductSheet({ product, onClose }) {
 
           <div className="mt-6 rounded-2xl border border-line bg-shell/60 p-4">
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">{t.ui.freeFrom}</p>
-            <p className="mt-1.5 text-[0.88rem] text-body">{t.freeFrom.join(' · ')}</p>
+            <p className="mt-1.5 text-[0.88rem] text-body">{FREE_FROM.map((id) => t.freeFrom[id]).join(' · ')}</p>
           </div>
 
           <div className="mt-6">
