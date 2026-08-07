@@ -30,17 +30,6 @@ export function Wordmark({ className = '' }) {
   )
 }
 
-function ConceptChip({ label }) {
-  return (
-    <span
-      className="hidden rounded-full border border-line px-2 py-[0.15rem] text-[0.55rem] font-semibold uppercase tracking-[0.13em] text-muted sm:inline-block"
-      title="An independent design study. Not affiliated with Violife or Flora Food Group."
-    >
-      {label}
-    </span>
-  )
-}
-
 /** EN / ΕΛ, as a two-up switch rather than a dropdown behind a globe icon. */
 function LanguageSwitch({ className = '' }) {
   const { lang, page, t } = useSite()
@@ -126,11 +115,10 @@ function TopBar() {
           href={path('home')}
           /* Tight leading so the wordmark can grow without the capsule
              outgrowing the round buttons sitting beside it. */
-          className="glass frost flex items-center gap-2.5 rounded-full py-2.5 pl-4 pr-3 text-[1.2rem] leading-tight sm:text-[1.35rem]"
+          className="glass frost flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[1.2rem] leading-tight sm:text-[1.35rem]"
           aria-label={t.ui.home}
         >
           <Wordmark />
-          <ConceptChip label={t.ui.concept} />
         </a>
 
         {/* Pointer navigation */}

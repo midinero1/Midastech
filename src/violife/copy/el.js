@@ -36,7 +36,6 @@ export default {
     freeFrom: 'Χωρίς',
     minutes: 'λεπτά',
     language: 'Γλώσσα',
-    concept: 'Concept',
     readTheStory: 'Διάβασε την ιστορία',
     recipesWithThis: 'Συνταγές με αυτό',
     fullRange: 'Η γκάμα',

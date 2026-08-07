@@ -38,7 +38,6 @@ export default {
     freeFrom: 'Free from',
     minutes: 'min',
     language: 'Language',
-    concept: 'Concept',
     readTheStory: 'Read the story',
     recipesWithThis: 'Recipes with this',
     fullRange: 'The range',
