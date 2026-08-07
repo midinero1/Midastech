@@ -54,7 +54,7 @@ export default function Story() {
                   const Mark = FREE_FROM_ICONS[id]
                   return (
                     <li key={id} className="flex items-center gap-3 text-[0.95rem] text-body">
-                      <Mark className="h-5 w-5 shrink-0 text-teal" />
+                      <Mark className="h-5 w-5 shrink-0 text-muted" />
                       {t.ui.freeFrom} {t.freeFrom[id].toLowerCase()}
                     </li>
                   )

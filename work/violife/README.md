@@ -201,6 +201,12 @@ them at their real size rather than magnified:
 - **Symmetry can betray a shape.** An upright peanut is an infinity sign.
   Lying down with a harder pinch at the waist, it is a peanut.
 
+They sit unboxed and grey, straight on the page at the foot of the hero. A
+glass card around them read as a third thing competing with the headline and
+the pack, and this is reassurance a shopper checks once and then ignores — it
+should recede into the ground and let the product keep the attention. Grey
+still clears AA at 4.6:1, so quiet rather than faint.
+
 Claims are ids in `data.js` with labels in each dictionary, so the marks are
 shared across languages rather than redrawn per translation.
 

@@ -73,11 +73,9 @@ export default function Products() {
             {FREE_FROM.map((id) => {
               const Mark = FREE_FROM_ICONS[id]
               return (
-                <div key={id} className="flex flex-col items-center gap-2 text-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-shell text-teal">
-                    <Mark className="h-6 w-6" />
-                  </span>
-                  <span className="text-[0.75rem] font-medium leading-tight text-ink">{t.freeFrom[id]}</span>
+                <div key={id} className="flex flex-col items-center gap-2.5 text-center text-muted">
+                  <Mark className="h-8 w-8" />
+                  <span className="text-[0.75rem] font-medium leading-tight">{t.freeFrom[id]}</span>
                 </div>
               )
             })}

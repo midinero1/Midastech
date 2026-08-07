@@ -85,29 +85,29 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* Trust bar. Each claim gets its own crossed-out mark, because a
-            shopper avoiding one thing scans for that shape rather than
-            reading six words. Three across on a phone, six on a wide
-            screen — never a scroll, since a clipped claim reads as a bug. */}
-        <Reveal delay={200} className="relative z-10 mx-auto mt-12 max-w-4xl sm:mt-16">
-          <div className="glass frost rounded-[1.6rem] px-4 py-5 sm:px-6">
-            <p className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-muted">
-              {t.ui.freeFrom}
-            </p>
-            <ul className="mt-4 grid grid-cols-3 gap-x-2 gap-y-5 sm:grid-cols-6">
-              {FREE_FROM.map((id) => {
-                const Mark = FREE_FROM_ICONS[id]
-                return (
-                  <li key={id} className="flex flex-col items-center gap-1.5 text-center">
-                    <Mark className="h-7 w-7 text-teal" />
-                    <span className="text-[0.72rem] font-medium leading-tight text-ink sm:text-[0.78rem]">
-                      {t.freeFrom[id]}
-                    </span>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+        {/* Unboxed and grey, sitting straight on the page at the foot of
+            the hero. A glass card here read as a third thing competing
+            with the headline and the pack; this is reassurance a shopper
+            checks once and then ignores, so it recedes into the ground
+            and lets the product keep the attention. Grey still clears AA
+            at 4.6:1 — quiet, not faint. */}
+        <Reveal delay={200} className="relative z-10 mx-auto mt-16 max-w-4xl sm:mt-24">
+          <p className="text-center text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
+            {t.ui.freeFrom}
+          </p>
+          <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
+            {FREE_FROM.map((id) => {
+              const Mark = FREE_FROM_ICONS[id]
+              return (
+                <li key={id} className="flex flex-col items-center gap-2 text-center text-muted">
+                  <Mark className="h-7 w-7" />
+                  <span className="text-[0.72rem] font-medium leading-tight sm:text-[0.78rem]">
+                    {t.freeFrom[id]}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
         </Reveal>
       </section>
 
