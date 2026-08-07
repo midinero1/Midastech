@@ -90,15 +90,30 @@ tight to the pack while a drawn artboard carries margin the photograph does not.
 The wordmark on the drawn packs is set in the site's own typeface — those packs
 are placeholders, not replicas.
 
-The real script logotype does appear, once, on the language picker. It was
-lifted from the grated pouch shot rather than traced: it is white script and a
-cyan line printed on flat charcoal, so alpha comes from distance to the
-background rather than from luminance — a luminance key would half-erase the
-cyan, which is darker than the white but just as opaque — and the colour is
-then unpremultiplied back to full strength, or every antialiased edge keeps a
-charcoal fringe and the mark looks dirty over a light photograph. The chrome
-keeps the plain typeface version, which stays legible at sizes the script
-would not survive.
+The real script logotype does appear, once, on the language picker, as
+**vector** — `trace-wordmark.py`. No supplied photograph carries the mark above
+about 230px wide, so any raster of it is upscaled the moment it is shown at a
+useful size, and that was visibly soft. Tracing removes the ceiling.
+
+Three things made the trace clean, each fixing a specific artefact:
+
+- **Coverage, not a mask.** Thresholding to black-and-white at native
+  resolution throws away the sub-pixel edge position, and upscaling afterwards
+  can only produce stair steps on the original pixel grid. Antialiased coverage
+  is carried through and thresholded *after* the upsample, so edges land where
+  the real edge was.
+- **Mask before you resample, not after.** Resampling colour first makes
+  Lanczos ring at the high-contrast edges of the cyan line, and the overshoot
+  lands in the white mask as a halo around every glyph.
+- **Cyan claims its pixels first**, white takes the remainder, so the two paths
+  cannot overlap and no white edge peeks out from under a glyph.
+
+One gotcha worth recording: potracer reads its input as a greyscale image where
+*dark* is ink, not as a boolean mask. Hand it a bool array and it cheerfully
+traces the whole frame.
+
+The chrome keeps the plain typeface version, which stays legible at sizes the
+script would not survive.
 
 The supplied shots were flood-filled from the frame edge to lift their flat
 backgrounds — a threshold over the whole image would have eaten the cream

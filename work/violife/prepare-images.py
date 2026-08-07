@@ -91,48 +91,6 @@ def photo(path, name, box, quality=80):
     print(f'{name}  {im.size}  {os.path.getsize(p)//1024}KB')
 
 
-def lift_logo(path, name, box, tol=92, feather=0.6):
-    """
-    Lift the wordmark off a pack shot.
-
-    It is white script and a cyan line printed on flat charcoal, so alpha
-    comes from distance to the background rather than from luminance — a
-    luminance key would half-erase the cyan, which is darker than the white
-    but just as opaque. The colour is then unpremultiplied back to full
-    strength, otherwise every antialiased edge keeps a charcoal fringe and
-    the mark looks dirty over a light photograph.
-    """
-    im = Image.open(path).convert('RGB').crop(box)
-    w, h = im.size
-    px = im.load()
-    bg = px[1, 1]
-
-    out = Image.new('RGBA', (w, h))
-    op = out.load()
-    for y in range(h):
-        for x in range(w):
-            r, g, b = px[x, y]
-            d = max(abs(r - bg[0]), abs(g - bg[1]), abs(b - bg[2]))
-            a = min(1.0, d / tol)
-            if a <= 0.01:
-                op[x, y] = (0, 0, 0, 0)
-                continue
-            # Recover the ink colour at partial coverage.
-            rr = min(255, max(0, round(bg[0] + (r - bg[0]) / a)))
-            gg = min(255, max(0, round(bg[1] + (g - bg[1]) / a)))
-            bb = min(255, max(0, round(bg[2] + (b - bg[2]) / a)))
-            op[x, y] = (rr, gg, bb, round(a * 255))
-
-    if feather:
-        out.putalpha(out.getchannel('A').filter(ImageFilter.GaussianBlur(feather)))
-    bbox = out.getbbox()
-    if bbox:
-        out = out.crop(bbox)
-    p = os.path.join(OUT, name)
-    out.save(p, 'WEBP', quality=95, method=6, lossless=True)
-    print(f'{name}  {out.size}  {os.path.getsize(p)//1024}KB')
-
-
 os.makedirs(OUT, exist_ok=True)
 
 save(cutout(f'{SRC}/66a9c477-IMG_8201.jpeg', precrop=(0, 0, 1265, 887)), 'pack-creamy-original.webp', (900, 900))
@@ -145,6 +103,3 @@ save(cutout(f'{SRC}/0031ffa4-IMG_8222.jpeg'), 'pack-block-parmesan.webp', (900, 
 photo(f'{SRC}/56f9fe42-IMG_8199.webp', 'dish-greek-white-pizza.webp', (1100, 1100))
 photo(f'{SRC}/400e6ba0-IMG_8200.jpeg', 'dish-greek-white-orzo.webp', (1600, 1600))
 
-# The wordmark, taken off the grated pouch — the cleanest printing of it in
-# the supplied shots.
-lift_logo(f'{SRC}/6ce32ce1-IMG_8203.jpeg', 'violife-wordmark.webp', (378, 248, 612, 374))

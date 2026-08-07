@@ -140,10 +140,14 @@ export default function LanguagePicker() {
                 'radial-gradient(62% 58% at 50% 44%, rgba(34,39,42,0.62), rgba(34,39,42,0.18) 68%, rgba(34,39,42,0) 100%)',
             }}
           />
+          {/* Vector, not a crop. No supplied photograph carries the mark
+              above ~230px wide, so any raster of it is upscaled the moment
+              it is shown at a useful size. The shadow is kept tight — a
+              wide one hazes the edge and undoes the sharpness. */}
           <img
-            src={img('violife-wordmark.webp')}
+            src={img('violife-wordmark.svg')}
             alt="Violife"
-            className="absolute left-1/2 top-1/2 w-[8.5rem] -translate-x-1/2 -translate-y-[62%] drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] sm:w-[10rem]"
+            className="absolute left-1/2 top-1/2 w-[9rem] -translate-x-1/2 -translate-y-[62%] drop-shadow-[0_1px_5px_rgba(0,0,0,0.55)] sm:w-[10.5rem]"
           />
           {/* Grounds the card against the photo so the heading below has a
               clean edge to sit on rather than a hard seam. */}
