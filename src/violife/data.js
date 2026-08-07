@@ -14,10 +14,13 @@
 const BASE = '/work/violife'
 
 /* Greek first, because Violife is a Greek brand and this is its home
-   market. English is one tap away in the top bar of every page. */
+   market. English is one tap away in the top bar of every page.
+   `label` is the language's name in its own language — never translated,
+   which is the one rule of a language chooser worth never breaking.
+   Adding a locale here and a matching dictionary is the whole job. */
 export const LOCALES = [
-  { code: 'el', short: 'ΕΛ', label: 'Ελληνικά' },
-  { code: 'en', short: 'EN', label: 'English' },
+  { code: 'el', short: 'ΕΛ', flag: '🇬🇷', label: 'Ελληνικά' },
+  { code: 'en', short: 'EN', flag: '🇬🇧', label: 'English' },
 ]
 
 export const DEFAULT_LOCALE = 'el'

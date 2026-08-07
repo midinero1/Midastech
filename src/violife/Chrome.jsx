@@ -13,6 +13,7 @@
 import { useEffect, useState } from 'react'
 import { LOCALES, NAV, vPath } from './data'
 import { useSite } from './i18n'
+import LanguagePicker from './LanguagePicker'
 import { IconHome, IconPack, IconRecipe, IconPin, IconSearch, IconLeaf } from './art'
 
 const TAB_ICONS = { home: IconHome, pack: IconPack, recipe: IconRecipe, pin: IconPin }
@@ -54,10 +55,13 @@ function LanguageSwitch({ className = '' }) {
             hrefLang={l.code}
             aria-current={current ? 'true' : undefined}
             title={l.label}
-            className={`rounded-full px-2.5 py-1 text-[0.7rem] font-semibold transition-colors duration-400 ease-[var(--ease-glass)] ${
+            className={`flex items-center gap-1 rounded-full px-2 py-1 text-[0.7rem] font-semibold transition-colors duration-400 ease-[var(--ease-glass)] ${
               current ? 'bg-ink text-canvas' : 'text-muted hover:text-ink'
             }`}
           >
+            <span aria-hidden="true" className="text-[0.8rem] leading-none">
+              {l.flag}
+            </span>
             {l.short}
           </a>
         )
@@ -288,6 +292,7 @@ export default function Shell({ children }) {
       </main>
       <Footer />
       <TabBar />
+      <LanguagePicker />
       {/* Keeps the last of the footer clear of the floating tab bar. */}
       <div aria-hidden="true" className="h-24 bg-ink lg:hidden" />
     </>

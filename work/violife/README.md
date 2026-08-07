@@ -116,6 +116,39 @@ paths, `copy/en.js` and `copy/el.js` hold everything a human reads. Add a
 product and both dictionaries fail loudly on the missing key rather than
 silently rendering English.
 
+### The first-visit picker
+
+`LanguagePicker.jsx` shows once, on a visitor's first arrival, over a
+photograph. Two things keep it from being the usual interstitial nuisance: it
+never appears again once a choice is stored, and it guesses — the browser
+already knows what language the visitor reads, so that option is sorted to the
+top, ringed, and given focus. A Greek visitor presses Enter or taps the row
+their eye lands on first.
+
+Its copy cannot come from the dictionaries. At the moment it renders the
+visitor has not said what they read, and showing "Choose your language" in
+Greek to somebody who does not read Greek is the problem the component exists
+to solve — so the heading is bilingual and each option is written in its own
+language, which is the one rule of a language chooser worth never breaking.
+
+Adding a language means adding a row to `LOCALES` and a dictionary. The picker
+lays itself out from that list.
+
+Choosing the language you are already reading closes the panel without a
+navigation. Escape does the same and still records the choice, so dismissing
+it is not punished with the panel coming back.
+
+A stored preference deliberately does **not** redirect a later visit. Someone
+who lands on a Greek URL from a Greek search result should get the Greek page,
+not be bounced somewhere else by a month-old click; the top-bar switch is
+right there.
+
+One caveat for when more languages arrive: flags are countries, not languages.
+🇬🇧 for English already glosses over most of the people who read it, and the
+problem gets worse with Spanish or Portuguese. They are here because they make
+the two current options recognisable at a glance, which was the point. Past
+three or four languages, drop to native names alone.
+
 ## Ingredients and nutrition
 
 Each product carries two disclosures, matching the pattern the live site
