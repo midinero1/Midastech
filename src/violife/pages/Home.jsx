@@ -92,8 +92,10 @@ export default function Home() {
             and lets the product keep the attention. Grey still clears AA
             at 4.6:1 — quiet, not faint. */}
         <Reveal delay={200} className="relative z-10 mx-auto mt-16 max-w-4xl sm:mt-24">
-          <p className="text-center text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
-            {t.ui.freeFrom}
+          <p className="text-center">
+            <span className="flanked text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
+              {t.ui.freeFrom}
+            </span>
           </p>
           <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
             {FREE_FROM.map((id) => {

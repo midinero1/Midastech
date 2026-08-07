@@ -366,6 +366,34 @@
     }
   }
 
+  /* A label with a rule either side, each exactly as wide as the label.
+     The pseudo-elements are 100% of an inline-block, so the rules measure
+     themselves against the text and shrink on their own for a shorter
+     translation — ΧΩΡΙΣ gets shorter rules than FREE FROM without a
+     second value anywhere. */
+  .flanked {
+    position: relative;
+    display: inline-block;
+  }
+
+  .flanked::before,
+  .flanked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .flanked::before {
+    right: calc(100% + 0.9rem);
+  }
+
+  .flanked::after {
+    left: calc(100% + 0.9rem);
+  }
+
   /* ----------------------------------------------------------------
      Disclosure
 
