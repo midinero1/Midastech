@@ -197,7 +197,7 @@ export function ProductCard({ product, onOpen, className = '' }) {
           beats a utility class. */}
       <div className={`relative aspect-[4/3] shrink-0 overflow-hidden ${FIELD}`}>
         <div className="absolute inset-0 transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.06]">
-          <PackShot product={product} name={c.name} className="h-full w-full p-3" />
+          <PackShot product={product} name={c.name} className="h-full w-full p-4 sm:p-5" />
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
@@ -295,7 +295,7 @@ export function ProductSheet({ product, onClose }) {
         </button>
 
         <div className={`mx-5 mt-2 overflow-hidden rounded-[1.5rem] ${FIELD}`}>
-          <PackShot product={product} name={c.name} eager className="mx-auto h-56 w-full max-w-sm p-3" />
+          <PackShot product={product} name={c.name} eager className="mx-auto h-56 w-full max-w-sm p-6" />
         </div>
 
         <div className="px-6 pt-6">

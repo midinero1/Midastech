@@ -66,7 +66,7 @@ export default function Home() {
                 product={HERO_PRODUCT}
                 name={hero.name}
                 eager
-                className="float absolute inset-0 h-full w-full px-5 pb-24 pt-5"
+                className="float absolute inset-0 h-full w-full px-6 pb-24 pt-6 sm:px-16 sm:pb-32 sm:pt-14"
               />
               <button
                 type="button"

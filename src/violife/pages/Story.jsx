@@ -64,7 +64,7 @@ export default function Story() {
 
             <Reveal delay={110}>
               <div className={`mx-auto aspect-square w-full max-w-sm overflow-hidden rounded-[1.75rem] ${FIELD}`}>
-                <PackShot product={showcase} name={t.products[showcase.id].name} className="float h-full w-full p-5" />
+                <PackShot product={showcase} name={t.products[showcase.id].name} className="float h-full w-full p-10" />
               </div>
             </Reveal>
           </div>
