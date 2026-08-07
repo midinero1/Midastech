@@ -19,17 +19,18 @@ import os
 
 import numpy as np
 import potrace
-from PIL import Image
+from PIL import Image, ImageFilter
 
 SRC = '/root/.claude/uploads/04e99792-c25a-5125-950a-8ea6e3ff7ee7/6ce32ce1-IMG_8203.jpeg'
 OUT = '/home/user/Midastech/public/violife/violife-wordmark.svg'
 BOX = (378, 248, 612, 374)
-UP = 8  # mask upsample: buys the tracer sub-pixel accuracy on 20px-tall text
+UP = 10   # coverage upsample: sub-pixel accuracy on 20px-tall text
+BLUR = 0.7  # smooths JPEG noise along edges before it can become a wobble
 
 CYAN = '#42C6D2'
 
 
-def coverage(img, tol=90.0):
+def coverage(img, tol=90.0, blur=BLUR):
     """
     Continuous ink coverage per colour, 0..1 — not a binary mask.
 
@@ -44,7 +45,14 @@ def coverage(img, tol=90.0):
     ink = np.clip(np.abs(a - bg).max(axis=2) / tol, 0, 1)
     # White has r == g; cyan has g far above r. Everything between is an edge.
     cyanness = np.clip((a[..., 1] - a[..., 0]) / 70.0, 0, 1)
-    return ink * (1 - cyanness), ink * cyanness
+    w, c = ink * (1 - cyanness), ink * cyanness
+    if blur:
+        # Blur the coverage, not the mask. JPEG noise along an edge is what
+        # turns a smooth curve into a wobbly one once potrace fits it, and a
+        # sub-pixel blur removes the noise without moving the edge.
+        w, c = (np.asarray(Image.fromarray((m * 255).astype(np.uint8))
+                           .filter(ImageFilter.GaussianBlur(blur))) / 255 for m in (w, c))
+    return w, c
 
 
 def upscale(cov, k=UP):
@@ -63,7 +71,7 @@ def to_path(mask, turd):
     # potracer reads the array as a greyscale image where DARK is ink, not
     # as a boolean mask — hand it a bool array and it traces the whole frame.
     bmp = potrace.Bitmap(np.where(mask, 0, 255).astype(np.uint8))
-    path = bmp.trace(turdsize=turd, alphamax=1.0, opticurve=True, opttolerance=0.2)
+    path = bmp.trace(turdsize=turd, alphamax=1.334, opticurve=True, opttolerance=0.6)
     out = []
     for curve in path:
         d = [f'M{pt(curve.start_point)}']

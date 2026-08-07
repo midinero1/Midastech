@@ -107,6 +107,12 @@ Three things made the trace clean, each fixing a specific artefact:
   lands in the white mask as a halo around every glyph.
 - **Cyan claims its pixels first**, white takes the remainder, so the two paths
   cannot overlap and no white edge peeks out from under a glyph.
+- **Sub-pixel blur on the coverage before it is upsampled.** JPEG noise along
+  an edge is what turns a smooth curve into a wobbly one once potrace fits it;
+  a 0.7px blur removes the noise without moving the edge. With `alphamax` at
+  potrace's maximum and a looser `opttolerance`, the fit drops from 856
+  segments to 596 — the same letterforms, longer and cleaner curves. Pushing
+  further starts rounding the counters closed, so this is where it stops.
 
 One gotcha worth recording: potracer reads its input as a greyscale image where
 *dark* is ink, not as a boolean mask. Hand it a bool array and it cheerfully
