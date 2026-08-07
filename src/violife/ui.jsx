@@ -7,10 +7,10 @@
  * job in three different visual languages.
  */
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ProductArt, DishArt, IconArrow, IconClock, IconClose, IconCheck, IconMelt, IconStretch, IconGrate } from './art'
-import { PRODUCTS, img } from './data'
+import { NUTRITION_ROWS, PRODUCTS, img } from './data'
 import { useSite } from './i18n'
 
 export { default as Reveal } from '../components/Reveal'
@@ -84,6 +84,50 @@ export function Segmented({ options, value, onChange, label, className = '' }) {
           </button>
         )
       })}
+    </div>
+  )
+}
+
+/* -------------------------------------------------------------------
+   Disclosure
+
+   Reference detail — ingredients, nutrition — that a minority of people
+   want and everybody else should not have to scroll past. Collapsed by
+   default, following the pattern the live site already uses: a hairline
+   rule, the label, and a plus that becomes a minus.
+------------------------------------------------------------------- */
+export function Disclosure({ label, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen)
+  const id = useId()
+
+  return (
+    <div className="border-t border-line">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls={id}
+        className="flex w-full items-center justify-between gap-4 py-4 text-left"
+      >
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-ink">{label}</span>
+        {/* Two bars; the upright one collapses to turn + into −. Rotating
+            the whole glyph would spin the horizontal bar too, which reads
+            as a fidget rather than a state change. */}
+        <span aria-hidden="true" className="relative block h-4 w-4 shrink-0 text-teal">
+          <span className="absolute left-0 top-1/2 h-[1.5px] w-full -translate-y-1/2 rounded-full bg-current" />
+          <span
+            className={`absolute left-1/2 top-0 h-full w-[1.5px] -translate-x-1/2 rounded-full bg-current transition-transform duration-400 ease-[var(--ease-glass)] ${
+              open ? 'scale-y-0' : 'scale-y-100'
+            }`}
+          />
+        </span>
+      </button>
+
+      <div id={id} className="disclosure-panel" data-open={open} role="region">
+        <div>
+          <div className="pb-5">{children}</div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -289,6 +333,43 @@ export function ProductSheet({ product, onClose }) {
           <div className="mt-6 rounded-2xl border border-line bg-shell/60 p-4">
             <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">{t.ui.freeFrom}</p>
             <p className="mt-1.5 text-[0.88rem] text-body">{t.freeFrom.join(' · ')}</p>
+          </div>
+
+          <div className="mt-6">
+            <Disclosure label={t.ui.ingredients}>
+              <ul className="space-y-1.5">
+                {t.ingredients.map((line) => (
+                  <li key={line} className="flex gap-2 text-[0.88rem] leading-relaxed text-body">
+                    <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-cyan" />
+                    {line}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-[0.78rem] leading-relaxed text-muted">{t.ui.declarationNote}</p>
+            </Disclosure>
+
+            <Disclosure label={t.ui.nutrition}>
+              <table className="w-full text-[0.88rem]">
+                <caption className="pb-2 text-left text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-muted">
+                  {t.ui.per100}
+                </caption>
+                <tbody>
+                  {NUTRITION_ROWS.map((row) => (
+                    <tr key={row} className="border-b border-line/70 last:border-0">
+                      <th scope="row" className="py-2 pr-4 text-left font-normal text-body">
+                        {t.nutritionRows[row]}
+                      </th>
+                      <td className="py-2 text-right tabular-nums text-ink">
+                        {product.nutrition?.[row] ?? <span className="text-muted">—</span>}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!product.nutrition && (
+                <p className="mt-3 text-[0.78rem] leading-relaxed text-muted">{t.ui.declarationNote}</p>
+              )}
+            </Disclosure>
           </div>
 
           <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">

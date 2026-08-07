@@ -98,5 +98,21 @@ export const STOCKISTS = [
   { id: 'waitrose', name: 'Waitrose', dist: '2.1', has: ['blocks', 'slices', 'grated', 'creamy', 'drinks'] },
 ]
 
+/**
+ * The nutrition panel's rows, in the order a European back-of-pack table
+ * declares them. Labels are translated; the values are not, so any real
+ * figures belong here rather than in the dictionaries.
+ *
+ * No product carries values yet. Ingredient declarations and nutrition
+ * figures are legally regulated text — they get transcribed from the
+ * actual pack or the product specification, never reconstructed from
+ * memory, because a plausible wrong number on an allergen or a salt
+ * figure is worse than no number at all. Add a `nutrition` key to a
+ * product below and the panel fills itself in:
+ *
+ *   nutrition: { energy: '1046 kJ / 253 kcal', fat: '21 g', ... }
+ */
+export const NUTRITION_ROWS = ['energy', 'fat', 'saturates', 'carbs', 'sugars', 'fibre', 'protein', 'salt']
+
 /** Asset paths. Images live in public/ so they are served unhashed and cacheable. */
 export const img = (file) => `/violife/${file}`

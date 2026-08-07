@@ -40,6 +40,11 @@ export default {
     noneThatQuick: 'Nothing that quick yet. Try a longer window.',
     withinMiles: (n) => `${n} within 3 miles`,
     featured: 'Featured',
+    ingredients: 'Ingredients',
+    nutrition: 'Nutritional information',
+    per100: 'Per 100 g',
+    declarationNote:
+      'Ingredient and nutrition declarations are legally regulated text. They are transcribed from the pack or the product specification, and are not reproduced in this concept.',
   },
 
   nav: {
@@ -64,6 +69,25 @@ export default {
     15: 'Under 15',
     25: 'Under 25',
     45: 'Under 45',
+  },
+
+  /* Only what the supplied packs actually state. The full declaration per
+     product comes from the spec sheet — see NUTRITION_ROWS in data.js. */
+  ingredients: [
+    'Made with coconut oil and vitamin B12.',
+    '100% vegan. Suitable for a plant-based diet.',
+    'Free from dairy, soya, gluten, lactose, nuts and preservatives.',
+  ],
+
+  nutritionRows: {
+    energy: 'Energy',
+    fat: 'Fat',
+    saturates: 'of which saturates',
+    carbs: 'Carbohydrate',
+    sugars: 'of which sugars',
+    fibre: 'Fibre',
+    protein: 'Protein',
+    salt: 'Salt',
   },
 
   freeFrom: ['Dairy', 'Soya', 'Gluten', 'Lactose', 'Nuts', 'Preservatives'],

@@ -367,6 +367,28 @@
   }
 
   /* ----------------------------------------------------------------
+     Disclosure
+
+     Height animated with grid-template-rows rather than max-height.
+     A max-height guess is either too small (content clips) or too large
+     (the easing goes slack because most of the duration is spent
+     animating empty space); 0fr → 1fr is exact whatever the content is.
+  ---------------------------------------------------------------- */
+  .disclosure-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s var(--ease-glass);
+  }
+
+  .disclosure-panel[data-open='true'] {
+    grid-template-rows: 1fr;
+  }
+
+  .disclosure-panel > * {
+    overflow: hidden;
+  }
+
+  /* ----------------------------------------------------------------
      Scroll reveal
   ---------------------------------------------------------------- */
   .reveal {
@@ -433,6 +455,10 @@
   .page-in,
   .float {
     animation: none !important;
+  }
+
+  .disclosure-panel {
+    transition: none !important;
   }
 
   .btn:active {
