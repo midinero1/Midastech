@@ -10,7 +10,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ProductArt, DishArt, IconArrow, IconClock, IconClose, IconCheck, IconMelt, IconStretch, IconGrate } from './art'
-import { FREE_FROM, PRODUCTS, vPath } from './data'
+import { PRODUCTS, img } from './data'
+import { useSite } from './i18n'
 
 export { default as Reveal } from '../components/Reveal'
 
@@ -19,7 +20,8 @@ export { default as Reveal } from '../components/Reveal'
 
    The indicator is measured off the live DOM rather than assuming equal
    widths, so the same component works with two options or with seven,
-   and survives a label wrapping at a narrow width.
+   and survives a Greek label being half again as long as its English
+   counterpart.
 ------------------------------------------------------------------- */
 export function Segmented({ options, value, onChange, label, className = '' }) {
   const trackRef = useRef(null)
@@ -32,17 +34,17 @@ export function Segmented({ options, value, onChange, label, className = '' }) {
     if (!el || !track) return
     setBox({ left: el.offsetLeft, width: el.offsetWidth })
     // Keep the active option in view when the track scrolls on a phone.
-    const overflowsLeft = el.offsetLeft < track.scrollLeft
-    const overflowsRight = el.offsetLeft + el.offsetWidth > track.scrollLeft + track.clientWidth
-    if (overflowsLeft || overflowsRight) {
-      track.scrollTo({ left: el.offsetLeft - 16, behavior: 'smooth' })
-    }
+    const left = el.offsetLeft < track.scrollLeft
+    const right = el.offsetLeft + el.offsetWidth > track.scrollLeft + track.clientWidth
+    if (left || right) track.scrollTo({ left: el.offsetLeft - 16, behavior: 'smooth' })
   }, [value])
 
   useLayoutEffect(measure, [measure, options])
 
   useEffect(() => {
     window.addEventListener('resize', measure)
+    // Labels shift once the webfont lands, which moves the indicator.
+    document.fonts?.ready.then(measure)
     return () => window.removeEventListener('resize', measure)
   }, [measure])
 
@@ -100,47 +102,67 @@ export function Heading({ eyebrow, title, body, className = '', align = 'left' }
 }
 
 /* -------------------------------------------------------------------
-   Product card
+   Pack rendering
 
-   The tinted field behind the pack is the only place colour is allowed
-   to vary per product, and it is held far enough back that a grid of
-   twelve still reads as one shelf rather than a paint chart.
+   Some products have a real photograph, the rest are drawn. Both go on
+   the same neutral field at the same scale so a mixed grid still reads
+   as one shelf — which it would not if the photographed packs sat on
+   white and the drawn ones on a tint.
 ------------------------------------------------------------------- */
-/* The ground each pack sits on. Held a clear step deeper than the pack
-   itself, because half this range is near-white and disappears against a
-   field tinted to match it. */
-const FIELD = {
-  cheddar: 'bg-[#F0E0BE]',
-  mozzarella: 'bg-[#E8E2D2]',
-  smoked: 'bg-[#EFDAC2]',
-  greek: 'bg-[#E4E7DE]',
-  oat: 'bg-[#EBE3D2]',
-  herb: 'bg-[#E3E8D2]',
+export function PackShot({ product, name, className = '', scale, eager = false }) {
+  if (product.photo) {
+    return (
+      <img
+        src={img(product.photo)}
+        alt={name}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        className={`object-contain ${className}`}
+        style={scale ? { transform: `scale(${scale})` } : undefined}
+      />
+    )
+  }
+  /* A photograph is cropped tight to the pack; the drawn artboard carries
+     margin the photograph does not. Without the correction the drawn packs
+     sit visibly smaller than the shot ones in the same row. */
+  return (
+    <ProductArt
+      kind={product.kind}
+      tone={product.tone}
+      name={product.label}
+      className={className}
+      style={{ transform: `scale(${scale ?? 1.32})` }}
+    />
+  )
 }
 
+/** One field colour for the whole range — the packs supply the contrast. */
+export const FIELD = 'bg-[#E9E6DF]'
+
 export function ProductCard({ product, onOpen, className = '' }) {
+  const { t } = useSite()
+  const c = t.products[product.id]
   return (
     <button
       type="button"
       onClick={() => onOpen(product)}
-      className={`group flex w-full flex-col overflow-hidden rounded-[1.5rem] border border-line bg-shell text-left transition-all duration-500 ease-[var(--ease-glass)] hover:-translate-y-1 hover:shadow-[0_28px_50px_-30px_rgba(16,30,24,0.4)] active:scale-[0.985] ${className}`}
+      className={`group flex w-full flex-col overflow-hidden rounded-[1.5rem] border border-line bg-shell text-left transition-all duration-500 ease-[var(--ease-glass)] hover:-translate-y-1 hover:shadow-[0_28px_50px_-30px_rgba(34,39,42,0.4)] active:scale-[0.985] ${className}`}
     >
-      <div className={`relative aspect-[4/3] shrink-0 ${FIELD[product.tone] ?? FIELD.cheddar}`}>
-        {/* The square artboard letterboxes inside a 4:3 field, so it needs
-            scaling up to fill the tile rather than floating in it. */}
-        <ProductArt
-          kind={product.kind}
-          tone={product.tone}
-          className="absolute inset-0 h-full w-full scale-[1.3] transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.38]"
-        />
+      {/* The hover zoom lives on a wrapper: PackShot sets an inline transform
+          to normalise drawn art against photography, and an inline transform
+          beats a utility class. */}
+      <div className={`relative aspect-[4/3] shrink-0 overflow-hidden ${FIELD}`}>
+        <div className="absolute inset-0 transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.06]">
+          <PackShot product={product} name={c.name} className="h-full w-full p-3" />
+        </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[1.02rem] font-[620] leading-snug tracking-[-0.022em]">{product.name}</h3>
-        <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">{product.lead}</p>
+        <h3 className="text-[1.02rem] font-[620] leading-snug tracking-[-0.022em]">{c.name}</h3>
+        <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">{c.lead}</p>
         {/* Pushed to the bottom so the link sits on one line across a row of
             cards with different amounts of copy. */}
-        <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[0.8rem] font-semibold text-moss">
-          Details
+        <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[0.8rem] font-semibold text-teal">
+          {t.ui.details}
           <IconArrow className="h-3.5 w-3.5 transition-transform duration-400 ease-[var(--ease-glass)] group-hover:translate-x-1" />
         </span>
       </div>
@@ -156,9 +178,9 @@ export function ProductCard({ product, onOpen, className = '' }) {
    shelf — not a full page load and a back button.
 ------------------------------------------------------------------- */
 const BEHAVIOUR_ICONS = { melt: IconMelt, stretch: IconStretch, grate: IconGrate }
-const BEHAVIOUR_LABELS = { melt: 'Melts', stretch: 'Stretches', grate: 'Grates' }
 
 export function ProductSheet({ product, onClose }) {
+  const { t, path } = useSite()
   const panelRef = useRef(null)
   const [shown, setShown] = useState(false)
 
@@ -180,6 +202,7 @@ export function ProductSheet({ product, onClose }) {
   }, [onClose])
 
   if (!product) return null
+  const c = t.products[product.id]
 
   /*
    * Portalled to <body> rather than rendered in place.
@@ -195,7 +218,7 @@ export function ProductSheet({ product, onClose }) {
     <div className="fixed inset-0 z-[70] flex items-end justify-center sm:items-center">
       <button
         type="button"
-        aria-label="Close"
+        aria-label={t.ui.close}
         onClick={onClose}
         className={`absolute inset-0 bg-ink/35 backdrop-blur-md transition-opacity duration-500 ease-[var(--ease-glass)] ${
           shown ? 'opacity-100' : 'opacity-0'
@@ -206,7 +229,7 @@ export function ProductSheet({ product, onClose }) {
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={product.name}
+        aria-label={c.name}
         tabIndex={-1}
         className={`glass frost-strong relative max-h-[92vh] w-full overflow-y-auto rounded-t-[2rem] outline-none transition-transform duration-500 ease-[var(--ease-glass)] sm:max-w-lg sm:rounded-[2rem] ${
           shown ? 'translate-y-0 sm:scale-100' : 'translate-y-full sm:translate-y-0 sm:scale-95'
@@ -221,20 +244,20 @@ export function ProductSheet({ product, onClose }) {
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t.ui.close}
           className="absolute right-4 top-4 z-10 hidden h-9 w-9 items-center justify-center rounded-full bg-ink/8 text-ink transition-colors duration-300 hover:bg-ink/14 sm:flex"
         >
           <IconClose className="h-4 w-4" />
         </button>
 
-        <div className={`mx-5 mt-2 overflow-hidden rounded-[1.5rem] ${FIELD[product.tone] ?? FIELD.cheddar}`}>
-          <ProductArt kind={product.kind} tone={product.tone} className="mx-auto h-52 w-full max-w-sm scale-[1.22]" />
+        <div className={`mx-5 mt-2 overflow-hidden rounded-[1.5rem] ${FIELD}`}>
+          <PackShot product={product} name={c.name} eager className="mx-auto h-56 w-full max-w-sm p-3" />
         </div>
 
         <div className="px-6 pt-6">
-          <h2 className="text-[1.6rem] font-[680] leading-tight tracking-[-0.032em]">{product.name}</h2>
-          <p className="mt-2 text-[0.95rem] font-medium text-moss">{product.lead}</p>
-          <p className="mt-4 text-[0.92rem] leading-relaxed text-body">{product.body}</p>
+          <h2 className="text-[1.6rem] font-[680] leading-tight tracking-[-0.032em]">{c.name}</h2>
+          <p className="mt-2 text-[0.95rem] font-medium text-teal">{c.lead}</p>
+          <p className="mt-4 text-[0.92rem] leading-relaxed text-body">{c.body}</p>
 
           {product.behaviour.length > 0 && (
             <div className="mt-6 flex flex-wrap gap-2">
@@ -245,35 +268,35 @@ export function ProductSheet({ product, onClose }) {
                     key={b}
                     className="inline-flex items-center gap-1.5 rounded-full border border-line bg-shell/70 px-3 py-1.5 text-[0.78rem] font-medium text-ink"
                   >
-                    <Icon className="h-3.5 w-3.5 text-moss" />
-                    {BEHAVIOUR_LABELS[b]}
+                    <Icon className="h-3.5 w-3.5 text-teal" />
+                    {t.behaviour[b]}
                   </span>
                 )
               })}
             </div>
           )}
 
-          <h3 className="mt-7 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">Best for</h3>
+          <h3 className="mt-7 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">{t.ui.bestFor}</h3>
           <ul className="mt-2.5 space-y-1.5">
-            {product.best.map((b) => (
+            {c.best.map((b) => (
               <li key={b} className="flex items-center gap-2 text-[0.9rem] text-body">
-                <IconCheck className="h-4 w-4 shrink-0 text-leaf" />
+                <IconCheck className="h-4 w-4 shrink-0 text-teal" />
                 {b}
               </li>
             ))}
           </ul>
 
           <div className="mt-6 rounded-2xl border border-line bg-shell/60 p-4">
-            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">Free from</p>
-            <p className="mt-1.5 text-[0.88rem] text-body">{FREE_FROM.join(' · ')}</p>
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">{t.ui.freeFrom}</p>
+            <p className="mt-1.5 text-[0.88rem] text-body">{t.freeFrom.join(' · ')}</p>
           </div>
 
           <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-            <a href={vPath('find')} className="btn btn-primary flex-1">
-              Find in store
+            <a href={path('find')} className="btn btn-primary flex-1">
+              {t.ui.findInStore}
             </a>
-            <a href={vPath('recipes')} className="btn btn-glass flex-1">
-              Recipes with this
+            <a href={path('recipes')} className="btn btn-glass flex-1">
+              {t.ui.recipesWithThis}
             </a>
           </div>
         </div>
@@ -294,26 +317,39 @@ export function useProductSheet() {
    Recipe card
 ------------------------------------------------------------------- */
 export function RecipeCard({ recipe, className = '' }) {
+  const { t, path } = useSite()
+  const c = t.recipes[recipe.id]
   const uses = PRODUCTS.find((p) => p.id === recipe.uses)
+
   return (
     <a
-      href={vPath('recipes')}
-      className={`group flex flex-col overflow-hidden rounded-[1.5rem] border border-line bg-shell transition-all duration-500 ease-[var(--ease-glass)] hover:-translate-y-1 hover:shadow-[0_28px_50px_-30px_rgba(16,30,24,0.4)] active:scale-[0.985] ${className}`}
+      href={path('recipes')}
+      className={`group flex flex-col overflow-hidden rounded-[1.5rem] border border-line bg-shell transition-all duration-500 ease-[var(--ease-glass)] hover:-translate-y-1 hover:shadow-[0_28px_50px_-30px_rgba(34,39,42,0.4)] active:scale-[0.985] ${className}`}
     >
-      <div className="relative aspect-[5/4] shrink-0 bg-mist">
-        <DishArt
-          kind={recipe.dish}
-          className="absolute inset-0 h-full w-full scale-[1.16] transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.23]"
-        />
-        <span className="glass frost absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-semibold text-ink">
+      <div className="relative aspect-[5/4] shrink-0 overflow-hidden bg-mist">
+        {recipe.photo ? (
+          <img
+            src={img(recipe.photo)}
+            alt={c.title}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.05]"
+          />
+        ) : (
+          <DishArt
+            kind={recipe.dish}
+            className="absolute inset-0 h-full w-full scale-[1.16] transition-transform duration-700 ease-[var(--ease-glass)] group-hover:scale-[1.23]"
+          />
+        )}
+        <span className="glass-photo frost absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.7rem] font-semibold text-ink">
           <IconClock className="h-3.5 w-3.5" />
-          {recipe.minutes} min
+          {recipe.minutes} {t.ui.minutes}
         </span>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[1.02rem] font-[620] leading-snug tracking-[-0.022em]">{recipe.title}</h3>
-        <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">{recipe.note}</p>
-        {uses && <p className="mt-auto pt-3 text-[0.78rem] font-medium text-moss">Made with {uses.name}</p>}
+        <h3 className="text-[1.02rem] font-[620] leading-snug tracking-[-0.022em]">{c.title}</h3>
+        <p className="mt-1.5 text-[0.85rem] leading-relaxed text-muted">{c.note}</p>
+        {uses && <p className="mt-auto pt-3 text-[0.78rem] font-medium text-teal">{t.ui.madeWith(t.products[uses.id].name)}</p>}
       </div>
     </a>
   )

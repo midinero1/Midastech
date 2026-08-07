@@ -1,16 +1,14 @@
 /**
  * Product and dish artwork, drawn as vectors.
  *
- * A real build of this site would run on photography. Drawing the range
- * instead keeps the concept honest — nothing here pretends to be a
- * photograph of a product that exists — and it happens to be the right
- * call for the medium anyway: the whole range weighs a few kilobytes,
- * stays sharp on any display, and recolours from a token.
+ * Where a real photograph was supplied, the site uses it. This file
+ * covers the rest of the range, drawn in the same livery as the photographed
+ * packs — charcoal, cyan, cream — so a grid mixing the two still reads as
+ * one shelf rather than two different projects.
  *
- * Two styles, deliberately contrasted. Packs are rendered three-quarter
- * with a fixed light source at top-left, so the range reads as one shelf.
- * Dishes are rendered flat top-down, so a recipe card never competes with
- * a product card for the same kind of attention.
+ * Packs are three-quarter with a fixed light source at top-left. Dishes are
+ * flat top-down, so a recipe card never competes with a product card for the
+ * same kind of attention.
  */
 
 import { useId } from 'react'
@@ -18,9 +16,9 @@ import { useId } from 'react'
 /* -------------------------------------------------------------------
    Tone sets
 
-   One warm family across the range — butter, cream, wheat, a little
-   clay. Restraint here is what stops a grid of twelve products turning
-   into a colour chart.
+   These colour the product itself — the slices, the shreds, the window
+   on the pack — not the packaging, which is charcoal across the range.
+   One warm family: butter, cream, wheat, a little clay.
 ------------------------------------------------------------------- */
 export const TONES = {
   cheddar: { light: '#F5D68C', base: '#EDC168', dark: '#D7A244', deep: '#B07E2C' },
@@ -37,9 +35,9 @@ function Ground({ id, cy = 206, rx = 84, ry = 15, opacity = 0.3 }) {
     <>
       <defs>
         <radialGradient id={id}>
-          <stop offset="0%" stopColor="#101E18" stopOpacity={opacity} />
-          <stop offset="58%" stopColor="#101E18" stopOpacity={opacity * 0.4} />
-          <stop offset="100%" stopColor="#101E18" stopOpacity="0" />
+          <stop offset="0%" stopColor="#22272A" stopOpacity={opacity} />
+          <stop offset="58%" stopColor="#22272A" stopOpacity={opacity * 0.4} />
+          <stop offset="100%" stopColor="#22272A" stopOpacity="0" />
         </radialGradient>
       </defs>
       <ellipse cx="120" cy={cy} rx={rx} ry={ry} fill={`url(#${id})`} />
@@ -49,166 +47,258 @@ function Ground({ id, cy = 206, rx = 84, ry = 15, opacity = 0.3 }) {
 
 /* -------------------------------------------------------------------
    Packs
+
+   Redrawn against the real packaging: a charcoal pack, a white wordmark,
+   a cyan "100% vegan" line, the flavour name in cream, and the cyan
+   free-from lozenge. Getting that architecture right is what lets a
+   drawn pack sit in the same grid as a photographed one without the
+   grid falling apart.
+
+   The wordmark is set in the site's own typeface. This concept does not
+   trace or reproduce the brand's registered script logotype.
 ------------------------------------------------------------------- */
 
-function Block({ t, uid }) {
-  /* A wrapped brick rather than a bare slab. The band across the middle is
-     what stops it reading as a cardboard box at card size — it is the one
-     detail that says "this is a pack on a shelf". */
+const PACK = { face: '#474B4F', shade: '#3A3E42', lit: '#565B60', edge: '#61666B' }
+const CYAN = '#42C6D2'
+const CREAM = '#F6DFA5'
+
+/** The label furniture, shared by every silhouette. `s` scales it to fit. */
+function Label({ x, y, w, name, s = 1, window: win, tone }) {
+  const c = x + w / 2
+  return (
+    <g>
+      <text
+        x={c}
+        y={y}
+        textAnchor="middle"
+        fill="#FFFFFF"
+        fontFamily="Inter, sans-serif"
+        fontSize={15 * s}
+        fontWeight="700"
+        letterSpacing={-0.6 * s}
+      >
+        violife
+      </text>
+      <text
+        x={c}
+        y={y + 11 * s}
+        textAnchor="middle"
+        fill={CYAN}
+        fontFamily="Inter, sans-serif"
+        fontSize={7 * s}
+        fontWeight="600"
+      >
+        100% VEGAN
+      </text>
+
+      <text
+        x={c}
+        y={y + 30 * s}
+        textAnchor="middle"
+        fill={CREAM}
+        fontFamily="Inter, sans-serif"
+        fontSize={11.5 * s}
+        fontWeight="700"
+        letterSpacing={0.4 * s}
+      >
+        {name}
+      </text>
+
+      {/* The free-from lozenge. At card size it reads as a shape; at sheet
+          size the words resolve. */}
+      <rect x={c - 27 * s} y={y + 38 * s} width={54 * s} height={12 * s} rx={6 * s} fill={CYAN} />
+      <text
+        x={c}
+        y={y + 46.5 * s}
+        textAnchor="middle"
+        fill="#20343A"
+        fontFamily="Inter, sans-serif"
+        fontSize={6 * s}
+        fontWeight="700"
+        letterSpacing={0.3 * s}
+      >
+        FREE FROM
+      </text>
+
+      {/* A window onto the product itself, the way the packs carry a
+          serving photo. */}
+      {win && <ellipse cx={c} cy={y + 66 * s} rx={22 * s} ry={13 * s} fill={tone.base} />}
+      {win && <ellipse cx={c} cy={y + 63 * s} rx={22 * s} ry={13 * s} fill={tone.light} />}
+    </g>
+  )
+}
+
+function Pouch({ t, uid, name }) {
+  /* Stand-up pouch — the grated format. Tallest silhouette in the range. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={86} cy={202} />
-      {/* right face — furthest from the light */}
-      <path d="M170 106 L204 82 L204 146 Q204 152 199 156 L170 176 Z" fill={t.deep} />
-      {/* top face — catches it directly */}
-      <path d="M58 106 L92 82 L204 82 L170 106 Z" fill={t.light} />
-      {/* front face */}
-      <path d="M50 116 Q50 106 60 106 L170 106 L170 166 Q170 176 160 176 L60 176 Q50 176 50 166 Z" fill={t.base} />
-      {/* falls off towards the base */}
-      <path d="M50 148 L170 148 L170 166 Q170 176 160 176 L60 176 Q50 176 50 166 Z" fill={t.dark} opacity="0.38" />
-      {/* wrapper band */}
-      <path d="M50 122 L170 122 L170 142 L50 142 Z" fill="#FDFCF8" opacity="0.92" />
-      <path d="M170 122 L204 98 L204 118 L170 142 Z" fill="#FDFCF8" opacity="0.55" />
-      <circle cx="72" cy="132" r="5.5" fill="#1B5A3F" opacity="0.85" />
-      <rect x="86" y="129" width="46" height="5" rx="2.5" fill="#1B5A3F" opacity="0.28" />
-      {/* specular along the two lit edges */}
-      <path d="M60 106 L170 106" stroke="#FFFFFF" strokeOpacity="0.55" strokeWidth="2" />
-      <path d="M170 106 L204 82" stroke="#FFFFFF" strokeOpacity="0.28" strokeWidth="1.5" />
+      <Ground id={`${uid}-g`} rx={62} cy={214} ry={11} />
+      <path
+        d="M64 44 Q64 34 74 34 L166 34 Q176 34 176 44 L176 196 Q176 208 164 208 L76 208 Q64 208 64 196 Z"
+        fill={PACK.face}
+      />
+      {/* the gusset catches light down the left, shadow down the right */}
+      <path d="M64 44 Q64 34 74 34 L92 34 L92 208 L76 208 Q64 208 64 196 Z" fill={PACK.lit} opacity="0.5" />
+      <path d="M152 34 L166 34 Q176 34 176 44 L176 196 Q176 208 164 208 L152 208 Z" fill={PACK.shade} opacity="0.75" />
+      {/* resealable seal */}
+      <rect x="72" y="44" width="96" height="5" rx="2.5" fill={PACK.edge} opacity="0.7" />
+      <Label x={64} y={80} w={112} name={name} s={1} window tone={t} />
     </>
   )
 }
 
-function Slices({ t, uid }) {
-  /* Fanned rather than square-stacked: the eye reads four distinct
-     slices instantly, where a square stack reads as one thick object. */
-  const layers = [
-    { a: -9, x: -20, y: 6, fill: t.deep },
-    { a: -4, x: -10, y: 2, fill: t.dark },
-    { a: 1, x: 2, y: -1, fill: t.base },
-    { a: 6, x: 14, y: -4, fill: t.light },
-  ]
+function Tray({ t, uid, name }) {
+  /* Flow-wrapped tray — the slices format. Label on top, product showing
+     through the lower third. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={86} cy={200} />
-      {layers.map((l, i) => (
-        <g key={i} transform={`translate(${l.x} ${l.y}) rotate(${l.a} 120 130)`}>
-          <rect x="62" y="72" width="116" height="116" rx="16" fill={l.fill} />
-          {/* each slice picks up a sheen on its upper-left corner */}
-          <path
-            d="M78 72 H162 A16 16 0 0 1 178 88 V104 Z"
-            fill="#FFFFFF"
-            opacity={i === layers.length - 1 ? 0.34 : 0.12}
-          />
-        </g>
+      <Ground id={`${uid}-g`} rx={72} cy={212} ry={10} />
+      <rect x="52" y="34" width="136" height="176" rx="12" fill="#F2F1EE" />
+      <rect x="52" y="34" width="136" height="122" rx="12" fill={PACK.face} />
+      <rect x="52" y="140" width="136" height="16" fill={PACK.face} />
+      <path d="M52 46 Q52 34 64 34 L78 34 L78 156 L52 156 Z" fill={PACK.lit} opacity="0.42" />
+      {/* the slices themselves, fanned below the label */}
+      {[0, 1, 2, 3, 4].map((i) => (
+        <rect key={i} x={62 + i * 2} y={160 + i * 9} width={116 - i * 4} height="8" rx="3" fill={i % 2 ? t.base : t.light} />
       ))}
+      {/* corner flash, as on the real packs */}
+      <path d="M188 34 L188 62 L160 34 Z" fill={CYAN} />
+      <Label x={52} y={70} w={136} name={name} s={0.95} />
     </>
   )
 }
 
-function Shreds({ t, uid }) {
-  /* Hand-placed rather than generated — a random scatter always leaves
-     a hole or a collision somewhere, and this reads as a poured mound. */
-  const strands = [
-    [58, 150, 74, -8, t.dark],
-    [104, 156, 66, 6, t.deep],
-    [148, 148, 58, -14, t.dark],
-    [66, 134, 62, 12, t.base],
-    [118, 138, 70, -5, t.base],
-    [86, 122, 76, -3, t.base],
-    [140, 126, 54, 16, t.dark],
-    [72, 110, 58, 9, t.light],
-    [124, 112, 64, -11, t.light],
-    [96, 98, 68, 4, t.light],
-    [148, 104, 44, -6, t.base],
-    [60, 96, 42, -13, t.base],
-    [110, 86, 52, 11, t.light],
-    [84, 78, 40, -7, t.light],
-  ]
+function Brick({ t, uid, name }) {
+  /* The block format: a wrapped brick, seen slightly from above. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={80} cy={176} ry={12} />
-      {strands.map(([x, y, w, a, fill], i) => (
-        <g key={i} transform={`rotate(${a} ${x + w / 2} ${y + 5})`}>
-          <rect x={x} y={y} width={w} height="11" rx="5.5" fill={fill} />
-          <rect x={x + 3} y={y + 1.5} width={w - 6} height="3" rx="1.5" fill="#FFFFFF" opacity="0.3" />
-        </g>
-      ))}
+      <Ground id={`${uid}-g`} rx={84} cy={196} ry={12} />
+      <path d="M46 92 L74 68 L196 68 L168 92 Z" fill={PACK.lit} />
+      <path d="M168 92 L196 68 L196 158 L168 182 Z" fill={PACK.shade} />
+      <path d="M46 102 Q46 92 56 92 L168 92 L168 172 Q168 182 158 182 L56 182 Q46 182 46 172 Z" fill={PACK.face} />
+      <path d="M46 92 L168 92" stroke="#FFFFFF" strokeOpacity="0.22" strokeWidth="1.6" />
+      <Label x={46} y={116} w={122} name={name} s={0.88} />
     </>
   )
 }
 
-function Tub({ t, uid }) {
+function Tub({ t, uid, name }) {
+  /* Spreadable tub — oval lid, tapered body, label wrapping the side. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={72} cy={198} ry={13} />
-      {/* body, tapered towards the base */}
-      <path d={`M70 116 L80 182 Q82 192 92 192 L148 192 Q158 192 160 182 L170 116 Z`} fill={t.base} />
-      {/* shaded right flank */}
-      <path d={`M128 116 L160 116 L150 182 Q148 192 138 192 L120 192 Z`} fill={t.dark} opacity="0.42" />
-      {/* highlight down the left flank */}
-      <path d={`M82 122 L92 178`} stroke="#FFFFFF" strokeOpacity="0.4" strokeWidth="7" strokeLinecap="round" />
-      {/* lid, sitting slightly proud of the body */}
-      <ellipse cx="120" cy="116" rx="54" ry="15" fill={t.light} />
-      <ellipse cx="120" cy="113" rx="54" ry="15" fill="#FFFFFF" opacity="0.55" />
-      <ellipse cx="120" cy="113" rx="41" ry="10" fill={t.light} />
-      <path d="M84 108 Q120 98 156 108" stroke="#FFFFFF" strokeOpacity="0.75" strokeWidth="2.5" fill="none" />
+      <Ground id={`${uid}-g`} rx={74} cy={200} ry={12} />
+      <path d="M58 118 L70 176 Q73 190 88 190 L152 190 Q167 190 170 176 L182 118 Z" fill={PACK.face} />
+      <path d="M128 118 L170 118 L158 176 Q155 190 140 190 L120 190 Z" fill={PACK.shade} opacity="0.7" />
+      <path d="M72 124 L84 180" stroke={PACK.lit} strokeWidth="9" strokeLinecap="round" opacity="0.6" />
+      {/* lid */}
+      <ellipse cx="120" cy="118" rx="62" ry="17" fill={PACK.lit} />
+      <ellipse cx="120" cy="114" rx="62" ry="17" fill={PACK.face} />
+      <ellipse cx="120" cy="114" rx="47" ry="12" fill={PACK.shade} opacity="0.45" />
+      <path d="M62 106 Q120 94 178 106" stroke="#FFFFFF" strokeOpacity="0.16" strokeWidth="2" fill="none" />
+      {/* the label sits on the side wall, so it is compressed */}
+      <text
+        x="120"
+        y="146"
+        textAnchor="middle"
+        fill="#FFFFFF"
+        fontFamily="Inter, sans-serif"
+        fontSize="14"
+        fontWeight="700"
+        letterSpacing="-0.5"
+      >
+        violife
+      </text>
+      <text x="120" y="157" textAnchor="middle" fill={CYAN} fontFamily="Inter, sans-serif" fontSize="6.5" fontWeight="600">
+        100% VEGAN
+      </text>
+      <text
+        x="120"
+        y="174"
+        textAnchor="middle"
+        fill={CREAM}
+        fontFamily="Inter, sans-serif"
+        fontSize="10.5"
+        fontWeight="700"
+        letterSpacing="0.4"
+      >
+        {name}
+      </text>
     </>
   )
 }
 
-function Creamer({ t, uid }) {
+function Pot({ t, uid, name }) {
+  /* Dips: shallower and wider than the spread tub, foil lid part-peeled. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={62} cy={202} ry={12} />
-      {/* carton body */}
-      <path d={`M78 108 Q78 100 86 100 L154 100 Q162 100 162 108 L162 180 Q162 190 152 190 L88 190 Q78 190 78 180 Z`} fill={t.base} />
-      {/* shoulder tapering to the neck */}
-      <path d={`M92 100 L100 70 L140 70 L148 100 Z`} fill={t.dark} />
-      <path d={`M120 70 L140 70 L148 100 L120 100 Z`} fill={t.deep} opacity="0.5" />
-      {/* shaded flank */}
-      <path d={`M126 100 L162 100 L162 180 Q162 190 152 190 L126 190 Z`} fill={t.dark} opacity="0.4" />
-      {/* cap — the one place brand green appears in the artwork */}
-      <rect x="98" y="52" width="44" height="22" rx="7" fill="#1B5A3F" />
-      <rect x="102" y="55" width="36" height="5" rx="2.5" fill="#FFFFFF" opacity="0.3" />
-      {/* label panel */}
-      <rect x="90" y="124" width="60" height="42" rx="8" fill="#FFFFFF" opacity="0.62" />
-      <path d={`M88 110 L88 178`} stroke="#FFFFFF" strokeOpacity="0.42" strokeWidth="6" strokeLinecap="round" />
+      <Ground id={`${uid}-g`} rx={72} cy={192} ry={11} />
+      <path d="M62 134 L72 172 Q75 184 90 184 L150 184 Q165 184 168 172 L178 134 Z" fill={PACK.face} />
+      <path d="M126 134 L168 134 L158 172 Q155 184 140 184 L118 184 Z" fill={PACK.shade} opacity="0.7" />
+      <ellipse cx="120" cy="134" rx="58" ry="16" fill={PACK.lit} />
+      <ellipse cx="120" cy="134" rx="49" ry="12" fill={t.base} />
+      {/* foil, caught mid-peel */}
+      <path d="M62 130 A58 16 0 0 1 178 130 L178 134 A58 16 0 0 1 62 134 Z" fill="#E8E9EA" />
+      <path d="M156 124 Q188 108 196 82 Q176 100 152 116 Z" fill="#EDEEEF" />
+      <path d="M156 124 Q182 110 192 90" stroke="#22272A" strokeOpacity="0.09" strokeWidth="2" fill="none" />
+      <text
+        x="120"
+        y="160"
+        textAnchor="middle"
+        fill="#FFFFFF"
+        fontFamily="Inter, sans-serif"
+        fontSize="13"
+        fontWeight="700"
+        letterSpacing="-0.5"
+      >
+        violife
+      </text>
+      <text
+        x="120"
+        y="174"
+        textAnchor="middle"
+        fill={CREAM}
+        fontFamily="Inter, sans-serif"
+        fontSize="9.5"
+        fontWeight="700"
+        letterSpacing="0.3"
+      >
+        {name}
+      </text>
     </>
   )
 }
 
-function Pot({ t, uid }) {
+function Carton({ t, uid, name }) {
+  /* Creamer carton — gable shoulder and a cyan cap. */
   return (
     <>
-      <Ground id={`${uid}-g`} rx={74} cy={190} ry={12} />
-      {/* shallow, wide pot */}
-      <path d={`M64 130 L72 172 Q74 182 84 182 L156 182 Q166 182 168 172 L176 130 Z`} fill={t.base} />
-      <path d={`M124 130 L168 130 L158 172 Q156 182 146 182 L118 182 Z`} fill={t.dark} opacity="0.4" />
-      {/* rim */}
-      <ellipse cx="120" cy="130" rx="58" ry="16" fill={t.light} />
-      <ellipse cx="120" cy="130" rx="49" ry="12" fill={t.deep} opacity="0.35" />
-      {/* foil lid, caught mid-peel */}
-      <path d={`M71 126 A58 16 0 0 1 169 126 L169 130 A58 16 0 0 1 71 130 Z`} fill="#FFFFFF" opacity="0.9" />
-      <path d={`M152 120 Q182 104 190 78 Q172 96 148 112 Z`} fill="#FFFFFF" opacity="0.82" />
-      <path d={`M152 120 Q176 106 186 86`} stroke="#101E18" strokeOpacity="0.1" strokeWidth="2" fill="none" />
-      <path d="M78 122 Q120 110 162 122" stroke="#FFFFFF" strokeOpacity="0.6" strokeWidth="2.5" fill="none" />
+      <Ground id={`${uid}-g`} rx={58} cy={206} ry={11} />
+      <path d="M78 96 Q78 88 86 88 L154 88 Q162 88 162 96 L162 188 Q162 198 152 198 L88 198 Q78 198 78 188 Z" fill={PACK.face} />
+      <path d="M92 88 L100 58 L140 58 L148 88 Z" fill={PACK.lit} />
+      <path d="M120 58 L140 58 L148 88 L120 88 Z" fill={PACK.shade} />
+      <path d="M130 88 L162 88 L162 188 Q162 198 152 198 L130 198 Z" fill={PACK.shade} opacity="0.6" />
+      <path d="M88 96 L88 190" stroke={PACK.lit} strokeWidth="7" strokeLinecap="round" opacity="0.55" />
+      <rect x="100" y="44" width="40" height="20" rx="6" fill={CYAN} />
+      <rect x="104" y="47" width="32" height="4" rx="2" fill="#FFFFFF" opacity="0.35" />
+      <Label x={78} y={124} w={84} name={name} s={0.72} />
     </>
   )
 }
 
-const PACKS = { block: Block, slices: Slices, shreds: Shreds, tub: Tub, creamer: Creamer, pot: Pot }
+const PACKS = { block: Brick, slices: Tray, shreds: Pouch, tub: Tub, creamer: Carton, pot: Pot }
 
 /**
- * `kind` picks the pack format, `tone` picks the colourway.
- * Sized by the caller — the viewBox is square and the art is centred.
+ * `kind` picks the pack format, `tone` the colourway, `name` the flavour
+ * printed on the label. Sized by the caller — the viewBox is square and
+ * the art is centred.
  */
-export function ProductArt({ kind = 'block', tone = 'cheddar', className = '', ...rest }) {
+export function ProductArt({ kind = 'block', tone = 'cheddar', name = 'ORIGINAL', className = '', ...rest }) {
   const uid = useId().replace(/:/g, '')
-  const Pack = PACKS[kind] ?? Block
+  const Pack = PACKS[kind] ?? Brick
   const t = TONES[tone] ?? TONES.cheddar
   return (
     <svg viewBox="0 0 240 240" className={className} role="presentation" focusable="false" {...rest}>
-      <Pack t={t} uid={uid} />
+      <Pack t={t} uid={uid} name={name} />
     </svg>
   )
 }

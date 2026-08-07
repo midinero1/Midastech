@@ -175,5 +175,5 @@ sitemap, and are excluded from the marketing site's Tailwind source scan so
 none of their utilities reach `dist/assets/src-*.css`.
 
 - [`work/violife/`](work/violife/README.md) — a mobile-first, glass-led
-  redesign concept for violife.com. Not affiliated with Violife or Flora Food
-  Group.
+  redesign concept for violife.com, in English and Greek. Not affiliated with
+  Violife or Flora Food Group.

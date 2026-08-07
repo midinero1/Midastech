@@ -15,28 +15,33 @@
 /* ------------------------------------------------------------------
    Tokens
 
-   The palette is deliberately small: two greens, a warm cream, and a
-   neutral ramp. Food photography and packaging bring the colour on a
-   real build — the interface stays quiet so the product doesn't have
-   to compete with its own chrome.
+   Taken off the packaging rather than invented: charcoal, cyan, cream,
+   and a neutral ramp. The packs are dark and busy, so the interface
+   around them stays quiet — the product should never have to compete
+   with its own chrome.
 ------------------------------------------------------------------ */
 @theme {
   /* Surfaces */
-  --color-canvas: #f6f4ee; /* warm paper — page background */
+  --color-canvas: #f5f3ee; /* warm paper — page background */
   --color-shell: #ffffff; /* raised cards */
-  --color-mist: #ece8df; /* alternate band */
-  --color-line: #dcd6c9; /* hairlines */
+  --color-mist: #eae7e0; /* alternate band */
+  --color-line: #dbd6cc; /* hairlines */
 
-  /* Ink — all three pass AA on canvas */
-  --color-ink: #101e18; /* headings — 15.9:1 */
-  --color-body: #4a564f; /* body copy — 6.8:1 */
-  --color-muted: #6f7a73; /* meta, captions — 4.6:1 */
+  /* Ink — sampled off the packaging, which is a charcoal rather than a black.
+     All three pass AA on canvas. */
+  --color-ink: #22272a; /* headings — 13.6:1 */
+  --color-body: #4e555a; /* body copy — 6.8:1 */
+  --color-muted: #676f74; /* meta, captions — 4.6:1 */
 
-  /* Brand */
-  --color-moss: #1b5a3f; /* primary green, safe as text — 7.3:1 */
-  --color-leaf: #2e8f62; /* interactive fills and indicators — 3.5:1, never body text */
-  --color-cream: #efddb4; /* the warm cheese tone — a surface, not an accent */
-  --color-crust: #a9762a; /* toasted edge, used very sparingly — 4.6:1 */
+  /* Brand, taken off the real packs: charcoal, cyan, cream.
+     Cyan is bright enough to be an accent and nowhere near dark enough to
+     be text on a light ground, so it splits in two — `cyan` for fills and
+     for type on the ink sections, `teal` wherever it has to be readable
+     against canvas. */
+  --color-cyan: #42c6d2; /* 7.4:1 on ink — fills, indicators, type on dark */
+  --color-teal: #0a6e7d; /* 5.3:1 on canvas — links and labels on light */
+  --color-cream: #f6dfa5; /* the pack's product-name cream */
+  --color-pack: #474b4f; /* the packaging charcoal itself */
 
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
 
@@ -77,19 +82,19 @@
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-leaf) 26%, transparent);
+    background: color-mix(in srgb, var(--color-cyan) 26%, transparent);
     color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-moss);
+    outline: 2px solid var(--color-teal);
     outline-offset: 3px;
     border-radius: 6px;
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--color-moss) 32%, transparent) transparent;
+    scrollbar-color: color-mix(in srgb, var(--color-teal) 32%, transparent) transparent;
   }
 }
 
@@ -108,8 +113,29 @@
     border: 1px solid color-mix(in srgb, #ffffff 62%, transparent);
     box-shadow:
       inset 0 1px 0 0 color-mix(in srgb, #ffffff 72%, transparent),
-      0 1px 2px rgba(16, 30, 24, 0.05),
-      0 12px 32px -14px rgba(16, 30, 24, 0.24);
+      0 1px 2px rgba(34, 39, 42, 0.05),
+      0 12px 32px -14px rgba(34, 39, 42, 0.24);
+  }
+
+  /* Glass over photography.
+     58% is enough over a page of flat colour but not over a busy image —
+     the blur softens the picture without ever lifting the contrast of the
+     text sitting on it. Over a photograph the glass has to carry more
+     body, and it still reads as glass because the edge and the blur are
+     doing the work. */
+  .glass-photo {
+    background: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+    border: 1px solid color-mix(in srgb, #ffffff 70%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 80%, transparent),
+      0 2px 6px rgba(34, 39, 42, 0.14),
+      0 16px 40px -18px rgba(34, 39, 42, 0.45);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-photo {
+      background: var(--color-canvas);
+    }
   }
 
   /* Dark glass, for panels that sit over the ink sections. */
@@ -173,18 +199,18 @@
   }
 
   .btn-primary {
-    background: var(--color-moss);
+    background: var(--color-teal);
     color: var(--color-canvas);
     box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
-      0 10px 26px -12px rgba(27, 90, 63, 0.85);
+      0 10px 26px -12px rgba(10, 110, 125, 0.85);
   }
 
   .btn-primary:hover {
-    background: #174d36;
+    background: #095c69;
     box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
-      0 16px 34px -14px rgba(27, 90, 63, 0.95);
+      0 16px 34px -14px rgba(10, 110, 125, 0.95);
   }
 
   .btn-glass {
@@ -195,7 +221,7 @@
     color: var(--color-ink);
     box-shadow:
       inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
-      0 8px 24px -12px rgba(16, 30, 24, 0.3);
+      0 8px 24px -12px rgba(34, 39, 42, 0.3);
   }
 
   .btn-glass:hover {
@@ -231,7 +257,7 @@
     font-weight: 620;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--color-moss);
+    color: var(--color-teal);
   }
 }
 
@@ -255,7 +281,7 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(58rem 34rem at 92% -18%, color-mix(in srgb, var(--color-leaf) 11%, transparent), transparent 60%),
+      radial-gradient(58rem 34rem at 92% -18%, color-mix(in srgb, var(--color-cyan) 11%, transparent), transparent 60%),
       radial-gradient(52rem 34rem at 0% 8%, color-mix(in srgb, var(--color-cream) 62%, transparent), transparent 66%);
   }
 
@@ -273,8 +299,8 @@
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(46rem 26rem at 78% -10%, color-mix(in srgb, var(--color-leaf) 26%, transparent), transparent 64%),
-      radial-gradient(38rem 24rem at 8% 108%, color-mix(in srgb, var(--color-leaf) 16%, transparent), transparent 66%);
+      radial-gradient(46rem 26rem at 78% -10%, color-mix(in srgb, var(--color-cyan) 26%, transparent), transparent 64%),
+      radial-gradient(38rem 24rem at 8% 108%, color-mix(in srgb, var(--color-cyan) 16%, transparent), transparent 66%);
   }
 
   /* Film grain. Its real job is killing the banding that large soft
