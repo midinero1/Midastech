@@ -165,3 +165,13 @@ rules needed.
 Update the domain in `public/sitemap.xml`, `public/robots.txt` and the
 `canonical`/`og:url`/`hreflang` tags in the eight `index.html` files when you
 have the real one — they currently point at `midastechnology.com`.
+
+## Client sites
+
+`clients/` holds the sites we build for other people. Each one is
+self-contained and ships on its own domain — nothing under `clients/` is part
+of this site's Vite build or its `dist/`.
+
+| Client | Folder | Stack |
+| --- | --- | --- |
+| simpli cafe | [`clients/simpli-cafe/`](clients/simpli-cafe/) | Static HTML + CSS, no build step |
