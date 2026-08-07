@@ -1,10 +1,8 @@
 import { useMemo, useState } from 'react'
-import { FREE_FROM_ICONS, IconArrow, IconMelt, IconStretch, IconGrate, IconPin } from '../art'
-import { FORMATS, FREE_FROM, HERO_PRODUCT, PRODUCTS, PROOF, RECIPES, STORY_YEARS } from '../data'
+import { FREE_FROM_ICONS, IconArrow, IconPin } from '../art'
+import { FORMATS, FREE_FROM, HERO_PRODUCT, PRODUCTS, RECIPES, STORY_YEARS } from '../data'
 import { useSite } from '../i18n'
 import { FIELD, Heading, PackShot, ProductCard, ProductSheet, RecipeCard, Reveal, Segmented, useProductSheet } from '../ui'
-
-const PROOF_ICONS = { melt: IconMelt, stretch: IconStretch, grate: IconGrate }
 
 /**
  * The argument the home page makes, in order: this behaves like cheese →
@@ -83,78 +81,6 @@ export default function Home() {
               </button>
             </div>
           </Reveal>
-        </div>
-
-        {/* Unboxed and grey, sitting straight on the page at the foot of
-            the hero. A glass card here read as a third thing competing
-            with the headline and the pack; this is reassurance a shopper
-            checks once and then ignores, so it recedes into the ground
-            and lets the product keep the attention. Grey still clears AA
-            at 4.6:1 — quiet, not faint. */}
-        <Reveal delay={200} className="relative z-10 mx-auto mt-28 max-w-4xl sm:mt-44">
-          {/* The rules run the full width of the grid below, so the label
-              reads as a divider across the row rather than a caption
-              floating above it. */}
-          <div className="flex items-center gap-4">
-            <span aria-hidden="true" className="h-px flex-1 bg-line" />
-            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
-              {t.ui.freeFrom}
-            </span>
-            <span aria-hidden="true" className="h-px flex-1 bg-line" />
-          </div>
-          <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
-            {FREE_FROM.map((id) => {
-              const Mark = FREE_FROM_ICONS[id]
-              return (
-                <li key={id} className="flex flex-col items-center gap-2 text-center text-muted">
-                  <Mark className="h-7 w-7" />
-                  <span className="text-[0.72rem] font-medium leading-tight sm:text-[0.78rem]">
-                    {t.freeFrom[id]}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
-        </Reveal>
-      </section>
-
-      {/* ---------------------------------------------------------------
-          Proof
-      --------------------------------------------------------------- */}
-      <section id="proof" className="scroll-mt-28 px-5 py-20 sm:px-8 sm:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <Heading eyebrow={t.home.proofEyebrow} title={t.home.proofTitle} body={t.home.proofBody} />
-          </Reveal>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
-            {PROOF.map((p, i) => {
-              const Icon = PROOF_ICONS[p.icon]
-              const product = PRODUCTS.find((x) => x.id === p.product)
-              const c = t.proof[p.id]
-              return (
-                <Reveal key={p.id} delay={i * 110}>
-                  <button
-                    type="button"
-                    onClick={() => product && sheet.open(product)}
-                    className="group flex h-full w-full flex-col overflow-hidden rounded-[1.5rem] border border-line bg-shell p-6 text-left transition-all duration-500 ease-[var(--ease-glass)] hover:-translate-y-1 hover:shadow-[0_28px_50px_-30px_rgba(34,39,42,0.4)] active:scale-[0.985]"
-                  >
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-teal/10 text-teal">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="mt-5 text-[1.25rem] font-[660] tracking-[-0.026em]">{c.title}</h3>
-                    <p className="mt-2 flex-1 text-[0.9rem] leading-relaxed text-body">{c.body}</p>
-                    {product && (
-                      <span className="mt-5 inline-flex items-center gap-1.5 text-[0.8rem] font-semibold text-teal">
-                        {t.products[product.id].name}
-                        <IconArrow className="h-3.5 w-3.5 transition-transform duration-400 ease-[var(--ease-glass)] group-hover:translate-x-1" />
-                      </span>
-                    )}
-                  </button>
-                </Reveal>
-              )
-            })}
-          </div>
         </div>
       </section>
 
@@ -275,6 +201,41 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------------------
+          The claim, and what it is free from — kept to the bottom of the
+          page. `id="proof"` is preserved because the footer links to it.
+      --------------------------------------------------------------- */}
+      <section id="proof" className="scroll-mt-28 px-5 pb-6 sm:px-8 sm:pb-12">
+        <div className="mx-auto max-w-4xl">
+          <Reveal>
+            <h2 className="title text-center">{t.home.proofTitle}</h2>
+          </Reveal>
+
+          <Reveal delay={120} className="mt-12 sm:mt-16">
+          <div className="flex items-center gap-4">
+            <span aria-hidden="true" className="h-px flex-1 bg-line" />
+            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
+              {t.ui.freeFrom}
+            </span>
+            <span aria-hidden="true" className="h-px flex-1 bg-line" />
+          </div>
+          <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
+            {FREE_FROM.map((id) => {
+              const Mark = FREE_FROM_ICONS[id]
+              return (
+                <li key={id} className="flex flex-col items-center gap-2 text-center text-muted">
+                  <Mark className="h-7 w-7" />
+                  <span className="text-[0.72rem] font-medium leading-tight sm:text-[0.78rem]">
+                    {t.freeFrom[id]}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
           </Reveal>
         </div>
       </section>
