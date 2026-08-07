@@ -165,3 +165,15 @@ rules needed.
 Update the domain in `public/sitemap.xml`, `public/robots.txt` and the
 `canonical`/`og:url`/`hreflang` tags in the eight `index.html` files when you
 have the real one — they currently point at `midastechnology.com`.
+
+## Concept work
+
+`work/` holds unsolicited design studies — spec pieces, not client work. Each
+one is self-contained: its own stylesheet, its own shell, its own tokens. They
+build alongside the site but are `noindex`, are absent from the navigation and
+sitemap, and are excluded from the marketing site's Tailwind source scan so
+none of their utilities reach `dist/assets/src-*.css`.
+
+- [`work/violife/`](work/violife/README.md) — a mobile-first, glass-led
+  redesign concept for violife.com. Not affiliated with Violife or Flora Food
+  Group.

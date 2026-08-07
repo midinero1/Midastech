@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 @import './fonts.css';
 
+/* Concept studies under /work/ ship their own stylesheet and are never
+   loaded alongside this one, so their classes must not be scanned into
+   the marketing site's CSS. */
+@source not './violife';
+@source not '../work';
+
 /* ------------------------------------------------------------------
    Design tokens — Midas Technology
    A warm ivory canvas with bronze/gold accents and deep espresso

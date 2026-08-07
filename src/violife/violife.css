@@ -1,0 +1,415 @@
+/* ------------------------------------------------------------------
+   Violife — concept redesign
+   An independent design study by Midas Technology. Not affiliated with,
+   endorsed by, or produced for Violife or Flora Food Group.
+
+   Scoped to this folder so the concept never leaks utilities into the
+   Midas Technology stylesheet, and vice versa. The two sites are never
+   loaded together, so they get separate CSS bundles.
+------------------------------------------------------------------ */
+@import 'tailwindcss' source(none);
+@source './';
+
+@import '../fonts.css';
+
+/* ------------------------------------------------------------------
+   Tokens
+
+   The palette is deliberately small: two greens, a warm cream, and a
+   neutral ramp. Food photography and packaging bring the colour on a
+   real build — the interface stays quiet so the product doesn't have
+   to compete with its own chrome.
+------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-canvas: #f6f4ee; /* warm paper — page background */
+  --color-shell: #ffffff; /* raised cards */
+  --color-mist: #ece8df; /* alternate band */
+  --color-line: #dcd6c9; /* hairlines */
+
+  /* Ink — all three pass AA on canvas */
+  --color-ink: #101e18; /* headings — 15.9:1 */
+  --color-body: #4a564f; /* body copy — 6.8:1 */
+  --color-muted: #6f7a73; /* meta, captions — 4.6:1 */
+
+  /* Brand */
+  --color-moss: #1b5a3f; /* primary green, safe as text — 7.3:1 */
+  --color-leaf: #2e8f62; /* interactive fills and indicators — 3.5:1, never body text */
+  --color-cream: #efddb4; /* the warm cheese tone — a surface, not an accent */
+  --color-crust: #a9762a; /* toasted edge, used very sparingly — 4.6:1 */
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* One easing curve everywhere. Apple's is roughly this: slow out, no
+     overshoot, long tail. Mixing curves is what makes motion feel cheap. */
+  --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Clears the floating top bar when jumping to an anchor. */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    /* The mobile tab bar floats over the last section. */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-ink);
+    font-weight: 680;
+    /* Inter needs to be pulled tight at display sizes to hold together
+       the way SF Pro Display does out of the box. */
+    letter-spacing: -0.032em;
+    line-height: 1.04;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-leaf) 26%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-moss);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-moss) 32%, transparent) transparent;
+  }
+}
+
+@layer components {
+  /* ----------------------------------------------------------------
+     Glass
+
+     Four things separate real frosted glass from a translucent box:
+     saturation boost (colour blooms through rather than greying out),
+     a specular highlight along the top edge, a near-white hairline
+     rather than a grey one, and a shadow tight enough to read as
+     millimetres of lift rather than a drop shadow.
+  ---------------------------------------------------------------- */
+  .glass {
+    background: color-mix(in srgb, var(--color-canvas) 58%, transparent);
+    border: 1px solid color-mix(in srgb, #ffffff 62%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 72%, transparent),
+      0 1px 2px rgba(16, 30, 24, 0.05),
+      0 12px 32px -14px rgba(16, 30, 24, 0.24);
+  }
+
+  /* Dark glass, for panels that sit over the ink sections. */
+  .glass-dark {
+    background: color-mix(in srgb, var(--color-ink) 52%, transparent);
+    border: 1px solid color-mix(in srgb, #ffffff 16%, transparent);
+    box-shadow:
+      inset 0 1px 0 0 color-mix(in srgb, #ffffff 20%, transparent),
+      0 12px 36px -16px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Blur is a separate class so it can be dropped on elements that
+     animate — compositing a backdrop-filter every frame is expensive
+     on mobile, and the shadow/edge alone still reads as glass. */
+  .frost {
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+  }
+
+  .frost-strong {
+    backdrop-filter: blur(36px) saturate(190%);
+    -webkit-backdrop-filter: blur(36px) saturate(190%);
+  }
+
+  /* Where backdrop-filter is unsupported the glass would read as a
+     washed-out box, so fall back to something solid and intentional. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      background: color-mix(in srgb, var(--color-canvas) 94%, #ffffff);
+    }
+
+    .glass-dark {
+      background: color-mix(in srgb, var(--color-ink) 92%, #000000);
+    }
+  }
+
+  /* ----------------------------------------------------------------
+     Buttons
+  ---------------------------------------------------------------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    /* 48px tall — comfortably above the 44px touch target floor. */
+    padding: 0.875rem 1.5rem;
+    font-size: 0.9375rem;
+    font-weight: 560;
+    letter-spacing: -0.011em;
+    white-space: nowrap;
+    transition:
+      transform 0.4s var(--ease-glass),
+      box-shadow 0.4s var(--ease-glass),
+      background-color 0.4s var(--ease-glass);
+  }
+
+  .btn:active {
+    /* iOS-style press: the whole control shrinks slightly. */
+    transform: scale(0.965);
+  }
+
+  .btn-primary {
+    background: var(--color-moss);
+    color: var(--color-canvas);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+      0 10px 26px -12px rgba(27, 90, 63, 0.85);
+  }
+
+  .btn-primary:hover {
+    background: #174d36;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.22),
+      0 16px 34px -14px rgba(27, 90, 63, 0.95);
+  }
+
+  .btn-glass {
+    background: color-mix(in srgb, #ffffff 58%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid color-mix(in srgb, #ffffff 72%, transparent);
+    color: var(--color-ink);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+      0 8px 24px -12px rgba(16, 30, 24, 0.3);
+  }
+
+  .btn-glass:hover {
+    background: color-mix(in srgb, #ffffff 76%, transparent);
+  }
+
+  /* ----------------------------------------------------------------
+     Type scale
+  ---------------------------------------------------------------- */
+  .display {
+    font-size: clamp(2.6rem, 11.5vw, 6.5rem);
+    font-weight: 700;
+    letter-spacing: -0.042em;
+    line-height: 0.94;
+  }
+
+  .title {
+    font-size: clamp(1.85rem, 6.2vw, 3.25rem);
+    font-weight: 680;
+    letter-spacing: -0.034em;
+    line-height: 1.06;
+  }
+
+  .lede {
+    font-size: clamp(1.02rem, 3.3vw, 1.25rem);
+    line-height: 1.55;
+    letter-spacing: -0.011em;
+    color: var(--color-body);
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 620;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-moss);
+  }
+}
+
+@layer utilities {
+  /* ----------------------------------------------------------------
+     Lighting
+
+     Not gradients — light. Kept under 15% so it reads as a lit room
+     rather than a coloured wash, which is the tell that makes a page
+     look machine-made.
+  ---------------------------------------------------------------- */
+  .lit {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lit::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(58rem 34rem at 92% -18%, color-mix(in srgb, var(--color-leaf) 11%, transparent), transparent 60%),
+      radial-gradient(52rem 34rem at 0% 8%, color-mix(in srgb, var(--color-cream) 62%, transparent), transparent 66%);
+  }
+
+  /* The same idea on an ink ground. The light palette's cream pool turns
+     olive over dark green, so the dark sections get their own. */
+  .lit-dark {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .lit-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(46rem 26rem at 78% -10%, color-mix(in srgb, var(--color-leaf) 26%, transparent), transparent 64%),
+      radial-gradient(38rem 24rem at 8% 108%, color-mix(in srgb, var(--color-leaf) 16%, transparent), transparent 66%);
+  }
+
+  /* Film grain. Its real job is killing the banding that large soft
+     fields produce on 8-bit displays; the texture is a side benefit. */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.42;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
+  }
+
+  /* ----------------------------------------------------------------
+     Horizontal rails
+
+     Snap scrolling with the scrollbar hidden — the native mobile
+     gesture, so the rail needs no arrows to be discoverable on touch.
+     `edge` bleeds the rail to the viewport edge so the last card is
+     visibly clipped, which is what tells the user it scrolls.
+  ---------------------------------------------------------------- */
+  .rail {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail > * {
+    scroll-snap-align: start;
+    flex: none;
+  }
+
+  /* A rail that becomes a grid on a wide screen.
+     This needs its own media query rather than `rail lg:grid`, because both
+     would be utilities setting `display` and the winner would come down to
+     the order Tailwind happens to emit them in. */
+  @media (width < 64rem) {
+    .rail-sm {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .rail-sm::-webkit-scrollbar {
+      display: none;
+    }
+
+    .rail-sm > * {
+      scroll-snap-align: start;
+      flex: none;
+    }
+  }
+
+  /* ----------------------------------------------------------------
+     Scroll reveal
+  ---------------------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.9s var(--ease-glass) var(--reveal-delay, 0ms),
+      transform 0.9s var(--ease-glass) var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reveal[data-shown='true'] {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .page-in {
+    animation: page-in 0.55s var(--ease-glass) both;
+  }
+
+  /* A very slow vertical float for the hero product, so the page has a
+     pulse when nothing is being scrolled. */
+  @keyframes hover-float {
+    from {
+      transform: translateY(0) rotate(-0.4deg);
+    }
+    to {
+      transform: translateY(-14px) rotate(0.4deg);
+    }
+  }
+
+  .float {
+    animation: hover-float 7s ease-in-out infinite alternate;
+  }
+
+  .stack-3d {
+    perspective: 1200px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .page-in,
+  .float {
+    animation: none !important;
+  }
+
+  .btn:active {
+    transform: none;
+  }
+}

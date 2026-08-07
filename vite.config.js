@@ -23,6 +23,20 @@ const input = Object.fromEntries(
   ),
 )
 
+// Concept work lives under /work/ — self-contained studies with their own
+// stylesheet and shell, kept out of the marketing site's navigation and
+// sitemap and marked noindex. They share the build only so they deploy with
+// everything else and stay runnable as the toolchain moves on.
+const WORK = ['violife']
+const WORK_PAGES = ['home', 'products', 'recipes', 'story', 'find']
+
+for (const project of WORK) {
+  for (const page of WORK_PAGES) {
+    const dir = ['work', project, page === 'home' ? '' : page].filter(Boolean).join('/')
+    input[`work-${project}-${page}`] = r(`${dir}/index.html`)
+  }
+}
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: { rollupOptions: { input } },
