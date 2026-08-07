@@ -92,11 +92,16 @@ export default function Home() {
             and lets the product keep the attention. Grey still clears AA
             at 4.6:1 — quiet, not faint. */}
         <Reveal delay={200} className="relative z-10 mx-auto mt-28 max-w-4xl sm:mt-44">
-          <p className="text-center">
-            <span className="flanked text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
+          {/* The rules run the full width of the grid below, so the label
+              reads as a divider across the row rather than a caption
+              floating above it. */}
+          <div className="flex items-center gap-4">
+            <span aria-hidden="true" className="h-px flex-1 bg-line" />
+            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
               {t.ui.freeFrom}
             </span>
-          </p>
+            <span aria-hidden="true" className="h-px flex-1 bg-line" />
+          </div>
           <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
             {FREE_FROM.map((id) => {
               const Mark = FREE_FROM_ICONS[id]
