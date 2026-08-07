@@ -337,15 +337,29 @@ export function ProductSheet({ product, onClose }) {
 
           <div className="mt-6">
             <Disclosure label={t.ui.ingredients}>
-              <ul className="space-y-1.5">
-                {t.ingredients.map((line) => (
-                  <li key={line} className="flex gap-2 text-[0.88rem] leading-relaxed text-body">
-                    <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-cyan" />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-3 text-[0.78rem] leading-relaxed text-muted">{t.ui.declarationNote}</p>
+              {c.ingredients ? (
+                /* A real declaration, printed verbatim. Not reflowed, not
+                   reordered, not translated — the order of a declaration
+                   is itself regulated information. */
+                <>
+                  <p className="text-[0.88rem] leading-relaxed text-body">{c.ingredients}</p>
+                  {c.ingredientsNote && (
+                    <p className="mt-2 text-[0.78rem] leading-relaxed text-muted">{c.ingredientsNote}</p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <ul className="space-y-1.5">
+                    {t.ingredientsFallback.map((line) => (
+                      <li key={line} className="flex gap-2 text-[0.88rem] leading-relaxed text-body">
+                        <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-cyan" />
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-[0.78rem] leading-relaxed text-muted">{t.ui.declarationNote}</p>
+                </>
+              )}
             </Disclosure>
 
             <Disclosure label={t.ui.nutrition}>

@@ -97,5 +97,8 @@ save(cutout(f'{SRC}/66a9c477-IMG_8201.jpeg', precrop=(0, 0, 1265, 887)), 'pack-c
 save(cutout(f'{SRC}/6ce32ce1-IMG_8203.jpeg'), 'pack-grated-original.webp', (900, 900))
 save(cutout(f'{SRC}/96e1a42d-IMG_8204.webp'), 'pack-slices-gouda.webp', (900, 900))
 
+save(cutout(f'{SRC}/17a21d84-IMG_8218.webp'), 'pack-block-feta.webp', (900, 900))
+save(cutout(f'{SRC}/0031ffa4-IMG_8222.jpeg'), 'pack-block-parmesan.webp', (900, 900))
+
 photo(f'{SRC}/56f9fe42-IMG_8199.webp', 'dish-greek-white-pizza.webp', (1100, 1100))
 photo(f'{SRC}/400e6ba0-IMG_8200.jpeg', 'dish-greek-white-orzo.webp', (1600, 1600))

@@ -13,20 +13,23 @@
 
 const BASE = '/work/violife'
 
+/* Greek first, because Violife is a Greek brand and this is its home
+   market. English is one tap away in the top bar of every page. */
 export const LOCALES = [
-  { code: 'en', short: 'EN', label: 'English' },
   { code: 'el', short: 'ΕΛ', label: 'Ελληνικά' },
+  { code: 'en', short: 'EN', label: 'English' },
 ]
 
-export const DEFAULT_LOCALE = 'en'
+export const DEFAULT_LOCALE = 'el'
 export const PAGES = ['home', 'products', 'recipes', 'find', 'story']
 
 /**
- * English sits at the root of the concept, Greek under /el/ — the same rule
- * the parent site uses, so both languages get a real indexable address.
+ * Greek sits at the root of the concept, English under /en/, so the home
+ * market keeps the clean URLs and each language still has its own real
+ * indexable address.
  *
- *   home    → /work/violife/          /work/violife/el/
- *   recipes → /work/violife/recipes/  /work/violife/el/recipes/
+ *   home    → /work/violife/          /work/violife/en/
+ *   recipes → /work/violife/recipes/  /work/violife/en/recipes/
  */
 export function vPath(lang, page) {
   const base = lang === DEFAULT_LOCALE ? BASE : `${BASE}/${lang}`
@@ -43,17 +46,21 @@ export const NAV = [
 
 export const FORMATS = ['all', 'blocks', 'slices', 'grated', 'creamy', 'drinks']
 
+/* Photographed packs lead, so the strongest assets are what a visitor
+   meets first. `label` is the flavour name printed on a drawn pack and is
+   only read when there is no photo. */
 export const PRODUCTS = [
   { id: 'grated-original', format: 'grated', kind: 'shreds', tone: 'cheddar', photo: 'pack-grated-original.webp', behaviour: ['melt', 'stretch'], hero: true },
   { id: 'creamy-original', format: 'creamy', kind: 'tub', tone: 'greek', photo: 'pack-creamy-original.webp', behaviour: [] },
   { id: 'slices-gouda', format: 'slices', kind: 'slices', tone: 'cheddar', photo: 'pack-slices-gouda.webp', behaviour: ['melt'] },
+  { id: 'block-feta', format: 'blocks', kind: 'block', tone: 'greek', photo: 'pack-block-feta.webp', behaviour: [] },
+  { id: 'block-parmesan', format: 'blocks', kind: 'block', tone: 'greek', photo: 'pack-block-parmesan.webp', behaviour: ['grate'] },
 
   { id: 'block-cheddar', format: 'blocks', kind: 'block', tone: 'cheddar', label: 'CHEDDAR', behaviour: ['melt', 'grate'] },
   { id: 'block-mozzarella', format: 'blocks', kind: 'block', tone: 'mozzarella', label: 'MOZZARELLA', behaviour: ['melt', 'stretch', 'grate'] },
   { id: 'block-smoked', format: 'blocks', kind: 'block', tone: 'smoked', label: 'SMOKED', behaviour: ['melt'] },
-  { id: 'block-greek-white', format: 'blocks', kind: 'block', tone: 'greek', label: 'GREEK WHITE', behaviour: [] },
 
-  { id: 'slices-original', format: 'slices', kind: 'slices', tone: 'cheddar', label: 'ORIGINAL', behaviour: ['melt'] },
+  { id: 'slices-cheddar', format: 'slices', kind: 'slices', tone: 'cheddar', label: 'CHEDDAR', behaviour: ['melt'] },
   { id: 'slices-smoked', format: 'slices', kind: 'slices', tone: 'smoked', label: 'SMOKED', behaviour: ['melt'] },
 
   { id: 'grated-mozzarella', format: 'grated', kind: 'shreds', tone: 'mozzarella', label: 'MOZZARELLA', behaviour: ['melt', 'stretch'] },
@@ -74,8 +81,8 @@ export const PROOF = [
 ]
 
 export const RECIPES = [
-  { id: 'greek-white-pizza', photo: 'dish-greek-white-pizza.webp', minutes: 25, uses: 'block-greek-white' },
-  { id: 'greek-white-orzo', photo: 'dish-greek-white-orzo.webp', minutes: 45, uses: 'block-greek-white', wide: true },
+  { id: 'greek-white-pizza', photo: 'dish-greek-white-pizza.webp', minutes: 25, uses: 'block-feta' },
+  { id: 'greek-white-orzo', photo: 'dish-greek-white-orzo.webp', minutes: 45, uses: 'block-feta', wide: true },
   { id: 'mac', dish: 'mac', minutes: 40, uses: 'grated-original' },
   { id: 'smash-burger', dish: 'burger', minutes: 20, uses: 'slices-smoked' },
   { id: 'toastie', dish: 'toastie', minutes: 12, uses: 'block-cheddar' },

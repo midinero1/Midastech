@@ -28,13 +28,16 @@ const input = Object.fromEntries(
 // sitemap and marked noindex. They share the build only so they deploy with
 // everything else and stay runnable as the toolchain moves on.
 const WORK = ['violife']
-const WORK_LANGS = ['en', 'el']
+const WORK_LANGS = ['el', 'en']
 const WORK_PAGES = ['home', 'products', 'recipes', 'story', 'find']
+// Greek is the concept's primary language, so it holds the clean URLs and
+// English sits under /en/. Mirrors DEFAULT_LOCALE in src/violife/data.js.
+const WORK_DEFAULT_LANG = 'el'
 
 for (const project of WORK) {
   for (const lang of WORK_LANGS) {
     for (const page of WORK_PAGES) {
-      const dir = ['work', project, lang === 'en' ? '' : lang, page === 'home' ? '' : page]
+      const dir = ['work', project, lang === WORK_DEFAULT_LANG ? '' : lang, page === 'home' ? '' : page]
         .filter(Boolean)
         .join('/')
       input[`work-${project}-${lang}-${page}`] = r(`${dir}/index.html`)

@@ -2,9 +2,15 @@
  * English copy.
  *
  * Claims are limited to what the brand states publicly and what is printed
- * on the supplied packs: 100% vegan, made with coconut oil and vitamin B12,
- * free from dairy, soya, gluten, lactose, nuts and preservatives. Nothing
- * here invents nutrition figures, prices, awards or stockists.
+ * on the supplied packs. Range-wide claims are held to what is true of
+ * every product: dairy-free, made with coconut oil, and free from soya,
+ * gluten, lactose, nuts and artificial preservatives. Vitamin B12 is not
+ * range-wide — the Parmesan Style declaration has none — so it appears
+ * only inside the declarations that actually list it.
+ *
+ * Nothing here invents nutrition figures, prices, awards or stockists.
+ * Where a product has a real ingredient declaration it is printed
+ * verbatim; where it has none the panel says so.
  */
 
 export default {
@@ -71,12 +77,13 @@ export default {
     45: 'Under 45',
   },
 
-  /* Only what the supplied packs actually state. The full declaration per
-     product comes from the spec sheet — see NUTRITION_ROWS in data.js. */
-  ingredients: [
-    'Made with coconut oil and vitamin B12.',
-    '100% vegan. Suitable for a plant-based diet.',
-    'Free from dairy, soya, gluten, lactose, nuts and preservatives.',
+  /* Shown only where a product has no verbatim declaration of its own.
+     Narrowed to what holds across the whole range: the Parmesan Style
+     declaration contains no vitamin B12 and lists coconut oil fourth, so
+     "made with coconut oil and vitamin B12" is not a range-wide claim. */
+  ingredientsFallback: [
+    'Dairy-free, made with coconut oil.',
+    'Free from dairy, soya, gluten, lactose, nuts and artificial preservatives.',
   ],
 
   nutritionRows: {
@@ -90,7 +97,7 @@ export default {
     salt: 'Salt',
   },
 
-  freeFrom: ['Dairy', 'Soya', 'Gluten', 'Lactose', 'Nuts', 'Preservatives'],
+  freeFrom: ['Dairy', 'Soya', 'Gluten', 'Lactose', 'Nuts', 'Artificial preservatives'],
 
   home: {
     title: 'Concept — Violife redesign',
@@ -127,7 +134,7 @@ export default {
     title: 'The range — Violife concept redesign',
     eyebrow: (n) => `${n} products`,
     h1: 'The whole range.',
-    lede: 'Blocks, slices, grated, creamy and creamers. All of it 100% vegan, made with coconut oil and vitamin B12.',
+    lede: 'Blocks, slices, grated, creamy and creamers. All of it dairy-free, and all of it free from soya, gluten, lactose, nuts and artificial preservatives.',
     freeFromEyebrow: 'Every product, no exceptions',
     freeFromTitle: 'Free from all six.',
     freeFromBody: 'Not a claim that applies to selected lines. It applies to the range.',
@@ -158,7 +165,7 @@ export default {
     h1: 'Early, and stubborn.',
     lede: 'Violife started making a dairy-free alternative to cheese roughly two decades before anybody was asking for one. That head start is the reason it melts.',
     madeOfEyebrow: 'What it is made of',
-    madeOfTitle: 'Coconut oil, vitamin B12, and a lot of testing.',
+    madeOfTitle: 'Water, coconut oil, starch, and a lot of testing.',
     madeOfBody:
       'The base has not fundamentally changed in thirty-five years. What changed is the tuning — how it sets, how it browns, and at what temperature it lets go and flows.',
     closeTitle: 'Undairy the craving.',
@@ -230,17 +237,19 @@ export default {
       body: 'Smoke does a lot of work in a plant-based kitchen — it reads as depth. Firm enough to cube into a salad, soft enough to melt into a sauce without splitting.',
       best: ['Loaded fries', 'Burgers', 'Chowder'],
     },
-    'block-greek-white': {
-      name: 'Greek White Block',
+    'block-feta': {
+      name: 'Feta Style Block',
       lead: 'Brined, crumbly and unapologetically salty.',
       body: 'Crumbles over a salad the way it should — in shards, not dust. Holds its shape baked in a tray of tomatoes and oil, and takes on herbs and lemon well.',
       best: ['Greek salad', 'Baked in oil', 'Watermelon'],
     },
-    'slices-original': {
-      name: 'Original Flavour Slices',
+    'slices-cheddar': {
+      name: 'Cheddar Flavour Slices',
       lead: 'One slice, one sandwich. No tearing at the corners.',
       body: 'The everyday slice. Thin enough to go soft under residual heat alone, so it works on a burger straight off the pan without a lid and a splash of water.',
       best: ['Sandwiches', 'Burgers', 'Grilled cheese'],
+      ingredients:
+        'Water, Coconut oil, Modified tapioca and potato starch, Potato starch, Salt, Natural flavour, Fructose, Rowanberry extract (to help maintain freshness), Lactic acid, Calcium phosphate, Yeast extract, Paprika extract, Sugar, Carotene, Herbs, Olive extract.',
     },
     'slices-smoked': {
       name: 'Smoked Flavour Slices',
@@ -253,6 +262,9 @@ export default {
       lead: 'The pizza bag. Scatters evenly, pulls properly.',
       body: 'Mild enough to sit under a loud sauce and loose enough to spread in one handful. The format to buy if pizza is the reason you are here.',
       best: ['Pizza', 'Calzone', 'Garlic bread'],
+      ingredients:
+        'Food preparation with coconut oil. Water, Coconut oil (24%), Modified starch*, Starch, Sea salt, Mozzarella flavour, Olive extract, Colour: β-carotene, Vitamin B12.',
+      ingredientsNote: '*Not to be confused with GMO (genetically modified) ingredients.',
     },
     'creamy-herbs': {
       name: 'Creamy Herbs & Garlic',
@@ -265,6 +277,14 @@ export default {
       lead: 'Cold, sharp and thick enough to hold a crisp.',
       body: 'Built for scooping. Sits on a nacho without sliding off, and cuts through anything fried or heavily spiced.',
       best: ['Nachos', 'Wedges', 'Wings'],
+    },
+    'block-parmesan': {
+      name: 'Parmesan Style Wedge',
+      lead: 'Hard, salty, and it shaves as well as it grates.',
+      body: 'The finishing cheese. Firm enough to take a peeler along the edge for shavings, and dry enough to grate to a powder over pasta without clogging.',
+      best: ['Pasta', 'Risotto', 'Caesar salad'],
+      ingredients:
+        'Water, Modified potato starch, Potato & rice starch, Coconut oil, Sea salt, Natural flavor, Rice protein, Yeast extract, Glucose, Citric acid, Olive extract, Carotene.',
     },
     'barista-creamer': {
       name: 'Barista Creamer',
@@ -299,7 +319,7 @@ export default {
   },
 
   footer: {
-    tagline: 'Dairy-free by design. 100% vegan, made with coconut oil and vitamin B12.',
+    tagline: 'Dairy-free by design. Free from soya, gluten, lactose, nuts and artificial preservatives.',
     range: 'Range',
     kitchen: 'Kitchen',
     brand: 'Brand',

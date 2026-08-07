@@ -5,18 +5,22 @@ on a phone. **Not affiliated with, endorsed by, or produced for Violife or
 Flora Food Group.** The pages are `noindex, nofollow`, are not linked from the
 Midas Technology site, and are absent from its sitemap.
 
-Run it with `npm run dev` and open `/work/violife/` (English) or
-`/work/violife/el/` (Greek).
+Run it with `npm run dev` and open `/work/violife/` (Greek) or
+`/work/violife/en/` (English).
 
 ## What was actually assessed
 
-The live site could not be loaded from the machine this was built on —
+The live site cannot be loaded from the machine this was built on —
 `violife.com` and `www.violife.com` are both blocked by the network egress
-proxy here. The critique behind this concept therefore rests on what is
-externally verifiable: the page inventory and URL structure exposed through
-search indexes, the navigation taxonomy, and the locale sprawl. It is **not**
-based on a firsthand look at the current visual design, and any claim about
-how the live site looks should be treated as unverified.
+proxy here. The critique therefore rests on what is externally verifiable: the
+page inventory and URL structure exposed through search indexes, and the
+navigation taxonomy.
+
+One screenshot of a Greek product page has since been supplied, which
+confirmed the charcoal/cyan/cream palette and the ingredients-and-nutrition
+accordion pattern this concept now follows. Everything else about the current
+visual design remains unseen, so any claim about how the rest of the live site
+looks should still be treated as unverified.
 
 What that evidence does support:
 
@@ -75,8 +79,8 @@ and a Greek label half again as long as its English counterpart.
 
 ## Photography and drawn packs
 
-Three product shots and two dish photographs were supplied for this study. They
-are used where they exist. The rest of the range is drawn in `art.jsx` in the
+Five product shots and two dish photographs have been supplied for this study.
+They are used where they exist. The rest of the range is drawn in `art.jsx` in the
 same livery — charcoal pack, white wordmark, cyan "100% vegan" line, cream
 flavour name, cyan free-from lozenge — so a grid mixing the two still reads as
 one shelf. Two details make that work: every pack sits on the same neutral
@@ -95,9 +99,13 @@ bounding box; it is pre-cropped. See the script in the commit history.
 
 ## Languages
 
-English at `/work/violife/`, Greek under `/work/violife/el/`, mirroring the
-parent site's rule so both get a real indexable address. Violife is a Greek
-brand, so the Greek is written rather than translated: the English plays on
+Greek is the primary language and holds the clean URLs; English sits under
+`/work/violife/en/` and is one tap away in the top bar of every page, carrying
+you to the same page rather than dumping you on the home page. `x-default`
+points at English — it is the fallback for a visitor whose language matches
+neither, and a good share of them are reading from abroad.
+
+Violife is a Greek brand, so the Greek is written rather than translated: the English plays on
 "undairy", which has no Greek equivalent, so the campaign word stays in Latin
 script the way brand lines usually do on Greek packaging and the sentences
 around it are built fresh. Flavour names stay in Latin script too, which is how
@@ -107,6 +115,29 @@ Structure and copy are separated — `data.js` holds ids, formats and asset
 paths, `copy/en.js` and `copy/el.js` hold everything a human reads. Add a
 product and both dictionaries fail loudly on the missing key rather than
 silently rendering English.
+
+## Ingredients and nutrition
+
+Each product carries two disclosures, matching the pattern the live site
+already uses: a hairline rule, the label, and a cyan plus that becomes a
+minus. Collapsed by default.
+
+Where a real ingredient declaration has been supplied it is printed
+**verbatim** — not reflowed, not reordered, not translated. The order of a
+declaration is itself regulated information, and translating an allergen line
+is not something to do from memory. Products without one fall back to the
+claims common to the whole range, with a note saying the full declaration is
+not reproduced here.
+
+Nutrition tables render their full row structure with values dashed out. No
+product has figures yet. Add a `nutrition` key to a product in `data.js` and
+the table fills itself in and the note disappears.
+
+The same discipline applies to range-wide claims. Vitamin B12 was stated
+across the range until the Parmesan Style declaration arrived without it, so
+the claim was narrowed; "free from preservatives" became "free from
+artificial preservatives" once packs using the weaker wording appeared. A
+range-wide claim can only be as strong as the weakest pack in the range.
 
 ## Notes for a real build
 
