@@ -72,7 +72,31 @@ if (!js || !css) throw new Error(`Expected one .js and one .css in ${build}, fou
 let styles = readFileSync(resolve(build, css), 'utf8')
 const script = readFileSync(resolve(build, js), 'utf8')
 
-/* 3. Inline the fonts the stylesheet asks for ----------------------- */
+/* 3a. Drop @font-face blocks for families the page never sets --------
+   The concept sets one family, Inter, but shares a stylesheet with the
+   marketing site and so carries that site's faces too. Left in, each one
+   is embedded in full — a third of a megabyte of a typeface that never
+   renders. A browser would simply never fetch them; a single file has no
+   such luxury, because there is no fetching. */
+const declared = new Set(
+  [...styles.matchAll(/@font-face\s*\{[^}]*?font-family:\s*["']?([^;"'}]+)/g)].map((m) => m[1].trim()),
+)
+// A family is "used" if its name appears anywhere outside the face blocks —
+// it may be named by a custom property (--font-sans: 'Inter', …) rather than
+// by a font-family declaration, so matching only the latter drops faces the
+// page genuinely renders with.
+const elsewhere = styles.replace(/@font-face\s*\{[^}]*\}/g, '')
+const unused = [...declared].filter((family) => !elsewhere.includes(family))
+
+if (unused.length) {
+  styles = styles.replace(/@font-face\s*\{[^}]*\}/g, (block) => {
+    const family = block.match(/font-family:\s*["']?([^;"'}]+)/)?.[1].trim()
+    return unused.includes(family) ? '' : block
+  })
+  console.log(`  dropped unused faces: ${unused.join(', ')}`)
+}
+
+/* 3b. Inline the fonts that survived -------------------------------- */
 let fonts = 0
 styles = styles.replace(/url\(['"]?\/fonts\/([^'")]+)['"]?\)/g, (whole, file) => {
   const path = resolve(root, 'public/fonts', file)

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://midastechnology.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/el/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/services/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/services/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/services/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/services/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/el/services/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/services/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/services/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/services/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/about/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/el/about/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/about/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/about/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/contact/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/contact/"/>
+  </url>
+  <url>
+    <loc>https://midastechnology.com/el/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://midastechnology.com/contact/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://midastechnology.com/el/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://midastechnology.com/contact/"/>
+  </url>
+</urlset>
