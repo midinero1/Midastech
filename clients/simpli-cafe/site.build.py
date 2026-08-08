@@ -40,9 +40,8 @@ MAP_QUERY = "Voreadon 2, 16672 Vari, Greece"
 # Opening hours, mirrored in HOURS in assets/js/site.js and in the JSON-LD
 # below. All three have to agree.
 HOURS_ROWS = [
-    ("1,2,3,4", {"el": "Δευτέρα – Πέμπτη", "en": "Monday – Thursday"}, "07:00 – 20:00"),
-    ("5", {"el": "Παρασκευή", "en": "Friday"}, "07:00 – 21:00"),
-    ("6", {"el": "Σάββατο", "en": "Saturday"}, "08:00 – 21:00"),
+    ("1,2,3,4,5", {"el": "Δευτέρα – Παρασκευή", "en": "Monday – Friday"}, "07:00 – 19:00"),
+    ("6", {"el": "Σάββατο", "en": "Saturday"}, "07:00 – 18:00"),
     ("0", {"el": "Κυριακή", "en": "Sunday"}, {"el": "Κλειστά", "en": "Closed"}),
 ]
 
@@ -596,9 +595,8 @@ def jsonld(lang: str) -> str:
           "addressCountry": "GR"
         }},
         "openingHoursSpecification": [
-          {{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "07:00", "closes": "20:00"}},
-          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "21:00"}},
-          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "21:00"}}
+          {{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "07:00", "closes": "19:00"}},
+          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "07:00", "closes": "18:00"}}
         ]
       }}
     </script>"""

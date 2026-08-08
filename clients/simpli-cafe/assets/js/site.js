@@ -15,16 +15,16 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* --- Opening hours ------------------------------------------------
-     PLACEHOLDER — replace with the café's real hours, and keep them in
-     step with the table on the contact page and the JSON-LD on the home
-     pages. Times are 24h in Athens time; a day with no entry is closed. */
+     Keep in step with the table on the contact page and the JSON-LD on the
+     home pages. Times are 24h in Athens time; a day with no entry is a day
+     the café is closed. */
   var HOURS = {
-    1: ['07:00', '20:00'], // Monday
-    2: ['07:00', '20:00'],
-    3: ['07:00', '20:00'],
-    4: ['07:00', '20:00'],
-    5: ['07:00', '21:00'], // Friday
-    6: ['08:00', '21:00'], // Saturday
+    1: ['07:00', '19:00'], // Monday
+    2: ['07:00', '19:00'],
+    3: ['07:00', '19:00'],
+    4: ['07:00', '19:00'],
+    5: ['07:00', '19:00'], // Friday
+    6: ['07:00', '18:00'], // Saturday
     // Sunday has no entry: closed.
   };
 

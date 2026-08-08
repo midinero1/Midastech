@@ -55,8 +55,13 @@ every marker.
 | What | Where |
 | --- | --- |
 | Domain (`https://simplicafe.gr`) | `SITE` |
-| Opening hours | `HOURS_ROWS`, **and** `HOURS` in `assets/js/site.js`, **and** the JSON-LD in `jsonld()` — all three must agree |
 | The story on the About page | `COPY['el']['about']` and `COPY['en']['about']` |
+
+The opening hours are real — Monday to Friday 07:00–19:00, Saturday
+07:00–18:00, closed Sunday. They live in **three** places that have to agree:
+`HOURS_ROWS` here, `HOURS` in `assets/js/site.js` (which drives the live
+open/closed status) and the JSON-LD in `jsonld()` (which drives what Google
+shows). Change one, change all three.
 
 The address is real: **ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ** / **VOREADON 2, 16672 VARI**,
 set in capitals as the café writes it, in `ADDRESS`. (In Greek capitals the
