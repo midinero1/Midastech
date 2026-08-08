@@ -27,7 +27,7 @@ ROOT = pathlib.Path(__file__).parent
 SITE = "https://simplicafe.gr"
 
 # The address, set in capitals as the café writes it.
-ADDRESS = {"el": "ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ", "en": "VOREADON 2, 16672 VARI"}
+ADDRESS = {"el": "ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΚΙΖΑ", "en": "VOREADON 2, 16672 VARKIZA"}
 
 # The phone. PHONE_TEL is what the link dials; PHONE is what the page shows —
 # grouped 3-3-4 as Greek landlines are written, with the country code added
@@ -36,8 +36,8 @@ PHONE_TEL = "+302109655160"
 PHONE = {"el": "210 965 5160", "en": "+30 210 965 5160"}
 
 # What the map centres on. Latin script geocodes more reliably than Greek,
-# and the country keeps it out of the wrong Vari.
-MAP_QUERY = "Voreadon 2, 16672 Vari, Greece"
+# and the country keeps it off a Varkiza somewhere else.
+MAP_QUERY = "Voreadon 2, 16672 Varkiza, Greece"
 
 # No email or social yet — deliberately left off rather than shown as a
 # placeholder. To add one: put it here, drop an .info-item into contact() and
@@ -116,11 +116,11 @@ COPY = {
             "home": (
                 "simpli cafe — καφές, σνακ και ροφήματα όλη μέρα",
                 "Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά "
-                "της Βάρης. Yours Simpli!",
+                "της Βάρκιζας. Yours Simpli!",
             ),
             "about": (
                 "Το μαγαζί — simpli cafe",
-                "Μια μικρή καφετέρια στη Βάρη, από τους ανθρώπους που θα δεις πίσω από "
+                "Μια μικρή καφετέρια στη Βάρκιζα, από τους ανθρώπους που θα δεις πίσω από "
                 "τον πάγκο. Η ιστορία μας και η ξύλινη ταμπέλα που μας έδωσε το όνομα.",
             ),
             "contact": (
@@ -130,7 +130,7 @@ COPY = {
             ),
         },
         "hero": {
-            "eyebrow": "Καφετέρια · Βάρη",
+            "eyebrow": "Καφετέρια · Βάρκιζα",
             "h1": "Καλός καφές,\nαπλά.",
             "lede": (
                 "Εσπρέσο όπως πρέπει, φρέσκα σνακ κάθε πρωί και ένα σκαμπό στον ήλιο για να "
@@ -244,13 +244,13 @@ COPY = {
             "invite_p": "Στη γωνία, με τα τραπεζάκια έξω. Θα σε περιμένουμε.",
             "find_eyebrow": "Ο χάρτης",
             "find_h2": "Πού θα μας βρεις",
-            "find_p": "Βρισκόμαστε στη Βάρη, στην περιοχή της Βάρκιζας. Μόλις 10 λεπτά με τα πόδια από την παραλία.",
-            "map_label": "Χάρτης με την τοποθεσία του simpli cafe στη Βάρη",
+            "find_p": "Βρισκόμαστε στη Βάρκιζα, μόλις 10 λεπτά με τα πόδια από την παραλία.",
+            "map_label": "Χάρτης με την τοποθεσία του simpli cafe στη Βάρκιζα",
             "map_cta": "Άνοιγμα στους χάρτες Google",
             "directions": "Οδηγίες",
         },
         "footer": {
-            "blurb": "Μια μικρή καφετέρια στη Βάρη, δέκα λεπτά από την παραλία. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.",
+            "blurb": "Μια μικρή καφετέρια στη Βάρκιζα, δέκα λεπτά από την παραλία. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.",
             "visit": "Επισκέψου μας",
             "pages": "Σελίδες",
             "rights": "Με επιφύλαξη παντός δικαιώματος.",
@@ -267,11 +267,11 @@ COPY = {
             "home": (
                 "simpli cafe — coffee, snacks and beverages all day",
                 "Quality coffee, fresh snacks and beverages all day, in a small corner of "
-                "Vari. Yours Simpli!",
+                "Varkiza. Yours Simpli!",
             ),
             "about": (
                 "About us — simpli cafe",
-                "A small café in Vari, run by the people you'll see behind the counter. "
+                "A small café in Varkiza, run by the people you'll see behind the counter. "
                 "Our story, and the wooden sign that gave us our name.",
             ),
             "contact": (
@@ -280,7 +280,7 @@ COPY = {
             ),
         },
         "hero": {
-            "eyebrow": "Corner café · Vari",
+            "eyebrow": "Corner café · Varkiza",
             "h1": "Good coffee,\nkept simple.",
             "lede": (
                 "Espresso pulled properly, fresh snacks each morning, and a stool in the sun "
@@ -390,13 +390,13 @@ COPY = {
             "invite_p": "On the corner, with the tables outside. We'll be here.",
             "find_eyebrow": "The map",
             "find_h2": "Where to find us",
-            "find_p": "We are located in Vari in the province of Varkiza. Only a 10 minute walk from the beach.",
-            "map_label": "Map showing the location of simpli cafe in Vari",
+            "find_p": "We are located in Varkiza, only a 10 minute walk from the beach.",
+            "map_label": "Map showing the location of simpli cafe in Varkiza",
             "map_cta": "Open in Google Maps",
             "directions": "Directions",
         },
         "footer": {
-            "blurb": "A small café in Vari, ten minutes from the beach. Coffee, something fresh to go with it, and a place to sit.",
+            "blurb": "A small café in Varkiza, ten minutes from the beach. Coffee, something fresh to go with it, and a place to sit.",
             "visit": "Visit",
             "pages": "Pages",
             "rights": "All rights reserved.",
@@ -602,7 +602,7 @@ def jsonld(lang: str) -> str:
           "@type": "PostalAddress",
           "streetAddress": "VOREADON 2",
           "postalCode": "16672",
-          "addressLocality": "VARI",
+          "addressLocality": "VARKIZA",
           "addressRegion": "Attica",
           "addressCountry": "GR"
         }},

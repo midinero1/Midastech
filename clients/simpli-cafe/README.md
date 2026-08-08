@@ -63,11 +63,11 @@ The opening hours are real — Monday to Friday 07:00–19:00, Saturday
 open/closed status) and the JSON-LD in `jsonld()` (which drives what Google
 shows). Change one, change all three.
 
-The address is real: **ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ** / **VOREADON 2, 16672 VARI**,
-set in capitals as the café writes it, in `ADDRESS`. (In Greek capitals the
-town is `ΒΑΡΗ` — Greek drops its accents when it goes uppercase.) `MAP_QUERY`
-holds the Latin-script version of the same address, because Google geocodes
-Latin more reliably and the country name keeps it out of the wrong Vari.
+The address is real: **ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΚΙΖΑ** / **VOREADON 2, 16672
+VARKIZA**, set in capitals as the café writes it, in `ADDRESS` — matching the
+takeaway cups. `MAP_QUERY` holds the Latin-script version of the same address,
+because Google geocodes Latin more reliably and the country name keeps the pin
+off a Varkiza somewhere else.
 
 The phone is real too, and split in two on purpose. `PHONE_TEL` is the E.164
 form (`+302109655160`) that every `tel:` link dials, so a tap works from any
@@ -96,7 +96,7 @@ The tokens at the top of `assets/css/site.css` drive everything:
 Two accents, with a rule between them: **sage is the interface, oak is the
 brand.** Sage carries the eyebrows, icon tiles, hairlines and the soft band
 behind the card sections; oak appears only on the dot over the *i*, the
-"Good coffee, kept simple." strapline and the "Yours Simply!" signature. Keep
+"Good coffee, kept simple." strapline and the "Yours Simpli!" signature. Keep
 that split and the palette stays calm however much you add to it.
 
 Two things make the glass read as glass rather than as grey boxes: the fixed
@@ -114,7 +114,7 @@ the knot in the board:
 
 Type is Inter throughout, which covers Greek — that is what lets both language
 trees look identical. Quicksand sets the wordmark (Latin only; the name never
-needs Greek) and Playfair italic sets the "Yours Simply!" signature. All three
+needs Greek) and Playfair italic sets the "Yours Simpli!" signature. All three
 are self-hosted in `assets/fonts/` and split by unicode-range, so a page
 downloads only the subsets it uses.
 
