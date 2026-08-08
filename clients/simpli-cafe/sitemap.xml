@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://simplicafe.gr/</loc>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://simplicafe.gr/menu/</loc>
-    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/"/>
   </url>
   <url>
     <loc>https://simplicafe.gr/about/</loc>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/about/"/>
   </url>
   <url>
     <loc>https://simplicafe.gr/contact/</loc>
-    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/contact/"/>
+  </url>
+  <url>
+    <loc>https://simplicafe.gr/en/</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/"/>
+  </url>
+  <url>
+    <loc>https://simplicafe.gr/en/about/</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/about/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/about/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/about/"/>
+  </url>
+  <url>
+    <loc>https://simplicafe.gr/en/contact/</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://simplicafe.gr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://simplicafe.gr/contact/"/>
   </url>
 </urlset>

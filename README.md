@@ -174,4 +174,4 @@ of this site's Vite build or its `dist/`.
 
 | Client | Folder | Stack |
 | --- | --- | --- |
-| simpli cafe | [`clients/simpli-cafe/`](clients/simpli-cafe/) | Static HTML + CSS, no build step |
+| simpli cafe | [`clients/simpli-cafe/`](clients/simpli-cafe/) | Static HTML + CSS, bilingual (Ελληνικά / English), no build step |
