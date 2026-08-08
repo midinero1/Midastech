@@ -35,6 +35,10 @@ export const PAGES = ['home', 'products', 'recipes', 'find', 'story']
  *   recipes → /work/violife/recipes/  /work/violife/en/recipes/
  */
 export function vPath(lang, page) {
+  // The single-file bundle in work/violife has no server to resolve
+  // directories, so it routes on the hash instead. Absent that flag this
+  // returns the real URLs, unchanged.
+  if (globalThis.__VIOLIFE_SINGLE__) return `#/${lang}/${page}`
   const base = lang === DEFAULT_LOCALE ? BASE : `${BASE}/${lang}`
   return page === 'home' ? `${base}/` : `${base}/${page}/`
 }
@@ -129,5 +133,9 @@ export const STOCKISTS = [
  */
 export const NUTRITION_ROWS = ['energy', 'fat', 'saturates', 'carbs', 'sugars', 'fibre', 'protein', 'salt']
 
-/** Asset paths. Images live in public/ so they are served unhashed and cacheable. */
-export const img = (file) => `/violife/${file}`
+/**
+ * Asset paths. Images live in public/ so they are served unhashed and
+ * cacheable. The single-file bundle swaps in data URIs through the map
+ * below; with no map present this is the plain public path.
+ */
+export const img = (file) => globalThis.__VIOLIFE_ASSETS__?.[file] ?? `/violife/${file}`
