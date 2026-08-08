@@ -33,6 +33,32 @@ export default function Products() {
         </div>
       </section>
 
+      {/* What the whole range is free from, stated before the range itself
+          rather than after it. */}
+      <section className="px-5 pb-10 sm:px-8 sm:pb-14">
+        <div className="mx-auto max-w-6xl rounded-[2rem] border border-line bg-mist/70 px-6 py-12 sm:px-12 sm:py-16">
+          <Reveal>
+            <Heading
+              align="center"
+              eyebrow={t.productsPage.freeFromEyebrow}
+              title={t.productsPage.freeFromTitle}
+              body={t.productsPage.freeFromBody}
+            />
+          </Reveal>
+          <Reveal delay={120} className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-x-3 gap-y-7 sm:grid-cols-6">
+            {FREE_FROM.map((id) => {
+              const Mark = FREE_FROM_ICONS[id]
+              return (
+                <div key={id} className="flex flex-col items-center gap-2.5 text-center text-muted">
+                  <Mark className="h-8 w-8" />
+                  <span className="text-[0.75rem] font-medium leading-tight">{t.freeFrom[id]}</span>
+                </div>
+              )
+            })}
+          </Reveal>
+        </div>
+      </section>
+
       {/* The filter follows you down the page. On a phone the range is a
           long scroll, and a filter you have to scroll back up to reach is
           a filter nobody uses twice. */}
@@ -56,30 +82,6 @@ export default function Products() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="px-5 sm:px-8">
-        <div className="mx-auto max-w-6xl rounded-[2rem] border border-line bg-mist/70 px-6 py-12 sm:px-12 sm:py-16">
-          <Reveal>
-            <Heading
-              align="center"
-              eyebrow={t.productsPage.freeFromEyebrow}
-              title={t.productsPage.freeFromTitle}
-              body={t.productsPage.freeFromBody}
-            />
-          </Reveal>
-          <Reveal delay={120} className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-x-3 gap-y-7 sm:grid-cols-6">
-            {FREE_FROM.map((id) => {
-              const Mark = FREE_FROM_ICONS[id]
-              return (
-                <div key={id} className="flex flex-col items-center gap-2.5 text-center text-muted">
-                  <Mark className="h-8 w-8" />
-                  <span className="text-[0.75rem] font-medium leading-tight">{t.freeFrom[id]}</span>
-                </div>
-              )
-            })}
-          </Reveal>
         </div>
       </section>
 

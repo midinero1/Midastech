@@ -85,6 +85,42 @@ export default function Home() {
       </section>
 
       {/* ---------------------------------------------------------------
+          The claim, and what it is free from — placed ahead of the range
+          so the allergen marks are read before any product. `id="proof"`
+          is preserved because the footer links to it.
+      --------------------------------------------------------------- */}
+      <section id="proof" className="scroll-mt-28 px-5 pb-16 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-4xl">
+          <Reveal>
+            <h2 className="title text-center">{t.home.proofTitle}</h2>
+          </Reveal>
+
+          <Reveal delay={120} className="mt-12 sm:mt-16">
+            <div className="flex items-center gap-4">
+              <span aria-hidden="true" className="h-px flex-1 bg-line" />
+              <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
+                {t.ui.freeFrom}
+              </span>
+              <span aria-hidden="true" className="h-px flex-1 bg-line" />
+            </div>
+            <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
+              {FREE_FROM.map((id) => {
+                const Mark = FREE_FROM_ICONS[id]
+                return (
+                  <li key={id} className="flex flex-col items-center gap-2 text-center text-muted">
+                    <Mark className="h-7 w-7" />
+                    <span className="text-[0.72rem] font-medium leading-tight sm:text-[0.78rem]">
+                      {t.freeFrom[id]}
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------------------
           The range — one control, filtering in place
       --------------------------------------------------------------- */}
       <section className="bg-mist/60 px-5 py-20 sm:px-8 sm:py-28">
@@ -201,41 +237,6 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---------------------------------------------------------------
-          The claim, and what it is free from — kept to the bottom of the
-          page. `id="proof"` is preserved because the footer links to it.
-      --------------------------------------------------------------- */}
-      <section id="proof" className="scroll-mt-28 px-5 pb-6 sm:px-8 sm:pb-12">
-        <div className="mx-auto max-w-4xl">
-          <Reveal>
-            <h2 className="title text-center">{t.home.proofTitle}</h2>
-          </Reveal>
-
-          <Reveal delay={120} className="mt-12 sm:mt-16">
-          <div className="flex items-center gap-4">
-            <span aria-hidden="true" className="h-px flex-1 bg-line" />
-            <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">
-              {t.ui.freeFrom}
-            </span>
-            <span aria-hidden="true" className="h-px flex-1 bg-line" />
-          </div>
-          <ul className="mt-5 grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-6">
-            {FREE_FROM.map((id) => {
-              const Mark = FREE_FROM_ICONS[id]
-              return (
-                <li key={id} className="flex flex-col items-center gap-2 text-center text-muted">
-                  <Mark className="h-7 w-7" />
-                  <span className="text-[0.72rem] font-medium leading-tight sm:text-[0.78rem]">
-                    {t.freeFrom[id]}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
           </Reveal>
         </div>
       </section>
