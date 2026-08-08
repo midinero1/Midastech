@@ -92,7 +92,7 @@ export default function Home() {
       <section id="proof" className="scroll-mt-28 px-5 pb-16 sm:px-8 sm:pb-24">
         <div className="mx-auto max-w-4xl">
           <Reveal>
-            <h2 className="title text-center">{t.home.proofTitle}</h2>
+            <h2 className="title text-center text-[clamp(1.7rem,5.6vw,2.9rem)]">{t.home.proofTitle}</h2>
           </Reveal>
 
           <Reveal delay={120} className="mt-12 sm:mt-16">
