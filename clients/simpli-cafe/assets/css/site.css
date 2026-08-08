@@ -811,6 +811,19 @@ ul {
   letter-spacing: -0.018em;
 }
 
+/* The statement set beside a photograph rather than centred on its own. */
+.statement--inline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.statement--inline p {
+  font-size: clamp(1.3rem, 2.3vw, 1.8rem);
+}
+
 .statement__sign {
   display: block;
   margin-top: 1.5rem;
@@ -830,6 +843,12 @@ ul {
   align-items: center;
 }
 
+/* Photo and panel as two blocks of equal height, rather than a tall
+   photograph next to a small floating card. */
+.split--stretch {
+  align-items: stretch;
+}
+
 @media (min-width: 56rem) {
   .split {
     grid-template-columns: 1fr 1fr;
@@ -844,6 +863,15 @@ ul {
   width: 100%;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lift);
+}
+
+.split--stretch .split__media,
+.split--stretch .split__media img {
+  height: 100%;
+}
+
+.split--stretch .split__media img {
+  object-fit: cover;
 }
 
 /* The shopfront is a tall frame — held to a sensible width so the whole

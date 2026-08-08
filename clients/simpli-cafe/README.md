@@ -135,9 +135,9 @@ Zero axe (WCAG 2.1 AA) violations on all six pages at 1280px and 390px. Skip
 link, one `<h1>` per page, landmark elements, visible focus rings, and
 `prefers-reduced-motion` honoured. Body text is 11.4:1 on white.
 
-The two photographs are the café's own and are the largest thing on the site
-(~530 KB together); run them through an image compressor and add `.webp`
-sources if you want the last few Lighthouse points.
+The three photographs are the café's own and are the largest thing on the
+site — 416 KB for all of them, resized and re-encoded at quality 82. Add
+`.webp` sources if you want the last few Lighthouse points.
 
 ## Deploying
 

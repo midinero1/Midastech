@@ -166,6 +166,7 @@ COPY = {
             "text": "Το Simpli Cafe φροντίζει να σερβίρει ποιοτικό καφέ, σνακ και ροφήματα όλη μέρα.",
             "sign": "Yours Simply!",
             "photo_alt": "Η πρόσοψη του simpli cafe, με τα ψηλά τραπεζάκια στο πεζοδρόμιο.",
+            "cup_alt": "Καφές σε ποτήρι take away με το σήμα του simpli cafe, πάνω σε ξύλινο τραπέζι στον ήλιο, δίπλα σε ένα φυτό.",
         },
         "home_cta": {
             "h2": "Πέρνα μια βόλτα",
@@ -310,6 +311,7 @@ COPY = {
             "text": "Simpli Cafe strives to serve quality coffee, snacks and beverages all day.",
             "sign": "Yours Simply!",
             "photo_alt": "The simpli cafe shopfront, with high tables out on the pavement.",
+            "cup_alt": "A simpli cafe takeaway coffee on a sunlit wooden table, next to a potted plant.",
         },
         "home_cta": {
             "h2": "Come by",
@@ -661,12 +663,29 @@ def home(lang: str) -> str:
       <!-- The line the whole place runs on -------------------------- -->
       <section class="section">
         <div class="wrap">
-          <div class="glass statement reveal">
-            <p>{e(s['text'])}</p>
-            <span class="statement__sign">{e(s['sign'])}</span>
-          </div>
+          <div class="split split--stretch">
+            <div class="split__media reveal">
+              <img
+                src="{asset(lang, 'home', 'img/coffee.jpg')}"
+                width="864"
+                height="1000"
+                alt="{e(s['cup_alt'])}"
+                loading="lazy"
+              />
+            </div>
 
-          <figure class="photo-full reveal">
+            <div class="glass statement statement--inline reveal" data-delay="90">
+              <p>{e(s['text'])}</p>
+              <span class="statement__sign">{e(s['sign'])}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- The place ------------------------------------------------- -->
+      <section class="section section--tight">
+        <div class="wrap">
+          <figure class="photo-full reveal" style="margin-top: 0">
             <img
               src="{asset(lang, 'home', 'img/storefront.jpg')}"
               width="654"
