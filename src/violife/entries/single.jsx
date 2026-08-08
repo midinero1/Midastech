@@ -42,12 +42,60 @@ function App() {
   const [route, setRoute] = useState(readHash)
 
   useEffect(() => {
+    /* Move without touching the address at all.
+     *
+     * A single file gets embedded in places that police navigation — a
+     * sandboxed frame, a preview pane — where following even a same-page
+     * fragment is treated as a navigation request and refused outright.
+     * So every in-document link is handled here instead: the default is
+     * cancelled and the route becomes ordinary component state. Nothing
+     * is ever asked of the browser's navigation, so there is nothing for
+     * a host to refuse. The href stays on the anchor, because it is what
+     * makes the link a link — readable in a status bar, and still
+     * meaningful if this file is opened somewhere unrestricted.
+     */
+    const go = (lang, page, anchor) => {
+      setRoute({ lang, page })
+      // Let the new page commit before looking for anything inside it.
+      requestAnimationFrame(() => {
+        const target = anchor && document.getElementById(anchor)
+        if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' })
+        else window.scrollTo({ top: 0, behavior: 'instant' })
+      })
+    }
+
+    const onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+      const link = e.target.closest?.('a[href^="#"]')
+      if (!link) return
+
+      e.preventDefault()
+      // "#/el/home#proof" → route "/el/home", anchor "proof"; "#quick" → anchor only.
+      const [target, fragment] = link.getAttribute('href').slice(1).split('#')
+      const [, lang, page] = target.startsWith('/') ? target.split('/') : []
+
+      if (CODES.includes(lang) && PAGES.includes(page)) return go(lang, page, fragment)
+
+      const el = document.getElementById(fragment || target)
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
+    // The picker cannot reach `go` through a link, so hand it over directly.
+    globalThis.__VIOLIFE_NAV__ = go
+    document.addEventListener('click', onClick, true)
+
+    // Only for someone who opened the file with a route already in the URL.
     const onHash = () => {
-      setRoute(readHash())
-      window.scrollTo({ top: 0, behavior: 'instant' })
+      const { lang, page } = readHash()
+      go(lang, page)
     }
     window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+
+    return () => {
+      document.removeEventListener('click', onClick, true)
+      window.removeEventListener('hashchange', onHash)
+      delete globalThis.__VIOLIFE_NAV__
+    }
   }, [])
 
   const { lang, page } = route

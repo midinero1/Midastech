@@ -92,12 +92,10 @@ export default function LanguagePicker() {
     // In the single-document build there is no page load to unmount this,
     // so it has to close itself — otherwise the choice is registered behind
     // a panel that never leaves, over a body that is still scroll-locked.
-    // The hash is set directly rather than through location.href: assigning
-    // a URL is a navigation a sandboxed frame is entitled to refuse, while
-    // setting the fragment is the same same-document move as clicking an
-    // anchor, which is what every other link here already does.
-    if (globalThis.__VIOLIFE_SINGLE__) {
-      window.location.hash = `/${code}/${page}`
+    // Routing goes through the app rather than the address bar, because the
+    // places that take a single file tend to refuse navigation of any kind.
+    if (globalThis.__VIOLIFE_NAV__) {
+      globalThis.__VIOLIFE_NAV__(code, page)
       return dismiss()
     }
 
