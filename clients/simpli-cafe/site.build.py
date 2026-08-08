@@ -43,7 +43,7 @@ HOURS_ROWS = [
     ("1,2,3,4", {"el": "Δευτέρα – Πέμπτη", "en": "Monday – Thursday"}, "07:00 – 20:00"),
     ("5", {"el": "Παρασκευή", "en": "Friday"}, "07:00 – 21:00"),
     ("6", {"el": "Σάββατο", "en": "Saturday"}, "08:00 – 21:00"),
-    ("0", {"el": "Κυριακή", "en": "Sunday"}, "08:00 – 18:00"),
+    ("0", {"el": "Κυριακή", "en": "Sunday"}, {"el": "Κλειστά", "en": "Closed"}),
 ]
 
 # --- Icons -----------------------------------------------------------------
@@ -134,7 +134,7 @@ COPY = {
             "cta1": "Πού θα μας βρεις",
             "cta2": "Το μαγαζί μας",
             "float1": "Στη γωνία, με τραπεζάκια έξω",
-            "float2": "Ανοιχτά από νωρίς, κάθε μέρα",
+            "float2": "Ανοιχτά από νωρίς, Δευτέρα – Σάββατο",
             "brand_line": "Good coffee, kept simple.",
             "photo_alt": "Η ξύλινη ταμπέλα simpli cafe, κρεμασμένη πάνω από το πεζοδρόμιο με φόντο τον γαλάζιο ουρανό.",
         },
@@ -281,7 +281,7 @@ COPY = {
             "cta1": "Find us",
             "cta2": "About us",
             "float1": "On the corner, tables outside",
-            "float2": "Open from early, every day",
+            "float2": "Open from early, Monday to Saturday",
             "brand_line": "",
             "photo_alt": "The hand-cut wooden simpli cafe sign hanging above the pavement against a blue sky.",
         },
@@ -595,8 +595,8 @@ def jsonld(lang: str) -> str:
         }},
         "openingHoursSpecification": [
           {{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"], "opens": "07:00", "closes": "20:00"}},
-          {{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday","Saturday"], "opens": "07:00", "closes": "21:00"}},
-          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "08:00", "closes": "18:00"}}
+          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "07:00", "closes": "21:00"}},
+          {{"@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "21:00"}}
         ]
       }}
     </script>"""
@@ -769,9 +769,9 @@ def about(lang: str) -> str:
 def contact(lang: str) -> str:
     k = COPY[lang]["contact"]
     rows = "\n".join(
-        f"""                  <tr data-day="{days}">
+        f"""                  <tr data-day="{days}"{' data-closed="true"' if isinstance(hours, dict) else ''}>
                     <th scope="row">{e(label[lang])}</th>
-                    <td>{hours}</td>
+                    <td>{e(hours[lang]) if isinstance(hours, dict) else hours}</td>
                   </tr>"""
         for days, label, hours in HOURS_ROWS
     )

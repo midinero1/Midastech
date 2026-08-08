@@ -25,7 +25,7 @@
     4: ['07:00', '20:00'],
     5: ['07:00', '21:00'], // Friday
     6: ['08:00', '21:00'], // Saturday
-    0: ['08:00', '18:00'], // Sunday
+    // Sunday has no entry: closed.
   };
 
   var TZ = 'Europe/Athens';

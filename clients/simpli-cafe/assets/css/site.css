@@ -971,6 +971,10 @@ ul {
   font-variant-numeric: tabular-nums;
 }
 
+.hours tr[data-closed='true'] td {
+  color: var(--muted);
+}
+
 .hours tr[data-today='true'] th,
 .hours tr[data-today='true'] td {
   color: var(--sage-deep);
