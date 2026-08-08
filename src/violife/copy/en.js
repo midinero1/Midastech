@@ -118,7 +118,7 @@ export default {
       'Three behaviours decide whether an alternative works in a real kitchen. Everything in the range is built against them.',
 
     rangeEyebrow: 'The range',
-    rangeTitle: 'Pick a format.',
+    rangeTitle: 'Explore our products.',
 
     recipesEyebrow: 'From the kitchen',
     recipesTitle: 'Something worth making tonight.',

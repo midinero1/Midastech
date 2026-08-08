@@ -126,7 +126,13 @@ export default function Home() {
       <section className="bg-mist/60 px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto max-w-6xl">
           <Reveal className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
-            <Heading eyebrow={t.home.rangeEyebrow} title={t.home.rangeTitle} />
+            {/* A notch below the other section titles — this one sits beside
+                the format control rather than carrying the section alone. */}
+            <Heading
+              eyebrow={t.home.rangeEyebrow}
+              title={t.home.rangeTitle}
+              className="[&>h2]:text-[clamp(1.55rem,4.8vw,2.6rem)]"
+            />
             <Segmented
               options={formatOptions}
               value={format}
