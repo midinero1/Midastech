@@ -69,11 +69,17 @@ town is `ΒΑΡΗ` — Greek drops its accents when it goes uppercase.) `MAP_QUE
 holds the Latin-script version of the same address, because Google geocodes
 Latin more reliably and the country name keeps it out of the wrong Vari.
 
-There is **no phone, email or social link** on the site yet. They are left off
-rather than shown as placeholders. To add one: put the value in the details
-block at the top of `site.build.py`, drop an `.info-item` into `contact()` and
-a line into the footer, and add it to `jsonld()` — a phone number in the
-structured data is what makes the "call" button appear in Google's map pack.
+The phone is real too, and split in two on purpose. `PHONE_TEL` is the E.164
+form (`+302109655160`) that every `tel:` link dials, so a tap works from any
+country whatever the page shows. `PHONE` is what the reader sees: the local
+3-3-4 grouping on the Greek page, the same number with `+30` on the English
+one, where the reader may well be abroad. It is also in the structured data,
+which is what puts a call button on the Google listing.
+
+There is **no email or social link** yet. They are left off rather than shown
+as placeholders. To add one: put the value in the details block at the top of
+`site.build.py`, drop an `.info-item` into `contact()` and a line into the
+footer.
 
 ## The design
 

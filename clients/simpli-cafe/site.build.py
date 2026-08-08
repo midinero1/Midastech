@@ -29,13 +29,19 @@ SITE = "https://simplicafe.gr"
 # The address, set in capitals as the café writes it.
 ADDRESS = {"el": "ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ", "en": "VOREADON 2, 16672 VARI"}
 
+# The phone. PHONE_TEL is what the link dials; PHONE is what the page shows —
+# grouped 3-3-4 as Greek landlines are written, with the country code added
+# for the English page, where the reader may be abroad.
+PHONE_TEL = "+302109655160"
+PHONE = {"el": "210 965 5160", "en": "+30 210 965 5160"}
+
 # What the map centres on. Latin script geocodes more reliably than Greek,
 # and the country keeps it out of the wrong Vari.
 MAP_QUERY = "Voreadon 2, 16672 Vari, Greece"
 
-# No phone, email or social yet — deliberately left off rather than shown as
-# a placeholder. To add one back: put it here, drop an .info-item into
-# contact() and a line into the footer, and add it to jsonld().
+# No email or social yet — deliberately left off rather than shown as a
+# placeholder. To add one: put it here, drop an .info-item into contact() and
+# a line into the footer.
 
 # Opening hours, mirrored in HOURS in assets/js/site.js and in the JSON-LD
 # below. All three have to agree.
@@ -110,7 +116,7 @@ COPY = {
             "home": (
                 "simpli cafe — καφές, σνακ και ροφήματα όλη μέρα",
                 "Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά "
-                "της Βάρης. Yours Simply!",
+                "της Βάρης. Yours Simpli!",
             ),
             "about": (
                 "Το μαγαζί — simpli cafe",
@@ -163,7 +169,7 @@ COPY = {
         ],
         "statement": {
             "text": "Το Simpli Cafe φροντίζει να σερβίρει ποιοτικό καφέ, σνακ και ροφήματα όλη μέρα.",
-            "sign": "Yours Simply!",
+            "sign": "Yours Simpli!",
             "photo_alt": "Η πρόσοψη του simpli cafe, με τα ψηλά τραπεζάκια στο πεζοδρόμιο.",
             "cup_alt": "Καφές σε ποτήρι take away με το σήμα του simpli cafe, πάνω σε ξύλινο τραπέζι στον ήλιο, δίπλα σε ένα φυτό.",
         },
@@ -231,6 +237,8 @@ COPY = {
             "h1": "Πέρασε από το μαγαζί",
             "lede": "Χωρίς κράτηση — σχεδόν πάντα υπάρχει ένα σκαμπό ελεύθερο. Εδώ είναι η διεύθυνση, οι ώρες μας και ο χάρτης.",
             "address_label": "Διεύθυνση",
+            "phone_label": "Τηλέφωνο",
+            "call": "Κάλεσέ μας",
             "hours_label": "Ώρες λειτουργίας",
             "invite_h2": "Πέρνα να πούμε ένα γεια και να πιεις έναν καφέ",
             "invite_p": "Στη γωνία, με τα τραπεζάκια έξω. Θα σε περιμένουμε.",
@@ -259,7 +267,7 @@ COPY = {
             "home": (
                 "simpli cafe — coffee, snacks and beverages all day",
                 "Quality coffee, fresh snacks and beverages all day, in a small corner of "
-                "Vari. Yours Simply!",
+                "Vari. Yours Simpli!",
             ),
             "about": (
                 "About us — simpli cafe",
@@ -308,7 +316,7 @@ COPY = {
         ],
         "statement": {
             "text": "Simpli Cafe strives to serve quality coffee, snacks and beverages all day.",
-            "sign": "Yours Simply!",
+            "sign": "Yours Simpli!",
             "photo_alt": "The simpli cafe shopfront, with high tables out on the pavement.",
             "cup_alt": "A simpli cafe takeaway coffee on a sunlit wooden table, next to a potted plant.",
         },
@@ -375,6 +383,8 @@ COPY = {
             "h1": "Come by the shop",
             "lede": "No booking needed — there's almost always a stool free. Here's the address, our hours and the map.",
             "address_label": "Address",
+            "phone_label": "Phone",
+            "call": "Call us",
             "hours_label": "Opening hours",
             "invite_h2": "Come say hi and grab a coffee",
             "invite_p": "On the corner, with the tables outside. We'll be here.",
@@ -516,6 +526,7 @@ def footer(lang: str, page: str) -> str:
           <h4>{e(c['visit'])}</h4>
           <ul>
             <li>{e(ADDRESS[lang])}</li>
+            <li><a href="tel:{PHONE_TEL}">{e(PHONE[lang])}</a></li>
             <li><a href="{MAPS_LINK}" rel="noopener">{e(COPY[lang]['contact']['map_cta'])}</a></li>
           </ul>
         </div>
@@ -585,6 +596,7 @@ def jsonld(lang: str) -> str:
         "inLanguage": "{lang}",
         "servesCuisine": ["Coffee", "Snacks", "Beverages"],
         "priceRange": "€",
+        "telephone": "{PHONE['en']}",
         "hasMap": "{MAPS_LINK}",
         "address": {{
           "@type": "PostalAddress",
@@ -817,9 +829,17 @@ def contact(lang: str) -> str:
                       <p class="info-item__value">{e(ADDRESS[lang])}</p>
                     </div>
                   </li>
+                  <li class="info-item">
+                    <span class="info-item__icon">{ICONS['phone']}</span>
+                    <div>
+                      <h3>{e(k['phone_label'])}</h3>
+                      <a class="phone-link" href="tel:{PHONE_TEL}">{e(PHONE[lang])}</a>
+                    </div>
+                  </li>
                 </ul>
                 <div class="btn-row" style="margin-top: 1.75rem">
                   <a class="btn btn--primary" href="{MAPS_LINK}" rel="noopener">{ICONS['pin']}{e(k['directions'])}</a>
+                  <a class="btn btn--glass" href="tel:{PHONE_TEL}">{ICONS['phone']}{e(k['call'])}</a>
                 </div>
               </div>
 
