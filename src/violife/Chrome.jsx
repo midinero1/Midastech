@@ -113,9 +113,10 @@ function TopBar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-3 pt-3 sm:px-6 sm:pt-5">
         <a
           href={path('home')}
-          /* Tight leading so the wordmark can grow without the capsule
-             outgrowing the round buttons sitting beside it. */
-          className="glass frost flex items-center gap-2.5 rounded-full px-5 py-2.5 text-[1.2rem] leading-tight sm:text-[1.35rem]"
+          /* Tight leading and slim vertical padding, so the wordmark can be
+             set large without the capsule towering over the round buttons
+             sitting beside it. */
+          className="glass frost flex items-center gap-2.5 rounded-full px-5 py-2 text-[1.45rem] leading-tight sm:px-6 sm:text-[1.75rem]"
           aria-label={t.ui.home}
         >
           <Wordmark />
