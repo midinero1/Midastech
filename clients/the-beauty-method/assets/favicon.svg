@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The mark on the brand's black ground. Simplified for small sizes: the
+       petal silhouette and the stem carry it down to 16px, so only two leaf
+       pairs survive here. Keep in step with the #tbm-mark symbol in the pages. -->
+  <rect width="64" height="64" fill="#0f0e0c" />
+  <g transform="translate(32 32) scale(0.82) translate(-32 -32)">
+    <path
+      d="M32 4C41 15 46 24 46 33C46 44 40 53 32 60C24 53 18 44 18 33C18 24 23 15 32 4Z"
+      fill="none"
+      stroke="#e3c77e"
+      stroke-width="2.4"
+    />
+    <path d="M32 8.5L35 13L32 17.5L29 13Z" fill="#e3c77e" />
+    <path d="M32 17V52" stroke="#e3c77e" stroke-width="2.2" stroke-linecap="round" />
+    <g fill="#e3c77e">
+      <path d="M32 34C35 30 37.5 27 41.5 24C40.5 30 36.5 33 32 34Z" />
+      <path d="M32 34C29 30 26.5 27 22.5 24C23.5 30 27.5 33 32 34Z" />
+      <path d="M32 46C35 41 38 37 42 34C41 40 37 44 32 46Z" />
+      <path d="M32 46C29 41 26 37 22 34C23 40 27 44 32 46Z" />
+    </g>
+  </g>
+</svg>

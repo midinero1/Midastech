@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <title>The Beauty Method — Enhancing Your Natural Beauty</title>
+    <meta
+      name="description"
+      content="A boutique beauty studio for waxing, nails, tinting, brows and lashes. Unhurried appointments, meticulous technique, and a finish that still looks like you."
+    />
+    <link rel="canonical" href="https://thebeautymethod.com/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Beauty Method" />
+    <meta property="og:title" content="The Beauty Method — Enhancing Your Natural Beauty" />
+    <meta
+      property="og:description"
+      content="A boutique beauty studio for waxing, nails, tinting, brows and lashes. Unhurried appointments, meticulous technique, and a finish that still looks like you."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href="assets/fonts/playfair-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/css/site.css" />
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Sprite: the mark, the botanical sprig and the treatment icons, each
+         defined once and placed with <use>. -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true" focusable="false">
+      <symbol id="tbm-mark" viewBox="0 0 64 64">
+        <path
+          d="M32 4C41 15 46 24 46 33C46 44 40 53 32 60C24 53 18 44 18 33C18 24 23 15 32 4Z"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.3"
+        />
+        <path d="M32 9L34.4 13L32 17L29.6 13Z" fill="#c9a227" />
+        <path d="M32 17V52" stroke="#c9a227" stroke-width="1.1" stroke-linecap="round" />
+        <g fill="#c9a227">
+          <path d="M32 28C34 25 36 22 39 20C38.5 24 36 26.5 32 28Z" />
+          <path d="M32 28C30 25 28 22 25 20C25.5 24 28 26.5 32 28Z" />
+          <path d="M32 36C35 32 37 29 41 26C40 31 36 34 32 36Z" />
+          <path d="M32 36C29 32 27 29 23 26C24 31 28 34 32 36Z" />
+          <path d="M32 45C35 40 38 36 42 33C41 39 37 43 32 45Z" />
+          <path d="M32 45C29 40 26 36 22 33C23 39 27 43 32 45Z" />
+        </g>
+      </symbol>
+
+      <symbol id="tbm-sprig" viewBox="0 0 130 130">
+        <g fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+          <path d="M124 6C104 26 86 48 72 76" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(109 21) rotate(82)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(109 21) rotate(172)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(96 38) rotate(84) scale(0.92)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(96 38) rotate(174) scale(0.92)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(83 56) rotate(86) scale(0.8)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(83 56) rotate(176) scale(0.8)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(74 72) rotate(90) scale(0.62)" />
+          <path d="M0 0C5 -4 12 -4 17 0C12 4 5 4 0 0Z" transform="translate(74 72) rotate(180) scale(0.62)" />
+          <path d="M118 10C121 6 126 6 128 10C126 14 121 14 118 10Z" />
+        </g>
+      </symbol>
+
+      <symbol id="ic-wax" viewBox="0 0 40 40">
+        <g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 5c0 0 10 11.6 10 18.4a10 10 0 0 1-20 0C10 16.6 20 5 20 5Z" />
+          <path d="M15.5 24a4.5 4.5 0 0 0 4.5 4.5" />
+        </g>
+      </symbol>
+
+      <symbol id="ic-nail" viewBox="0 0 40 40">
+        <g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13.5 14.5a6.5 6.5 0 0 1 13 0v8.5a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4Z" />
+          <path d="M15.5 24.5c2-2 7-2 9 0" />
+        </g>
+      </symbol>
+
+      <symbol id="ic-tint" viewBox="0 0 40 40">
+        <g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 22c5.5-7.5 22.5-7.5 28 0-5.5 7.5-22.5 7.5-28 0Z" />
+          <circle cx="20" cy="22" r="4.2" />
+          <path d="M10 13.5 12 16.5M20 11v3.4M30 13.5 28 16.5" />
+        </g>
+      </symbol>
+
+      <symbol id="ic-brow" viewBox="0 0 40 40">
+        <g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 24c4-8 20-10 26-3" />
+          <path d="M11 20.5 9.5 17M16 17.5 15.5 14M21.5 16.8 22 13.4M27 18.2 28.4 15.2" />
+        </g>
+      </symbol>
+    </svg>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="logo" href="./" aria-label="The Beauty Method — home">
+          <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#tbm-mark" /></svg>
+          <span class="wordmark">
+            <span class="the">The</span>
+            <span class="beauty">Beauty</span>
+            <span class="method">Method</span>
+          </span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span>
+          <span class="sr-only">Menu</span>
+        </button>
+
+        <nav class="nav" id="site-nav" aria-label="Primary">
+          <a href="./" aria-current="page">Home</a>
+          <a href="treatments/">Treatments</a>
+          <a href="method/">Our Method</a>
+          <a href="about/">About</a>
+          <a class="btn btn-solid nav-cta" href="#book">Book</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero ------------------------------------------------------------ -->
+      <section class="hero">
+        <div class="shell">
+          <div class="hero-frame">
+            <svg class="hero-sprig hero-sprig--tr" viewBox="0 0 130 130" aria-hidden="true"><use href="#tbm-sprig" /></svg>
+            <svg class="hero-sprig hero-sprig--bl" viewBox="0 0 130 130" aria-hidden="true"><use href="#tbm-sprig" /></svg>
+
+            <svg class="hero-mark" viewBox="0 0 64 64" aria-hidden="true">
+              <use href="#tbm-mark" />
+            </svg>
+
+            <h1>
+              <span class="line-sm">The</span>
+              <span class="line-lg">Beauty</span>
+              <span class="line-md">Method</span>
+            </h1>
+
+            <p class="hero-slogan">Enhancing your natural beauty</p>
+
+            <div class="hero-actions">
+              <a class="btn btn-solid" href="treatments/">View treatments</a>
+              <a class="btn btn-outline" href="#book">Book an appointment</a>
+            </div>
+
+            <ul class="hero-meta">
+              <li>Waxing</li>
+              <li>Nails</li>
+              <li>Tinting</li>
+              <li>Brows &amp; Lashes</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Welcome --------------------------------------------------------- -->
+      <section class="section-pad">
+        <div class="shell split">
+          <div class="reveal">
+            <span class="eyebrow">Welcome</span>
+            <h2>A small studio, and an unhurried one.</h2>
+            <p class="lede" style="margin-top: 1.5rem">
+              The Beauty Method is a boutique treatment room built around one idea: beauty work
+              should be precise, calm and entirely yours. One guest at a time, no rushing, no
+              upselling — just careful hands and a finish that still looks like you.
+            </p>
+            <p style="margin-top: 1.25rem">
+              Every appointment begins with a proper look at what you actually want, and ends with
+              the aftercare that keeps it looking that way. That sequence is the method, and it is
+              the same whether you are here for a brow tint or a full leg wax.
+            </p>
+            <p style="margin-top: 2rem">
+              <a class="link" href="method/">Read our method <span aria-hidden="true">&rarr;</span></a>
+            </p>
+          </div>
+
+          <div class="reveal frame-motif" style="--i: 1">
+            <svg class="hero-sprig hero-sprig--tr" viewBox="0 0 130 130" aria-hidden="true"><use href="#tbm-sprig" /></svg>
+            <svg class="hero-sprig hero-sprig--bl" viewBox="0 0 130 130" aria-hidden="true"><use href="#tbm-sprig" /></svg>
+            <div class="motif-inner">
+              <svg class="motif-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#tbm-mark" /></svg>
+              <p class="motif-slogan">Enhancing your natural beauty</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Treatments preview ---------------------------------------------- -->
+      <section class="section-pad band-ivory">
+        <div class="shell">
+          <div class="section-head center reveal">
+            <span class="eyebrow">The Menu</span>
+            <h2>Treatments, kept deliberately few</h2>
+            <p>
+              Four things, done properly, rather than forty done in a hurry. The full price list —
+              waxing, nails and tinting — lives on the treatments page.
+            </p>
+          </div>
+
+          <div class="grid grid-4">
+            <article class="card reveal" style="--i: 0">
+              <svg class="card-icon" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-wax" /></svg>
+              <h3>Waxing</h3>
+              <p>
+                Lip, chin, brows and underarm through to bikini, Brazilian and full leg. Warm wax,
+                a clean strip technique and skin left calm.
+              </p>
+              <span class="card-price">From $10</span>
+            </article>
+
+            <article class="card reveal" style="--i: 1">
+              <svg class="card-icon" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-nail" /></svg>
+              <h3>Nails</h3>
+              <p>
+                Express manicures and pedicures when time is short, and deluxe gel treatments with
+                the soak, the massage and the finish when it is not.
+              </p>
+              <span class="card-price">From $15</span>
+            </article>
+
+            <article class="card reveal" style="--i: 2">
+              <svg class="card-icon" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-tint" /></svg>
+              <h3>Tinting</h3>
+              <p>
+                Brow and lash tinting matched to your colouring, so the depth reads as yours rather
+                than as something applied.
+              </p>
+              <span class="card-price">From $10</span>
+            </article>
+
+            <article class="card reveal" style="--i: 3">
+              <svg class="card-icon" viewBox="0 0 40 40" aria-hidden="true"><use href="#ic-brow" /></svg>
+              <h3>Brows &amp; Lashes</h3>
+              <p>
+                Shaping mapped to your own bone structure, and the eye trio when you want brows,
+                shape and lashes settled in one sitting.
+              </p>
+              <span class="card-price">From $10</span>
+            </article>
+          </div>
+
+          <p style="margin-top: 2.75rem; text-align: center">
+            <a class="link" href="treatments/">See the full price list <span aria-hidden="true">&rarr;</span></a>
+          </p>
+        </div>
+      </section>
+
+      <!-- Method preview --------------------------------------------------- -->
+      <section class="section-pad">
+        <div class="shell">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Our Method</span>
+            <h2>Four steps, every single time</h2>
+            <p>
+              The method is not a treatment on the menu. It is the order things happen in, and it
+              does not change because the room is busy.
+            </p>
+          </div>
+
+          <div class="grid grid-4">
+            <article class="step reveal" style="--i: 0">
+              <div class="step-num">01</div>
+              <h3>Consult</h3>
+              <p>
+                We start with your skin, your colouring and what you want it to look like on the
+                day after — not a form and a stopwatch.
+              </p>
+            </article>
+
+            <article class="step reveal" style="--i: 1">
+              <div class="step-num">02</div>
+              <h3>Prepare</h3>
+              <p>
+                Skin cleansed, patch tests where they are due, fresh tools every time. Most of the
+                comfort in a treatment is decided before it starts.
+              </p>
+            </article>
+
+            <article class="step reveal" style="--i: 2">
+              <div class="step-num">03</div>
+              <h3>Refine</h3>
+              <p>
+                The treatment itself, worked in small sections and checked as we go, so the shape
+                is corrected while it can still be corrected.
+              </p>
+            </article>
+
+            <article class="step reveal" style="--i: 3">
+              <div class="step-num">04</div>
+              <h3>Aftercare</h3>
+              <p>
+                Skin soothed, and you leave knowing exactly what to do for the next 48 hours and
+                when to come back.
+              </p>
+            </article>
+          </div>
+
+          <p style="margin-top: 2.75rem; text-align: center">
+            <a class="link" href="method/">The method in full <span aria-hidden="true">&rarr;</span></a>
+          </p>
+        </div>
+      </section>
+
+      <!-- Philosophy ------------------------------------------------------- -->
+      <section class="section-pad band-ink">
+        <div class="shell">
+          <figure class="quote reveal">
+            <blockquote>&ldquo;Enhancing your natural beauty.&rdquo;</blockquote>
+            <figcaption>The Beauty Method</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Booking ---------------------------------------------------------- -->
+      <section class="section-pad-sm cta-band" id="book">
+        <div class="shell-narrow reveal">
+          <span class="eyebrow">Appointments</span>
+          <h2>Book your treatment</h2>
+          <p>
+            Appointments are one guest at a time, so the diary is kept small on purpose. Send a
+            note with the treatment you are after and a couple of times that suit you.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-solid" href="mailto:hello@thebeautymethod.com">Email the studio</a>
+            <a class="btn btn-outline" href="treatments/">Browse treatments</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="footer-top">
+          <div class="footer-col">
+            <a class="logo" href="./" style="color: #fff">
+              <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#tbm-mark" /></svg>
+              <span class="wordmark">
+                <span class="the">The</span>
+                <span class="beauty">Beauty</span>
+                <span class="method">Method</span>
+              </span>
+            </a>
+            <p class="footer-slogan">Enhancing your natural beauty</p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Explore</h3>
+            <ul>
+              <li><a href="./">Home</a></li>
+              <li><a href="treatments/">Treatments</a></li>
+              <li><a href="method/">Our Method</a></li>
+              <li><a href="about/">About</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h3>Treatments</h3>
+            <ul>
+              <li><a href="treatments/#waxing">Waxing</a></li>
+              <li><a href="treatments/#nails">Nail services</a></li>
+              <li><a href="treatments/#tinting">Tinting</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h3>Visit</h3>
+            <ul>
+              <li><a href="mailto:hello@thebeautymethod.com">hello@thebeautymethod.com</a></li>
+              <li>Studio address — to confirm</li>
+              <li>Opening hours — to confirm</li>
+              <li><a href="#">Instagram</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 The Beauty Method. All rights reserved.</p>
+          <p>Site by <a href="https://midastechnology.com">Midas Technology</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/site.js" defer></script>
+  </body>
+</html>

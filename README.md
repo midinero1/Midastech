@@ -10,6 +10,13 @@ npm run build    # production build into dist/
 npm run preview  # serve the build on http://localhost:4173
 ```
 
+Client sites built by Midas live under `clients/`, each self-contained and
+deployed separately from this one:
+
+| Client | Folder |
+| --- | --- |
+| The Beauty Method | [`clients/the-beauty-method`](clients/the-beauty-method) |
+
 ## Pages
 
 English sits at the root, Greek under `/el/`. Eight documents in all.
