@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>simpli cafe — καφές, σνακ και ροφήματα όλη μέρα</title>
-    <meta name="description" content="Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά της Αθήνας. Yours Simply!" />
+    <meta name="description" content="Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά της Βάρης. Yours Simply!" />
     <link rel="canonical" href="https://simplicafe.gr/" />
     <link rel="alternate" hreflang="el" href="https://simplicafe.gr/" />
     <link rel="alternate" hreflang="en" href="https://simplicafe.gr/en/" />
@@ -15,7 +15,7 @@
     <meta property="og:site_name" content="simpli cafe" />
     <meta property="og:locale" content="el_GR" />
     <meta property="og:title" content="simpli cafe — καφές, σνακ και ροφήματα όλη μέρα" />
-    <meta property="og:description" content="Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά της Αθήνας. Yours Simply!" />
+    <meta property="og:description" content="Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά της Βάρης. Yours Simply!" />
     <meta property="og:url" content="https://simplicafe.gr/" />
     <meta property="og:image" content="https://simplicafe.gr/assets/img/sign.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -33,12 +33,13 @@
         "inLanguage": "el",
         "servesCuisine": ["Coffee", "Snacks", "Beverages"],
         "priceRange": "€",
-        "telephone": "+30 210 000 0000",
-        "email": "hello@simplicafe.gr",
+        "hasMap": "https://www.google.com/maps/search/?api=1&query=Voreadon%202%2C%2016672%20Vari%2C%20Greece",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "00 Example Street",
-          "addressLocality": "Athens",
+          "streetAddress": "VOREADON 2",
+          "postalCode": "16672",
+          "addressLocality": "VARI",
+          "addressRegion": "Attica",
           "addressCountry": "GR"
         },
         "openingHoursSpecification": [
@@ -71,8 +72,9 @@
       <section class="hero">
         <div class="wrap hero__grid">
           <div>
-            <p class="eyebrow">Καφετέρια · Αθήνα</p>
+            <p class="eyebrow">Καφετέρια · Βάρη</p>
             <h1>Καλός καφές,<br />απλά.</h1>
+            <span class="brand-line">Good coffee, kept simple.</span>
             <p class="lede">Εσπρέσο όπως πρέπει, φρέσκα σνακ κάθε πρωί και ένα σκαμπό στον ήλιο για να τα απολαύσεις. Τίποτα περίπλοκο — μόνο πράγματα φτιαγμένα σωστά.</p>
             <div class="btn-row" style="margin-top: 2rem">
               <a class="btn btn--primary" href="contact/">Πού θα μας βρεις</a>
@@ -110,7 +112,7 @@
             <article class="glass card reveal">
               <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3c-.6 1 .6 1.8 0 3M12 2.5c-.7 1.2.7 2 0 3.5"/></svg></span>
               <h3>Καφές που αξίζει</h3>
-              <p>Εσπρέσο καβουρδισμένος για εμάς στην Αθήνα και αλεσμένος τη στιγμή. Φρέντο, φίλτρου, flat white ή ελληνικός στο μπρίκι — όπως τον πίνεις.</p>
+              <p>Εσπρέσο καβουρδισμένος για εμάς στην Αττική και αλεσμένος τη στιγμή. Φρέντο, φίλτρου, flat white ή ελληνικός στο μπρίκι — όπως τον πίνεις.</p>
             </article>
             <article class="glass card reveal" data-delay="90">
               <span class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14c0-4 4-7 9-7s9 3 9 7c0 1.7-1.3 3-3 3H6c-1.7 0-3-1.3-3-3Z"/><path d="M8 8.5 7 6M12 7.6V5M16 8.5 17 6"/></svg></span>
@@ -134,14 +136,13 @@
             <span class="statement__sign">Yours Simply!</span>
           </div>
 
-          <figure class="reveal" style="margin: clamp(1.5rem, 3vw, 2.5rem) 0 0">
+          <figure class="photo-full reveal">
             <img
               src="assets/img/storefront.jpg"
               width="654"
               height="862"
               alt="Η πρόσοψη του simpli cafe, με τα ψηλά τραπεζάκια στο πεζοδρόμιο."
               loading="lazy"
-              style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 50%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lift)"
             />
           </figure>
         </div>
@@ -155,7 +156,7 @@
             <p class="lede" style="margin-top: 1rem; font-size: 1.1rem">Είμαστε εδώ από νωρίς το πρωί. Χωρίς κράτηση, χωρίς φασαρία — απλώς σπρώξε την πόρτα.</p>
             <div class="btn-row" style="justify-content: center; margin-top: 2rem">
               <a class="btn btn--primary" href="contact/">Δες πού είμαστε</a>
-              <a class="btn btn--glass" href="tel:+302100000000">Πάρε τηλέφωνο</a>
+              <a class="btn btn--glass" href="about/">Η ιστορία μας</a>
             </div>
           </div>
         </div>
@@ -169,15 +170,14 @@
           <span class="logo__name" aria-hidden="true">simplı<span class="logo__dot"></span></span>
           <span class="logo__sub" aria-hidden="true">cafe</span>
         </a>
-          <p style="margin-top: 1rem; max-width: 32ch">Μια μικρή καφετέρια στην Αθήνα. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.</p>
+          <p style="margin-top: 1rem; max-width: 32ch">Μια μικρή καφετέρια στη Βάρη, δέκα λεπτά από την παραλία. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.</p>
         </div>
 
         <div>
           <h4>Επισκέψου μας</h4>
           <ul>
-            <li>Οδός Παραδείγματος 00, Αθήνα 000 00</li>
-            <li><a href="tel:+302100000000">+30 210 000 0000</a></li>
-            <li><a href="mailto:hello@simplicafe.gr">hello@simplicafe.gr</a></li>
+            <li>ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ</li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=Voreadon%202%2C%2016672%20Vari%2C%20Greece" rel="noopener">Άνοιγμα στους χάρτες Google</a></li>
           </ul>
         </div>
 

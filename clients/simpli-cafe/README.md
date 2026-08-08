@@ -4,9 +4,10 @@ Three pages — home, about, contact — in **Greek and English**. Greek is the
 primary language and sits at the root of the site; English lives under `/en/`,
 with a ΕΛ / EN toggle in the header on every page.
 
-White paper, black ink and oak, with frosted-glass panels floating over a very
-soft warm wash: clean and Scandinavian, using translucency rather than colour
-for depth. Plain HTML and CSS — no framework, and nothing to run on the server.
+White paper, black ink, a muted sage and a little oak, with frosted-glass
+panels floating over a soft wash: clean and Scandinavian, taking its depth
+from translucency rather than from bright colour. Plain HTML and CSS — no
+framework, and nothing to run on the server.
 
 ```bash
 # preview locally
@@ -53,16 +54,21 @@ every marker.
 
 | What | Where |
 | --- | --- |
-| Address (both languages) | `ADDRESS` |
-| Phone | `PHONE_DISPLAY` and `PHONE_TEL` |
-| Email, Instagram | `EMAIL`, `INSTAGRAM`, `INSTAGRAM_URL` |
-| **What the map points at** | `MAP_QUERY` — put the real address here and both the embedded map and the "open in Google Maps" link follow |
-| Opening hours | `HOURS_ROWS`, **and** `HOURS` in `assets/js/site.js`, **and** the JSON-LD in `jsonld()` — all three must agree |
 | Domain (`https://simplicafe.gr`) | `SITE` |
+| Opening hours | `HOURS_ROWS`, **and** `HOURS` in `assets/js/site.js`, **and** the JSON-LD in `jsonld()` — all three must agree |
 | The story on the About page | `COPY['el']['about']` and `COPY['en']['about']` |
 
-The JSON-LD block on the home pages is what puts a café in Google's map pack.
-Keep it accurate; a wrong phone number there is worse than none.
+The address is real: **ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ** / **VOREADON 2, 16672 VARI**,
+set in capitals as the café writes it, in `ADDRESS`. (In Greek capitals the
+town is `ΒΑΡΗ` — Greek drops its accents when it goes uppercase.) `MAP_QUERY`
+holds the Latin-script version of the same address, because Google geocodes
+Latin more reliably and the country name keeps it out of the wrong Vari.
+
+There is **no phone, email or social link** on the site yet. They are left off
+rather than shown as placeholders. To add one: put the value in the details
+block at the top of `site.build.py`, drop an `.info-item` into `contact()` and
+a line into the footer, and add it to `jsonld()` — a phone number in the
+structured data is what makes the "call" button appear in Google's map pack.
 
 ## The design
 
@@ -71,9 +77,16 @@ The tokens at the top of `assets/css/site.css` drive everything:
 | Token | Value | What it is |
 | --- | --- | --- |
 | `--bg` / `--ink` | `#ffffff` / `#101010` | paper and ink |
-| `--oak` / `--oak-deep` | `#b5814f` / `#8a5c33` | the pine of the sign; the deeper one is the version that is safe as text |
+| `--sage` / `--sage-deep` | `#6f8175` / `#4d5e53` | the accent that does the everyday work — rules, icon tiles, dots, the band behind the cards. The deep one is the version that is safe as text. |
+| `--oak` / `--oak-deep` | `#b5814f` / `#8a5c33` | the pine of the sign, kept for the brand alone |
 | `--walnut` | `#7c4f2e` | the knot that dots the *i* |
 | `--glass`, `--blur` | white at 62%, `blur(24px) saturate(180%)` | the frosted panels |
+
+Two accents, with a rule between them: **sage is the interface, oak is the
+brand.** Sage carries the eyebrows, icon tiles, hairlines and the soft band
+behind the card sections; oak appears only on the dot over the *i*, the
+"Good coffee, kept simple." strapline and the "Yours Simply!" signature. Keep
+that split and the palette stays calm however much you add to it.
 
 Two things make the glass read as glass rather than as grey boxes: the fixed
 warm wash painted by `body::before`, and `.band-wash` behind the sections that
@@ -100,6 +113,13 @@ downloads only the subsets it uses.
 `https://www.google.com/maps?q=<address>&output=embed` — no API key, no
 account. It is the one third-party request on the site, and it only fires when
 the map scrolls into view (`loading="lazy"`).
+
+A coffee-cup pin is drawn on top of it, in `ICONS['pin_cup']`. The embed
+centres itself on the address, so the pin is positioned at the centre of the
+frame and the iframe is given `pointer-events: none` — the map is a picture of
+where the café is rather than something to drag around, which is also what
+keeps the cup planted on the right building. The button underneath opens the
+real, interactive map.
 
 ## JavaScript
 

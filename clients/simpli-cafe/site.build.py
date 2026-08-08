@@ -22,22 +22,20 @@ import urllib.parse
 ROOT = pathlib.Path(__file__).parent
 
 # --- Details ---------------------------------------------------------------
-# PLACEHOLDER: every value in this block is a stand-in. Replace them with the
-# café's real ones, then run this script.
 
+# PLACEHOLDER: the domain is still a stand-in.
 SITE = "https://simplicafe.gr"
-PHONE_DISPLAY = "+30 210 000 0000"
-PHONE_TEL = "+302100000000"
-EMAIL = "hello@simplicafe.gr"
-INSTAGRAM = "@simplicafe"
-INSTAGRAM_URL = "https://instagram.com/"
-ADDRESS = {
-    "el": "Οδός Παραδείγματος 00, Αθήνα 000 00",
-    "en": "00 Example Street, Athens 000 00",
-}
-# What the map is centred on. Swap for the café's real address (or paste the
-# place name Google Maps knows it by) and both the embed and the link follow.
-MAP_QUERY = "Simpli Cafe Athens"
+
+# The address, set in capitals as the café writes it.
+ADDRESS = {"el": "ΒΟΡΕΑΔΩΝ 2, 16672 ΒΑΡΗ", "en": "VOREADON 2, 16672 VARI"}
+
+# What the map centres on. Latin script geocodes more reliably than Greek,
+# and the country keeps it out of the wrong Vari.
+MAP_QUERY = "Voreadon 2, 16672 Vari, Greece"
+
+# No phone, email or social yet — deliberately left off rather than shown as
+# a placeholder. To add one back: put it here, drop an .info-item into
+# contact() and a line into the footer, and add it to jsonld().
 
 # Opening hours, mirrored in HOURS in assets/js/site.js and in the JSON-LD
 # below. All three have to agree.
@@ -84,6 +82,17 @@ ICONS = {
         '<path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2'
         'M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'
     ),
+    "pin_cup": (
+        '<svg viewBox="0 0 48 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+        '<path d="M24 1.6c-10.2 0-18.4 8.2-18.4 18.3C5.6 32.7 24 58 24 58s18.4-25.3 18.4-38.1'
+        'C42.4 9.8 34.2 1.6 24 1.6Z" fill="#101010" stroke="#ffffff" stroke-width="2.4"/>'
+        '<g fill="none" stroke="#ffffff" stroke-width="2.1" stroke-linecap="round" '
+        'stroke-linejoin="round">'
+        '<path d="M15.4 15.2h12.4v6.6a6.2 6.2 0 0 1-6.2 6.2h0a6.2 6.2 0 0 1-6.2-6.2v-6.6Z"/>'
+        '<path d="M27.8 16.6h1.7a3 3 0 0 1 0 6h-1.7"/>'
+        '<path d="M18.8 10.6c-.5.9.5 1.6 0 2.6M23.4 10.2c-.6 1 .6 1.7 0 2.9"/>'
+        "</g></svg>"
+    ),
     "arrow": _svg('<path d="M5 12h14M13 6l6 6-6 6"/>', width="1.8"),
 }
 
@@ -102,11 +111,11 @@ COPY = {
             "home": (
                 "simpli cafe — καφές, σνακ και ροφήματα όλη μέρα",
                 "Ποιοτικός καφές, φρέσκα σνακ και ροφήματα όλη μέρα, σε μια μικρή γωνιά "
-                "της Αθήνας. Yours Simply!",
+                "της Βάρης. Yours Simply!",
             ),
             "about": (
                 "Το μαγαζί — simpli cafe",
-                "Μια μικρή καφετέρια στην Αθήνα, από τους ανθρώπους που θα δεις πίσω από "
+                "Μια μικρή καφετέρια στη Βάρη, από τους ανθρώπους που θα δεις πίσω από "
                 "τον πάγκο. Η ιστορία μας και η ξύλινη ταμπέλα που μας έδωσε το όνομα.",
             ),
             "contact": (
@@ -116,7 +125,7 @@ COPY = {
             ),
         },
         "hero": {
-            "eyebrow": "Καφετέρια · Αθήνα",
+            "eyebrow": "Καφετέρια · Βάρη",
             "h1": "Καλός καφές,\nαπλά.",
             "lede": (
                 "Εσπρέσο όπως πρέπει, φρέσκα σνακ κάθε πρωί και ένα σκαμπό στον ήλιο για να "
@@ -126,6 +135,7 @@ COPY = {
             "cta2": "Το μαγαζί μας",
             "float1": "Στη γωνία, με τραπεζάκια έξω",
             "float2": "Ανοιχτά από νωρίς, κάθε μέρα",
+            "brand_line": "Good coffee, kept simple.",
             "photo_alt": "Η ξύλινη ταμπέλα simpli cafe, κρεμασμένη πάνω από το πεζοδρόμιο με φόντο τον γαλάζιο ουρανό.",
         },
         "cards_head": {
@@ -136,7 +146,7 @@ COPY = {
             (
                 "cup",
                 "Καφές που αξίζει",
-                "Εσπρέσο καβουρδισμένος για εμάς στην Αθήνα και αλεσμένος τη στιγμή. "
+                "Εσπρέσο καβουρδισμένος για εμάς στην Αττική και αλεσμένος τη στιγμή. "
                 "Φρέντο, φίλτρου, flat white ή ελληνικός στο μπρίκι — όπως τον πίνεις.",
             ),
             (
@@ -161,7 +171,7 @@ COPY = {
             "h2": "Πέρνα μια βόλτα",
             "p": "Είμαστε εδώ από νωρίς το πρωί. Χωρίς κράτηση, χωρίς φασαρία — απλώς σπρώξε την πόρτα.",
             "cta1": "Δες πού είμαστε",
-            "cta2": "Πάρε τηλέφωνο",
+            "cta2": "Η ιστορία μας",
         },
         "about": {
             "eyebrow": "Το μαγαζί",
@@ -187,7 +197,7 @@ COPY = {
                 (
                     "cup",
                     "Καφές που θα πίναμε κι εμείς",
-                    "Ένα χαρμάνι espresso, καβουρδισμένο για εμάς στην Αθήνα και φρέσκο κάθε "
+                    "Ένα χαρμάνι espresso, καβουρδισμένο για εμάς στην Αττική και φρέσκο κάθε "
                     "εβδομάδα. Το ρυθμίζουμε κάθε πρωί και το ξαναδοκιμάζουμε το μεσημέρι.",
                 ),
                 (
@@ -218,23 +228,21 @@ COPY = {
         },
         "contact": {
             "eyebrow": "Επικοινωνία",
-            "h1": "Πού θα μας βρεις",
-            "lede": "Χωρίς κράτηση — σχεδόν πάντα υπάρχει ένα σκαμπό ελεύθερο. Για οτιδήποτε άλλο, εδώ είμαστε.",
-            "phone_label": "Τηλέφωνο",
+            "h1": "Πέρασε από το μαγαζί",
+            "lede": "Χωρίς κράτηση — σχεδόν πάντα υπάρχει ένα σκαμπό ελεύθερο. Εδώ είναι η διεύθυνση, οι ώρες μας και ο χάρτης.",
             "address_label": "Διεύθυνση",
-            "email_label": "Email",
-            "instagram_label": "Instagram",
-            "instagram_note": "Ό,τι βγήκε φρέσκο, τα περισσότερα πρωινά.",
             "hours_label": "Ώρες λειτουργίας",
             "invite_h2": "Πέρνα να πούμε ένα γεια και να πιεις έναν καφέ",
             "invite_p": "Στη γωνία, με τα τραπεζάκια έξω. Θα σε περιμένουμε.",
-            "map_label": "Χάρτης με την τοποθεσία του simpli cafe",
+            "find_eyebrow": "Ο χάρτης",
+            "find_h2": "Πού θα μας βρεις",
+            "find_p": "Βρισκόμαστε στη Βάρη, στην περιοχή της Βάρκιζας. Μόλις 10 λεπτά με τα πόδια από την παραλία.",
+            "map_label": "Χάρτης με την τοποθεσία του simpli cafe στη Βάρη",
             "map_cta": "Άνοιγμα στους χάρτες Google",
             "directions": "Οδηγίες",
-            "call": "Κάλεσέ μας",
         },
         "footer": {
-            "blurb": "Μια μικρή καφετέρια στην Αθήνα. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.",
+            "blurb": "Μια μικρή καφετέρια στη Βάρη, δέκα λεπτά από την παραλία. Καφές, κάτι φρέσκο να τον συνοδεύει, και μια θέση να καθίσεις.",
             "visit": "Επισκέψου μας",
             "pages": "Σελίδες",
             "rights": "Με επιφύλαξη παντός δικαιώματος.",
@@ -251,11 +259,11 @@ COPY = {
             "home": (
                 "simpli cafe — coffee, snacks and beverages all day",
                 "Quality coffee, fresh snacks and beverages all day, in a small corner of "
-                "Athens. Yours Simply!",
+                "Vari. Yours Simply!",
             ),
             "about": (
                 "About us — simpli cafe",
-                "A small café in Athens, run by the people you'll see behind the counter. "
+                "A small café in Vari, run by the people you'll see behind the counter. "
                 "Our story, and the wooden sign that gave us our name.",
             ),
             "contact": (
@@ -264,7 +272,7 @@ COPY = {
             ),
         },
         "hero": {
-            "eyebrow": "Corner café · Athens",
+            "eyebrow": "Corner café · Vari",
             "h1": "Good coffee,\nkept simple.",
             "lede": (
                 "Espresso pulled properly, fresh snacks each morning, and a stool in the sun "
@@ -274,6 +282,7 @@ COPY = {
             "cta2": "About us",
             "float1": "On the corner, tables outside",
             "float2": "Open from early, every day",
+            "brand_line": "",
             "photo_alt": "The hand-cut wooden simpli cafe sign hanging above the pavement against a blue sky.",
         },
         "cards_head": {"eyebrow": "What we do", "h2": "A few things, done properly"},
@@ -281,7 +290,7 @@ COPY = {
             (
                 "cup",
                 "Coffee worth the walk",
-                "A blend roasted for us here in Athens and ground to order. Freddo, filter, "
+                "A blend roasted for us here in Attica and ground to order. Freddo, filter, "
                 "flat white or a proper Greek coffee in the briki — however you take it.",
             ),
             (
@@ -306,7 +315,7 @@ COPY = {
             "h2": "Come by",
             "p": "We're here from early. No booking, no fuss — just push the door.",
             "cta1": "See where we are",
-            "cta2": "Give us a ring",
+            "cta2": "Our story",
         },
         "about": {
             "eyebrow": "About us",
@@ -332,7 +341,7 @@ COPY = {
                 (
                     "cup",
                     "Coffee we'd drink ourselves",
-                    "One espresso blend, roasted for us in Athens and delivered every week. We "
+                    "One espresso blend, roasted for us in Attica and delivered every week. We "
                     "dial it in each morning and taste it again after lunch.",
                 ),
                 (
@@ -362,23 +371,21 @@ COPY = {
         },
         "contact": {
             "eyebrow": "Contact",
-            "h1": "Where to find us",
-            "lede": "No booking needed — there's almost always a stool free. For anything else, here we are.",
-            "phone_label": "Phone",
+            "h1": "Come by the shop",
+            "lede": "No booking needed — there's almost always a stool free. Here's the address, our hours and the map.",
             "address_label": "Address",
-            "email_label": "Email",
-            "instagram_label": "Instagram",
-            "instagram_note": "What came out of the oven, most mornings.",
             "hours_label": "Opening hours",
             "invite_h2": "Come say hi and grab a coffee",
             "invite_p": "On the corner, with the tables outside. We'll be here.",
-            "map_label": "Map showing the location of simpli cafe",
+            "find_eyebrow": "The map",
+            "find_h2": "Where to find us",
+            "find_p": "We are located in Vari in the province of Varkiza. Only a 10 minute walk from the beach.",
+            "map_label": "Map showing the location of simpli cafe in Vari",
             "map_cta": "Open in Google Maps",
             "directions": "Directions",
-            "call": "Call us",
         },
         "footer": {
-            "blurb": "A small café in Athens. Coffee, something fresh to go with it, and a place to sit.",
+            "blurb": "A small café in Vari, ten minutes from the beach. Coffee, something fresh to go with it, and a place to sit.",
             "visit": "Visit",
             "pages": "Pages",
             "rights": "All rights reserved.",
@@ -508,8 +515,7 @@ def footer(lang: str, page: str) -> str:
           <h4>{e(c['visit'])}</h4>
           <ul>
             <li>{e(ADDRESS[lang])}</li>
-            <li><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
-            <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
+            <li><a href="{MAPS_LINK}" rel="noopener">{e(COPY[lang]['contact']['map_cta'])}</a></li>
           </ul>
         </div>
 
@@ -578,12 +584,13 @@ def jsonld(lang: str) -> str:
         "inLanguage": "{lang}",
         "servesCuisine": ["Coffee", "Snacks", "Beverages"],
         "priceRange": "€",
-        "telephone": "{PHONE_DISPLAY}",
-        "email": "{EMAIL}",
+        "hasMap": "{MAPS_LINK}",
         "address": {{
           "@type": "PostalAddress",
-          "streetAddress": "{ADDRESS['en'].split(',')[0]}",
-          "addressLocality": "Athens",
+          "streetAddress": "VOREADON 2",
+          "postalCode": "16672",
+          "addressLocality": "VARI",
+          "addressRegion": "Attica",
           "addressCountry": "GR"
         }},
         "openingHoursSpecification": [
@@ -601,6 +608,9 @@ def home(lang: str) -> str:
     s = c["statement"]
     cta = c["home_cta"]
     headline = "<br />".join(e(part) for part in h["h1"].split("\n"))
+    # On the Greek page the English strapline rides under the headline; the
+    # English page already says it in the headline itself.
+    brand_line = f'<span class="brand-line">{e(h["brand_line"])}</span>' if h["brand_line"] else ""
 
     return f"""      <!-- Hero ------------------------------------------------------ -->
       <section class="hero">
@@ -608,6 +618,7 @@ def home(lang: str) -> str:
           <div>
             <p class="eyebrow">{e(h['eyebrow'])}</p>
             <h1>{headline}</h1>
+            {brand_line}
             <p class="lede">{e(h['lede'])}</p>
             <div class="btn-row" style="margin-top: 2rem">
               <a class="btn btn--primary" href="{link(lang, 'home', lang, 'contact')}">{e(h['cta1'])}</a>
@@ -655,14 +666,13 @@ def home(lang: str) -> str:
             <span class="statement__sign">{e(s['sign'])}</span>
           </div>
 
-          <figure class="reveal" style="margin: clamp(1.5rem, 3vw, 2.5rem) 0 0">
+          <figure class="photo-full reveal">
             <img
               src="{asset(lang, 'home', 'img/storefront.jpg')}"
               width="654"
               height="862"
               alt="{e(s['photo_alt'])}"
               loading="lazy"
-              style="width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center 50%; border-radius: var(--radius-lg); box-shadow: var(--shadow-lift)"
             />
           </figure>
         </div>
@@ -676,7 +686,7 @@ def home(lang: str) -> str:
             <p class="lede" style="margin-top: 1rem; font-size: 1.1rem">{e(cta['p'])}</p>
             <div class="btn-row" style="justify-content: center; margin-top: 2rem">
               <a class="btn btn--primary" href="{link(lang, 'home', lang, 'contact')}">{e(cta['cta1'])}</a>
-              <a class="btn btn--glass" href="tel:{PHONE_TEL}">{e(cta['cta2'])}</a>
+              <a class="btn btn--glass" href="{link(lang, 'home', lang, 'about')}">{e(cta['cta2'])}</a>
             </div>
           </div>
         </div>
@@ -784,35 +794,16 @@ def contact(lang: str) -> str:
               <div>
                 <ul class="info-list">
                   <li class="info-item">
-                    <span class="info-item__icon">{ICONS['phone']}</span>
-                    <div>
-                      <h3>{e(k['phone_label'])}</h3>
-                      <a class="phone-link" href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a>
-                    </div>
-                  </li>
-                  <li class="info-item">
                     <span class="info-item__icon">{ICONS['pin']}</span>
                     <div>
                       <h3>{e(k['address_label'])}</h3>
                       <p class="info-item__value">{e(ADDRESS[lang])}</p>
                     </div>
                   </li>
-                  <li class="info-item">
-                    <span class="info-item__icon">{ICONS['mail']}</span>
-                    <div>
-                      <h3>{e(k['email_label'])}</h3>
-                      <p class="info-item__value"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
-                    </div>
-                  </li>
-                  <li class="info-item">
-                    <span class="info-item__icon">{ICONS['instagram']}</span>
-                    <div>
-                      <h3>{e(k['instagram_label'])}</h3>
-                      <p class="info-item__value"><a href="{INSTAGRAM_URL}" rel="noopener">{INSTAGRAM}</a></p>
-                      <p class="meta">{e(k['instagram_note'])}</p>
-                    </div>
-                  </li>
                 </ul>
+                <div class="btn-row" style="margin-top: 1.75rem">
+                  <a class="btn btn--primary" href="{MAPS_LINK}" rel="noopener">{ICONS['pin']}{e(k['directions'])}</a>
+                </div>
               </div>
 
               <div>
@@ -838,25 +829,27 @@ def contact(lang: str) -> str:
       <section class="wrap invite reveal">
         <h2>{e(k['invite_h2'])}</h2>
         <p class="lede">{e(k['invite_p'])}</p>
-        <div class="btn-row" style="justify-content: center; margin-top: 1.75rem">
-          <a class="btn btn--primary" href="tel:{PHONE_TEL}">{ICONS['phone']}{e(k['call'])}</a>
-          <a class="btn btn--glass" href="{MAPS_LINK}" rel="noopener">{ICONS['pin']}{e(k['directions'])}</a>
-        </div>
       </section>
 
-      <!-- Map ------------------------------------------------------- -->
+      <!-- Where to find us ------------------------------------------ -->
       <section class="section section--tight">
         <div class="wrap">
+          <div class="head reveal">
+            <p class="eyebrow">{e(k['find_eyebrow'])}</p>
+            <h2>{e(k['find_h2'])}</h2>
+            <p class="lede">{e(k['find_p'])}</p>
+          </div>
+
           <div class="glass map reveal">
-            <!-- PLACEHOLDER: MAP_QUERY in site.build.py sets what this shows.
-                 Put the café's real address there and rebuild. -->
-            <iframe
-              src="{MAPS_EMBED}"
-              title="{e(k['map_label'])}"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-            ></iframe>
+            <div class="map__frame">
+              <iframe
+                src="{MAPS_EMBED}"
+                title="{e(k['map_label'])}"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <span class="map__pin">{ICONS['pin_cup']}</span>
+            </div>
             <div class="map__bar">
               <span class="meta"><strong>simpli cafe</strong> · {e(ADDRESS[lang])}</span>
               <a class="btn btn--quiet" href="{MAPS_LINK}" rel="noopener">{e(k['map_cta'])} {ICONS['arrow']}</a>
